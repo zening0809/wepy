@@ -1,0 +1,8 @@
+/node_modules
+/logs
+/cache
+/static/node_modules
+.vscode
+/static/download
+/nfs
+/dist

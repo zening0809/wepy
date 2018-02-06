@@ -1,0 +1,62 @@
+<style lang="scss">
+    page {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<script>
+    import wepy from "wepy";
+    import "wepy-async-function";
+    export default class extends wepy.app {
+        config = {
+            pages: [
+                // 添加卡片
+                "pages/add_card_page/index",
+                // 首页
+                "pages/index",
+                // 卡片盒页
+                "pages/card_page/index"
+            ],
+            window: {
+                backgroundTextStyle: "light",
+                navigationBarBackgroundColor: "#256af2",
+                navigationBarTitleText: "WeChat",
+                navigationBarTextStyle: "#fff"
+            }
+        };
+        globalData = {
+            userInfo: null
+        };
+        constructor() {
+            super();
+            this.use("requestfix");
+        }
+        onLaunch() {
+            this.testAsync();
+        }
+        sleep(s) {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("promise resolved");
+                }, s * 1000);
+            });
+        }
+        async testAsync() {
+            const data = await this.sleep(3);
+            console.log(data);
+        }
+        getUserInfo(cb) {
+            const that = this;
+            if (this.globalData.userInfo) {
+                return this.globalData.userInfo;
+            }
+            wepy.getUserInfo({
+                success(res) {
+                    that.globalData.userInfo = res.userInfo;
+                    cb && cb(res.userInfo);
+                }
+            });
+        }
+    }
+</script>

@@ -1,0 +1,156 @@
+<template>
+    <view class='addCardContainer'>
+        <view class='title'>标题</view>
+        <input placeholder="请输入新增标题" placeholder-style="color:#c7c7c7" class='titleInput' auto-focus/>
+        <view class='title'>TAG标签</view>
+        <view class='tagContainer'>
+        <repeat
+            for="{{tagList}}"
+            key="index"
+            item="item"
+            index= "index"
+        >
+            <view style="background:{{index === curTag?item.color: ''}}" @tap="chooseTag({{index}})">{{item.text}}</view>
+        </repeat>
+        </view>
+        <view class='title'>内容</view>
+        <textarea class='contentArea' bindblur="bindTextAreaBlur" placeholder-style="color:#c7c7c7" placeholder="请输入新增内容" />
+        <view class='title'>添加图片</view>
+        <view class='imgContainer'>
+            <image wx:if="{{chooseImg}}" src='{{chooseImgPath}}' />
+            <image @tap="addImg()" src='/asserts/image/card/add_img.png' />
+        </view>
+        <view class='formBtn'>发 布</view>
+    </view>
+</template>
+<script>
+    import wepy from 'wepy'
+    export default class AddCard extends wepy.page {
+        config = {
+            navigationBarTitleText: '新增卡片'
+        }
+        data = {
+            curTag: -1,
+            tagList: [
+                {
+                    color: '#256af2',
+                    text: '技能交换'
+                },
+                {
+                    color: '#b4e99f',
+                    text: '团队进展'
+                },
+                {
+                    color: '#fb91af',
+                    text: '求助'
+                },
+                {
+                    color: '#f7cd8b',
+                    text: '资源分享'
+                }
+            ],
+            chooseImg: false,
+            chooseImgPath: ''
+        }
+        methods = {
+            chooseTag(index){
+                this.curTag = index;
+                this.$apply();
+            },
+            addImg() {
+                var _this = this;
+                wx.chooseImage({
+                    count: 1, // 默认9
+                    // sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+                    // sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function(res) {
+                        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+                        _this.chooseImgPath = res.tempFilePaths[0];
+                        _this.chooseImg = true;
+                        _this.$apply();
+                    }
+                })
+            }
+        }
+    }
+</script>
+<style lang='scss' scoped>
+    .addCardContainer {
+        background: #f7f9fa;
+        height: 100%;
+        .title {
+            height: 70rpx;
+            line-height: 70rpx;
+            font-size: 28rpx;
+            padding-left: 24rpx;
+            color: #333;
+        }
+        .titleInput {
+            height: 70rpx;
+            line-height: 70rpx;
+            font-size: 24rpx;
+            padding-left: 24rpx;
+            color: #333;
+            background: #ffffff;
+            border-bottom: 1px solid #f0f1f2;
+            border-top: 1px solid #f0f1f2;
+        }
+        .tagContainer {
+            height: 70rpx;
+            display: flex;
+            align-items: center;
+            padding-left: 24rpx;
+            view {
+                padding: 10rpx 24rpx;
+                height: 32rpx;
+                font-size: 24rpx;
+                border-radius: 32rpx;
+                background: #c7c7c7;
+                color: #fff;
+                margin-left: 24rpx;
+            }
+            view:nth-child(1) {
+                margin-left: 0rpx;
+            }
+        }
+        .contentArea {
+            height: 260rpx;
+            width: 100%;
+            font-size: 24rpx;
+            padding-left: 24rpx;
+            padding-top: 24rpx;
+            color: #333;
+            background: #ffffff;
+            border-bottom: 1px solid #f0f1f2;
+            border-top: 1px solid #f0f1f2;
+        }
+        .imgContainer {
+            height: 220rpx;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-bottom: 1px solid #f0f1f2;
+            border-top: 1px solid #f0f1f2;
+            image {
+                width: 116rpx;
+                height: 116rpx;
+                margin-left: 24rpx;
+            }
+        }
+        .formBtn{
+            width: 90%;
+            margin: 36rpx auto;
+            height: 88rpx;
+            border-radius: 14rpx; 
+            text-align: center;
+            color: #fff;
+            line-height: 88rpx;
+            background: #256af2;
+            font-size: 32rpx;
+        }
+    }
+</style>
+
+
+
