@@ -217,6 +217,7 @@
                     }
                 }
                 .content-item-right {
+                    box-sizing: border-box;
                     height: 100%;
                     line-height: 120rpx;
                     width: 140rpx;
