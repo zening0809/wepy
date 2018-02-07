@@ -123,6 +123,7 @@
         .achive-content {
             padding: 0 24rpx;
             padding-bottom: 130rpx;
+            background: #f7f9fa;
             overflow: auto;
             .achive-content-title {
                 padding: 35rpx 0rpx 25rpx 0rpx;

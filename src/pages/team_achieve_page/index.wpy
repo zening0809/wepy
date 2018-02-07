@@ -161,6 +161,7 @@
             padding: 0 24rpx;
             overflow: auto;
             padding-bottom: 130rpx;
+            background: #f7f9fa;
             .achive-content-title {
                 padding: 35rpx 0rpx 25rpx 0rpx;
                 font-size: 12px;
