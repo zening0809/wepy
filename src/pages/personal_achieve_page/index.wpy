@@ -1,0 +1,137 @@
+<template>
+    <view class="addCardContainer">
+        <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
+        <view class="achive-tab">
+            <view class="tab">
+                <span class="span-tab">我的徽章</span>
+            </view>
+            <view class="diver"></view>
+            <view class="tab active-tab">
+                <span class="span-tab">个人成就</span>
+            </view>
+            <view class="diver"></view>            
+            <view class="tab">
+                <span class="span-tab">团队成就</span>
+            </view>
+        </view>
+        <view class="achive-content">
+            <view  class="achive-content-title">个人成就排名</view>
+
+            <repeat for="{{ personalList }}" key="index" index="index" item="item">
+                <PersonItem :item="item"></PersonItem>
+            </repeat>
+        </view>  
+        <BtnCom></BtnCom>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import BtnCom from '../../components/btnCom'
+    import AchieveHead from '../../components/achieveHead'
+    import PersonItem from '../../components/personItem'
+
+    export default class PersonalAchievePage extends wepy.page {
+        config = {
+            navigationBarTitleText: '卡片盒'
+        }
+        data = {
+            personalNum: '121',
+            teamNum: '6666',
+            personalList: [{
+                personRank: 1,
+                avatar: '/asserts/image/home/title.png',
+                personName: 'CG猎人TIM',
+                teamId: '823',
+                achieveNum: '8686'
+            },{
+                personRank: 2,
+                avatar: '/asserts/image/home/title.png',
+                personName: 'UDPonline',
+                teamId: '523',
+                achieveNum: '7258'
+            },{
+                personRank: 3,
+                avatar: '/asserts/image/home/title.png',
+                personName: '你好大海',
+                teamId: '321',
+                achieveNum: '6436'
+            },{
+                personRank: 4,
+                avatar: '/asserts/image/home/title.png',
+                personName: '欧巴酱',
+                teamId: '451',
+                achieveNum: '5366'
+            },{
+                personRank: 5,
+                avatar: '/asserts/image/home/title.png',
+                personName: '欧巴酱',
+                teamId: '451',
+                achieveNum: '5366'
+            },{
+                personRank: 6,
+                avatar: '/asserts/image/home/title.png',
+                personName: '欧巴酱',
+                teamId: '451',
+                achieveNum: '5366'
+            }]
+        }
+        components = {
+            AchieveHead,
+            BtnCom,
+            PersonItem
+        }
+    }
+</script>
+
+<style  lang="scss" scoped>
+    .addCardContainer {
+        background: #f7f9fa;
+        height: 100%;
+        
+        .achive-tab {
+            background: #ffffff;
+            height: 75rpx;
+            box-shadow: 0px 3px 5px #dee6f3;
+            display: flex;
+            align-items: center;/*垂直居中*/
+            .tab {
+                font-size: 11px;
+                text-align: center;
+                line-height: 75rpx;
+                flex: 1;
+                color: #a7a8a9;
+                .span-tab {
+                    display: inline-block;
+                    height: 100%;
+                    box-sizing: border-box;
+                }
+            }
+            .tab.active-tab {
+                .span-tab {
+                    color: #000;
+                    border-bottom: 4rpx solid #367be8;
+                }
+            }
+            .diver {
+                width: 2rpx;
+                height: 12px;
+                background: #dee6f3;
+            }
+
+        }
+        .achive-content {
+            padding: 0 24rpx;
+            padding-bottom: 130rpx;
+            background: #f7f9fa;
+            overflow: auto;
+            .achive-content-title {
+                padding: 35rpx 0rpx 25rpx 0rpx;
+                font-size: 12px;
+            }
+        }
+    }
+    
+
+</style>
+

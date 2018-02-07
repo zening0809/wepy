@@ -1,0 +1,294 @@
+<template>
+    <view class="addCardContainer">
+        <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
+        <view class="achive-tab">
+            <view class="tab">
+                <span class="span-tab">我的徽章</span>
+            </view>
+            <view class="diver"></view>
+            <view class="tab">
+                <span class="span-tab">个人成就</span>
+            </view>
+            <view class="diver"></view>            
+            <view class="tab active-tab">
+                <span class="span-tab">团队成就</span>
+            </view>
+        </view>
+        <view class="achive-content">
+            <view  class="achive-content-title">团队成就排名</view>
+
+            <view class="content-item one">
+                <view class="content-item-left">
+                    <view class="rank-num">1</view>
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">No.3648</view>
+                    <view class="item-sub">
+                        <image src="/asserts/image/home/title.png" class="samll-img"></image>
+                        <image src="/asserts/image/home/title.png" class="samll-img"></image>
+                        <image src="/asserts/image/home/title.png" class="samll-img"></image>
+                        <image src="/asserts/image/home/title.png" class="samll-img"></image>
+                        <image src="/asserts/image/home/title.png" class="samll-img"></image>
+                    </view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">8686</view>
+            </view>
+            
+            <view class="content-item two">
+                <view class="content-item-left">
+                    <view class="rank-num">2</view>
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">No.4123</view>
+                    <view class="item-sub">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                    </view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">7258</view>
+            </view>
+
+            <view class="content-item three">
+                <view class="content-item-left" >
+                    <view class="rank-num">3</view>
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">No.2321</view>
+                    <view class="item-sub">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                    </view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">6436</view>
+            </view>
+
+            <view class="content-item">
+                <view class="content-item-left">
+                    <view class="rank-num">4</view>
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">No.1234</view>
+                    <view class="item-sub">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                        <image src="/asserts/image/home/title.png" class="samll-img">
+                    </view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">5643</view>
+            </view>
+        </view>  
+        <BtnCom></BtnCom>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import BtnCom from '../../components/btnCom'
+    import AchieveHead from '../../components/achieveHead'
+
+    export default class PersonalAchievePage extends wepy.page {
+        config = {
+            navigationBarTitleText: '卡片盒'
+        }
+        data = {
+            personalNum: '555',
+            teamNum: '8989'
+        }
+        components = {
+            AchieveHead,
+            BtnCom
+        }
+    }
+</script>
+
+<style  lang="scss" scoped>
+    .addCardContainer {
+        background: #f7f9fa;
+        height: 100%;
+        
+        .achive-tab {
+            background: #ffffff;
+            height: 75rpx;
+            box-shadow: 0px 3px 5px #dee6f3;
+            display: flex;
+            align-items: center;/*垂直居中*/
+            .tab {
+                font-size: 11px;
+                text-align: center;
+                line-height: 75rpx;
+                flex: 1;
+                color: #a7a8a9;
+                .span-tab {
+                    display: inline-block;
+                    height: 100%;
+                    box-sizing: border-box;
+                }
+            }
+            .tab.active-tab {
+                .span-tab {
+                    color: #000;
+                    border-bottom: 4rpx solid #367be8;
+                }
+            }
+            .diver {
+                width: 2rpx;
+                height: 12px;
+                background: #dee6f3;
+            }
+
+        }
+        .achive-content {
+            padding: 0 24rpx;
+            overflow: auto;
+            padding-bottom: 130rpx;
+            background: #f7f9fa;
+            .achive-content-title {
+                padding: 35rpx 0rpx 25rpx 0rpx;
+                font-size: 12px;
+            }
+            .content-item {
+                background: #ffffff;
+                height: 120rpx;
+                border-radius: 5px;
+                display: flex;
+                box-shadow: 2px 0px 2px #dee6f3;
+                margin-bottom: 18rpx;
+                .content-item-left {
+                    height: 100%;
+                    width: 120rpx;
+                    border-radius: 5px;
+                    display: flex;
+                    align-items: center;/*垂直居中*/  
+                    justify-content: center;/*水平居中*/ 
+                    .rank-num {
+                        font-size: 13px;
+                        color: #ffffff;
+                        background-color: #aac9f7;
+                        height: 60rpx;
+                        width: 60rpx;
+                        text-align: center;
+                        line-height: 60rpx;
+                        border-radius: 5px;
+                    }
+                    .avatar-class {
+                         height: 100%; 
+                         width: 120rpx;
+                         border-radius: 5px;
+                    }
+                    .title-class {
+                        height: 100%;
+                        width: 120rpx;
+                    }
+                }
+                .content-item-mid {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;/*水平居中*/                                      
+                    .item-name {
+                        color: #aac9f7;
+                        font-size: 12px;
+                    }
+                    .item-sub {
+                        overflow: hidden;
+                        .samll-img {
+                            width: 48rpx;
+                            height: 48rpx;
+                            margin-right: 6rpx;
+                            border-radius: 2px; 
+                        }                    
+                    }
+                }
+                .content-item-badage {
+                    width: 80rpx;
+                    display: flex;
+                    align-items: center;/*垂直居中*/  
+                    justify-content: center;/*水平居中*/                                      
+                    .cup-class {
+                        height: 30rpx;
+                        width: 30rpx;
+                    }
+                }
+                .content-item-right {
+                    height: 100%;
+                    line-height: 120rpx;
+                    width: 140rpx;
+                    border-radius: 0px 5px 5px 0px;
+                    background: #aac9f7;
+                    color: #ffffff;
+                    font-weight: 700;
+                    text-align: center;
+                }
+            }
+            .content-item.one {
+                .content-item-left {
+                    .rank-num {
+                        background-color: #e58837;
+                    }
+                }
+                .content-item-mid {
+                    .item-name {
+                        color: #e58837;
+                    }
+                }
+                .content-item-right {
+                    background: #e58837;                    
+                }
+            }
+            .content-item.two {
+                .content-item-left {
+                    .rank-num {
+                        background-color:  #f4b847;
+                    }
+                }
+                .content-item-mid {
+                    .item-name {
+                        color: #f4b847;
+                    }
+                }
+                .content-item-right {
+                    background: #f4b847;                    
+                }
+            }
+            .content-item.three {
+                .content-item-left {
+                    .rank-num {
+                        background-color:#f1d466;
+                    }
+                }
+                .content-item-mid {
+                    .item-name {
+                        color: #f1d466;
+                    }
+                }
+                .content-item-right {
+                    background: #f1d466;                    
+                }
+            }
+
+        }
+    }
+    
+
+</style>
+
