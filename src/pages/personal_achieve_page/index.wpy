@@ -1,0 +1,316 @@
+<template>
+    <view class="addCardContainer">
+        <AchieveHead/>
+        <view class="achive-tab">
+            <view class="tab">
+                <span class="span-tab">我的徽章</span>
+            </view>
+            <view class="diver"></view>
+            <view class="tab active-tab">
+                <span class="span-tab">个人成就</span>
+            </view>
+            <view class="diver"></view>            
+            <view class="tab">
+                <span class="span-tab">团队成就</span>
+            </view>
+        </view>
+        <view class="achive-content">
+            <view  class="achive-content-title">个人成就排名</view>
+
+            <view class="content-item one">
+                <view class="content-item-left">
+                    <view class="rank-num">1</view>
+                    <view class="triangle-topleft">
+                    </view>
+                    <image src="/asserts/image/home/title.png" class="avatar-class">                                                            
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">CG猎人TIM</view>
+                    <view class="item-sub">团队编号： No.823</view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">8686</view>
+            </view>
+
+            <view class="content-item two">
+                <view class="content-item-left">
+                    <view class="rank-num">2</view>
+                    <view class="triangle-topleft">
+                    </view>
+                    <image src="/asserts/image/home/title.png" class="avatar-class">                                        
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">UDPonline</view>
+                    <view class="item-sub">团队编号： No.523</view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">7258</view>
+            </view>
+
+            <view class="content-item three">
+                <view class="content-item-left" >
+                    <view class="rank-num">3</view>
+                    <view class="triangle-topleft">
+                    </view>
+                    <image src="/asserts/image/home/title.png" class="avatar-class">                    
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">你好大海</view>
+                    <view class="item-sub">团队编号： No.321</view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">6436</view>
+            </view>
+
+            <view class="content-item primary">
+                <view class="content-item-left">
+                    <view class="rank-num">4</view>
+                    <view class="triangle-topleft">
+                    </view>
+                    <image src="/asserts/image/home/title.png" class="avatar-class">                    
+                </view>
+                <view class="content-item-mid">
+                    <view class="item-name">欧巴酱</view>
+                    <view class="item-sub">团队编号： No.451</view>
+                </view>
+                <view class="content-item-badage">
+                    <image src="/asserts/image/card/cup.png" class="cup-class">
+                </view>
+                <view class="content-item-right">5366</view>
+            </view>
+        </view>  
+        <BtnCom/>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import BtnCom from '../../components/btnCom'
+    import AchieveHead from '../../components/achieveHead'
+
+    export default class PersonalAchievePage extends wepy.page {
+        config = {
+            navigationBarTitleText: '卡片盒'
+        }
+        components = {
+            AchieveHead,
+            BtnCom
+        }
+    }
+</script>
+
+<style  lang="scss" scoped>
+    .addCardContainer {
+        background: #f7f9fa;
+        height: 100%;
+        
+        .achive-tab {
+            background: #ffffff;
+            height: 75rpx;
+            box-shadow: 0px 3px 5px #dee6f3;
+            display: flex;
+            align-items: center;/*垂直居中*/
+            .tab {
+                font-size: 11px;
+                text-align: center;
+                line-height: 75rpx;
+                flex: 1;
+                color: #a7a8a9;
+                .span-tab {
+                    display: inline-block;
+                    height: 100%;
+                    box-sizing: border-box;
+                }
+            }
+            .tab.active-tab {
+                .span-tab {
+                    color: #000;
+                    border-bottom: 4rpx solid #367be8;
+                }
+            }
+            .diver {
+                width: 1rpx;
+                height: 12px;
+                background: #dee6f3;
+            }
+
+        }
+        .achive-content {
+            padding: 0 24rpx;
+            overflow: auto;
+            .achive-content-title {
+                padding: 35rpx 0rpx 25rpx 0rpx;
+                font-size: 12px;
+            }
+            .content-item {
+                background: #ffffff;
+                height: 120rpx;
+                border-radius: 5px;
+                display: flex;
+                box-shadow: 2px 0px 2px #dee6f3;
+                margin-bottom: 18rpx;
+                .content-item-left {
+                    height: 100%;
+                    width: 120rpx;
+                    border-radius: 5px;
+                    position: relative;
+                    .rank-num {
+                        color: #ffffff;
+                        font-size: 12px;
+                        padding: 4rpx 0rpx 0rpx 10rpx; 
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        z-index: 9;
+                    }
+                    .triangle-topleft {
+                        position: absolute;
+                        z-index: 8;                        
+                        top: 0;
+                        left: 0;
+                        width:0; 
+                        height:0;
+                        border-width:35rpx;
+                        border-style:solid;
+                        border-top-left-radius: 5px;
+                        border-color: #e58837 transparent transparent #e58837;
+                    }
+                    .avatar-class {
+                         height: 100%; 
+                         width: 120rpx;
+                         border-radius: 5px;
+                    }
+                    .title-class {
+                        height: 100%;
+                        width: 120rpx;
+                    }
+                }
+                .content-item-mid {
+                    padding-left: 30rpx;
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;/*水平居中*/                                      
+                    .item-name {
+                        color: #e58837;
+                        font-size: 12px;
+                    }
+                    .item-sub {
+                        font-size: 10px; 
+                        color:#a7a8a9;                    
+                    }
+                }
+                .content-item-badage {
+                    width: 80rpx;
+                    display: flex;
+                    align-items: center;/*垂直居中*/  
+                    justify-content: center;/*水平居中*/                                      
+                    .cup-class {
+                        height: 30rpx;
+                        width: 30rpx;
+                    }
+                }
+                .content-item-right {
+                    height: 100%;
+                    line-height: 120rpx;
+                    width: 140rpx;
+                    border-radius: 0px 5px 5px 0px;
+                    background: #e58837;
+                    color: #ffffff;
+                    font-weight: 700;
+                    text-align: center;
+                }
+            }
+            .content-item.one {
+                .content-item-left {
+                    .triangle-topleft {
+                        border-color: #e58837 transparent transparent #e58837;                    
+                    }
+                }
+                .content-item-mid {
+                    .item-name {
+                        color: #e58837;
+                    }
+                }
+                .content-item-right {
+                    background: #e58837;                    
+                }
+            }
+            .content-item.two {
+                .content-item-left {
+                    .triangle-topleft {
+                        border-color: #f4b847 transparent transparent #f4b847;                    
+                    }
+                }
+                .content-item-mid {
+                    .item-name {
+                        color: #f4b847;
+                    }
+                }
+                .content-item-right {
+                    background: #f4b847;                    
+                }
+            }
+            .content-item.three {
+                .content-item-left {
+                    .triangle-topleft {
+                        border-color: #f1d466 transparent transparent #f1d466;                    
+                    }
+                }
+                .content-item-mid {
+                    .item-name {
+                        color: #f1d466;
+                    }
+                }
+                .content-item-right {
+                    background: #f1d466;                    
+                }
+            }
+            .content-item.primary {
+                .content-item-left {
+                    width: 180rpx;
+                    display: flex;
+                    align-items: center;/*垂直居中*/                      
+                    .rank-num {
+                        position: relative;
+                        width: 90rpx;
+                        padding: 0rpx;
+                        line-height: 120rpx;
+                        font-size: 16px;
+                        font-weight: 700;
+                        color: #000000;
+                        text-align: center;
+                        z-index: 0;
+                    }
+                    .triangle-topleft {
+                        border-color:  transparent;                    
+                    }
+                    .avatar-class {
+                        height: 90rpx; 
+                        width: 90rpx;
+                        border-radius: 5px;
+                    }
+                }
+                .content-item-mid {
+                    .item-name {
+                        color: #000;
+                    }
+                }
+                .content-item-right {
+                    background: #aac9f7;
+                    border-right: 6rpx solid #418df0;                    
+                }
+            }
+
+        }
+    }
+    
+
+</style>
+

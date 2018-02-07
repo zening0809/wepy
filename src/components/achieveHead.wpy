@@ -1,0 +1,61 @@
+<template>
+    <view class="achive-head">
+        <view class="title">成就</view>
+        <view class="sub-title">
+            <view class="p-title">
+                <view>个人成就</view>
+                <view class="p-num">123</view>
+            </view>
+            <view class="p-title">
+                <view>团队成就</view>
+                <view class="p-num">4567</view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+
+    export default class AchieveHead extends wepy.page {
+        config = {
+            navigationBarTitleText: '卡片盒'
+        }
+    }
+</script>
+<style lang="scss" scoped>
+    .achive-head {
+        height: 300rpx;
+        display: flex;
+        flex-direction: column;
+        background-color: pink;
+        .title {
+            text-align: center;
+            font-size: 15px;
+            color: #ffffff;
+            padding: 25rpx 0rpx;
+        }
+        .sub-title {
+            flex: 1;
+            display: flex;
+            padding-bottom: 40rpx;
+            box-sizing: border-box; 
+            .p-title {
+                font-size: 12px;
+                flex: 1;
+                display:flex;
+                flex-direction: column;
+                align-items: center;/*垂直居中*/
+                justify-content: center;/*水平居中*/
+                text-align: center;
+                color: #ffffff;  
+                .p-num {
+                    font-size: 20px;                    
+                    color: #feec78;
+                }                  
+            }
+
+        }
+    }
+</style>
+
