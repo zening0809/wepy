@@ -1,0 +1,120 @@
+<template>
+    <view class="container">
+        <ProductCard />
+        <view class="comment">
+            <view class="header">全部评论</view>
+            <repeat for={3}>
+                <view class="item">
+                    <view class="item-header">
+                        <view class="item-header--left">
+                            <image src="/asserts/image/home/title.png" class="item-avatar" />
+                            <text class="item-name">失去的春天</text>
+                            <view class="item-number">No.123</view>
+                        </view>
+                        <view class="item-header--right">
+                            <image src="/asserts/image/home/suport_card.png" class="item-like" />
+                            456
+                        </view>
+                    </view>
+                    <view class="item-content">
+                        本案中哇哦撒可富来接我困了士大夫撒飞洒地方萨芬，索拉卡佛我为富兰克林开发了快速士大夫士大夫撒。
+                    </view>
+                    <view class="item-footer">
+                        <view class="item-time">刚刚</view>
+                        <view class="item-del">删除</view>
+                    </view>
+                </view>
+            </repeat>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import ProductCard from '../../components/productCard'
+    export default class TeamComment extends wepy.page {
+        config = {
+            navigationBarTitleText: '团队评论'
+        }
+        components = {
+            ProductCard
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .container {
+        height: 100%;
+        width: 100%;
+        padding-bottom: 30rpx;
+        overflow-y: scroll;
+        font-size: 24rpx;
+        background-color: #f0f0f0;
+    }
+    .comment {
+        padding: 50rpx 0 0;
+        background-color: #fff;
+    }
+    .header {
+        padding: 20rpx 40rpx;
+        border-bottom: 2rpx solid #ddd;
+        font-size: 30rpx;
+    }
+    .item {
+        padding: 10rpx 40rpx;
+        border-bottom: 1rpx solid #ddd;
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            &--left {
+                display: flex;
+                align-items: center;
+            }
+            &--right {
+                display: flex;
+                align-items: center;
+                padding: 5rpx 25rpx;
+                color: rgb(60, 99, 228);
+                background-color: #f0f0f0;
+                border: 1rpx solid #ddd;
+                border-radius: 10rpx;
+            }
+        }
+        &-avatar {
+            height: 100rpx;
+            width: 100rpx;
+        }
+        &-name {
+            margin: 0 20rpx;
+        }
+        &-number {
+            padding: 0 20rpx;
+            font-size: 20rpx;
+            color: #fff;
+            background-color: rgb(60, 99, 228);
+            border-radius: 20rpx;
+        }
+        &-like {
+            height: 30rpx;
+            width: 30rpx;
+            margin-right: 20rpx;
+        }
+        &-content {
+            padding: 20rpx 0;
+            color: #999;
+        }
+        &-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 20rpx;
+        }
+        &-time {
+            color: #999;
+        }
+        &-del {
+            color: rgb(60, 99, 228);
+        }
+    }
+</style>
