@@ -37,10 +37,8 @@
 <script>
     import wepy from 'wepy'
 
-    export default class BtnCom extends wepy.page {
-        config = {
-            navigationBarTitleText: '卡片盒'
-        }
+    export default class BtnCom extends wepy.component {
+        
     }
 </script>
 <style lang="scss" scoped>

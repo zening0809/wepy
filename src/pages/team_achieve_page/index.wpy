@@ -1,6 +1,6 @@
 <template>
     <view class="addCardContainer">
-        <AchieveHead/>
+        <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
         <view class="achive-tab">
             <view class="tab">
                 <span class="span-tab">我的徽章</span>
@@ -36,7 +36,6 @@
                 </view>
                 <view class="content-item-right">8686</view>
             </view>
-
             
             <view class="content-item two">
                 <view class="content-item-left">
@@ -98,7 +97,7 @@
                 <view class="content-item-right">5643</view>
             </view>
         </view>  
-        <BtnCom/>
+        <BtnCom></BtnCom>
     </view>
 </template>
 
@@ -110,6 +109,10 @@
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '卡片盒'
+        }
+        data = {
+            personalNum: '555',
+            teamNum: '8989'
         }
         components = {
             AchieveHead,
@@ -148,7 +151,7 @@
                 }
             }
             .diver {
-                width: 1rpx;
+                width: 2rpx;
                 height: 12px;
                 background: #dee6f3;
             }
@@ -157,6 +160,7 @@
         .achive-content {
             padding: 0 24rpx;
             overflow: auto;
+            padding-bottom: 130rpx;
             .achive-content-title {
                 padding: 35rpx 0rpx 25rpx 0rpx;
                 font-size: 12px;

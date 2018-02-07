@@ -4,11 +4,11 @@
         <view class="sub-title">
             <view class="p-title">
                 <view>个人成就</view>
-                <view class="p-num">123</view>
+                <view class="p-num">{{ personal }}</view>
             </view>
             <view class="p-title">
                 <view>团队成就</view>
-                <view class="p-num">4567</view>
+                <view class="p-num">{{ team }}</view>
             </view>
         </view>
     </view>
@@ -17,9 +17,10 @@
 <script>
     import wepy from 'wepy'
 
-    export default class AchieveHead extends wepy.page {
-        config = {
-            navigationBarTitleText: '卡片盒'
+    export default class AchieveHead extends wepy.component {
+        props = {
+            personal: String,
+            team: String
         }
     }
 </script>
