@@ -12,10 +12,11 @@
         config = {
             pages: [
                 // 个人成就
+                "pages/achievement_page/index",
+                // 个人成就
                 "pages/personal_achieve_page/index",
                 // 团队成就
                 "pages/team_achieve_page/index",
-                
                 // 首页
                 "pages/index",
                 // 添加卡片
