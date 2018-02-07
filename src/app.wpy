@@ -11,19 +11,24 @@
     export default class extends wepy.app {
         config = {
             pages: [
-                // 团队评论
-                "pages/team_comment/index",
+                // 个人主页
+                "pages/own_comment_page/index",
+                // 已获得成就
+                "pages/get_achievement_page/index",
+                // 成就页
+                "pages/achievement_page/index",
                 // 个人成就
                 "pages/personal_achieve_page/index",
                 // 团队成就
                 "pages/team_achieve_page/index",
-                
                 // 首页
                 "pages/index",
                 // 添加卡片
                 "pages/add_card_page/index",
                 // 卡片盒页
                 "pages/card_page/index",
+                // 团队评论
+                "pages/team_comment/index",
                 
             ],
             window: {
