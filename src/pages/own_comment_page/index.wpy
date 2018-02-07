@@ -1,0 +1,113 @@
+<template>
+    <view class="ownContainer">
+       
+        <image class="titlePng" src='/asserts/image/own/title.png'/>
+        <view class='name'>乐小舟</view>
+        <view class='groupNum'>乐小舟</view>
+        <view class='groupNumContent'>No.262</view>
+        <view class='messageContainer'>
+            <view>
+                <image src='/asserts/image/own/notify.png'/>
+                <text>消息</text>
+            </view>
+            <image class='rightImg' src='/asserts/image/card/right.png' />
+        </view>
+        <view class='messageContainer'>
+            <view>
+                <image src='/asserts/image/own/msg.png'/>
+                <text>意见反馈</text>
+            </view>
+            <image class='rightImg' src='/asserts/image/card/right.png' />
+        </view>
+        <view class='messageContainer'>
+            <view>
+                <image src='/asserts/image/own/own.png'/>
+                <text>我的</text>
+            </view>
+            <image class='rightImg' src='/asserts/image/card/right.png' />
+        </view>
+        <BtnCom></BtnCom>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import BtnCom from '../../components/btnCom'
+    import AchieveHead from '../../components/achieveHead'
+    import PersonItem from '../../components/personItem'
+
+    export default class PersonalAchievePage extends wepy.page {
+        config = {
+            navigationBarTitleText: '个人主页'
+        }
+        data = {
+         
+        }
+        components = {
+            AchieveHead,
+            BtnCom,
+            PersonItem
+        }
+    }
+</script>
+
+<style  lang="scss" scoped>
+    .ownContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 60rpx; 
+        background: #f7f9fa;
+        height: 100%;
+        .messageContainer{
+            width: 94%;
+            height: 70rpx;
+            background: #fff;
+            border: 1rpx solid #f0f1f2;
+            margin: 12rpx 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            view{
+                height: 100%;
+                display: flex;
+                align-items: center;
+                image{
+                    width: 30rpx;
+                    height: 30rpx;
+                    margin:0 24rpx;
+                }
+                text{
+                    color: #ccc;
+                    font-size: 28rpx;
+                }
+            }
+              .rightImg{
+                    width: 20rpx;
+                    height: 30rpx;
+                    margin-right: 28rpx;
+                }
+        }
+        .titlePng{
+            width: 94rpx;
+            height: 94rpx;
+        }
+        .name{
+            font-size: 32rpx;
+            color: #333;
+            margin: 14rpx 0; 
+        }
+        .groupNum{
+            font-size: 28rpx;
+            color: #ccc;
+        }
+        .groupNumContent{
+            font-size: 38rpx;
+            color: #367be8;
+            margin-bottom: 24rpx; 
+        }
+    }
+    
+
+</style>
+

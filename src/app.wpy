@@ -11,7 +11,11 @@
     export default class extends wepy.app {
         config = {
             pages: [
-                // 个人成就
+                // 个人主页
+                "pages/own_comment_page/index",
+                // 已获得成就
+                "pages/get_achievement_page/index",
+                // 成就页
                 "pages/achievement_page/index",
                 // 个人成就
                 "pages/personal_achieve_page/index",
