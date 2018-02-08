@@ -11,7 +11,10 @@
     export default class extends wepy.app {
         config = {
             pages: [
-                
+                // 我的评论
+                "pages/my_comment_page/index",
+                // 我的卡片
+                "pages/my_card_page/index",
                 // 团队成就
                 "pages/team_achieve_page/index",
                 // 个人成就
