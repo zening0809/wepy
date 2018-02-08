@@ -17,7 +17,7 @@
         <view class="achive-content">
             <view  class="achive-content-title">团队成就排名</view>
             <repeat for="{{ teamList }}" key="index" index="index" item="teamItem">
-                <TeamItem :item="teamItem"> </TeamItem>
+                <TeamItem :teamItem="teamItem"> </TeamItem>
             </repeat>
         </view>  
         <BtnCom></BtnCom>
@@ -44,8 +44,7 @@
                     teamAchieveNum: '8686'
                 }, {
                     teamRank: 2,
-                    // TODO 双层渲染有坑， 两个repeat会有问题，待处理
-                    avatarList: ['/asserts/image/card/cup.png'],
+                    avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
                     teamId: '4123',
                     teamAchieveNum: '7258'
                 }, {
@@ -72,7 +71,6 @@
     .addCardContainer {
         background: #f7f9fa;
         height: 100%;
-        
         .achive-tab {
             background: #ffffff;
             height: 75rpx;
@@ -115,7 +113,4 @@
             }
         }
     }
-    
-
 </style>
-

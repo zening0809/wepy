@@ -1,78 +1,20 @@
 <template>
-    <view>
-        <block wx:if="{{ item.personRank == 1 }}"> 
-            <view class="content-item one" >
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.personRank }}</view>
-                    <view class="triangle-topleft">
-                    </view>
-                    <image src="{{ item.avatar }}" class="avatar-class">                                                            
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">{{ item.personName }}</view>
-                    <view class="item-sub">团队编号：No.{{ item.teamId }}</view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.achieveNum }}</view>
+  <view class="content-item {{ item.personRank == 1 ? 'one' : ( item.personRank == 2 ? 'two' : (item.personRank == 3 ? 'three' : 'primary'))}}" >
+        <view class="content-item-left">
+            <view class="rank-num">{{ item.personRank }}</view>
+            <view class="triangle-topleft">
             </view>
-        </block>
-        <block wx:elif="{{ item.personRank == 2 }}"> 
-            <view class="content-item two">
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.personRank }}</view>
-                    <view class="triangle-topleft">
-                    </view>
-                    <image src="{{ item.avatar }}" class="avatar-class">                                                            
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">{{ item.personName }}</view>
-                    <view class="item-sub">团队编号：No.{{ item.teamId }}</view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.achieveNum }}</view>
-            </view>
-        </block>
-        <block wx:elif="{{ item.personRank == 3 }}"> 
-            <view class="content-item three" >
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.personRank }}</view>
-                    <view class="triangle-topleft">
-                    </view>
-                    <image src="{{ item.avatar }}" class="avatar-class">                                                            
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">{{ item.personName }}</view>
-                    <view class="item-sub">团队编号：No.{{ item.teamId }}</view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.achieveNum }}</view>
-            </view>
-        </block>
-        <block wx:else> 
-            <view class="content-item primary" >
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.personRank }}</view>
-                    <view class="triangle-topleft">
-                    </view>
-                    <image src="{{ item.avatar }}" class="avatar-class">                                                            
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">{{ item.personName }}</view>
-                    <view class="item-sub">团队编号：No.{{ item.teamId }}</view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.achieveNum }}</view>
-            </view>
-        </block>
-    </view>
+            <image src="{{ item.avatar }}" class="avatar-class">                                                            
+        </view>
+        <view class="content-item-mid">
+            <view class="item-name">{{ item.personName }}</view>
+            <view class="item-sub">团队编号：No.{{ item.teamId }}</view>
+        </view>
+        <view class="content-item-badage">
+            <image src="/asserts/image/card/cup.png" class="cup-class">
+        </view>
+        <view class="content-item-right">{{ item.achieveNum }}</view>
+  </view>
 </template>
 
 <script>

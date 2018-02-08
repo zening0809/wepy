@@ -1,80 +1,21 @@
-<template>
-    <view>
-        <block wx:if="{{ item.teamRank == 1 }}"> 
-            <view class="content-item one">
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.teamRank }}</view>
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">No.{{ item.teamId }}</view>
-                    <view class="item-sub">
-                        <repeat for="{{ item.avatarList }}" item="avatar">
-                            <image src="{{ avatar }}" class="samll-img"> </image>
-                        </repeat>
-                    </view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.teamAchieveNum }}</view>
+<template>       
+    <view class="content-item {{ teamItem.teamRank == 1 ? 'one' : ( teamItem.teamRank == 2 ? 'two' : (teamItem.teamRank == 3 ? 'three' : ''))}}">
+        <view class="content-item-left">
+            <view class="rank-num">{{ teamItem.teamRank }}</view>
+        </view>
+        <view class="content-item-mid">
+            <view class="item-name">No.{{ teamItem.teamId }}</view>
+            <view class="item-sub">
+                <repeat for="{{ teamItem.avatarList }}" item="avatar">
+                    <image src="{{ avatar }}" class="samll-img"> </image>
+                </repeat>
             </view>
-        </block>
-
-        <block wx:elif="{{ item.teamRank == 2 }}"> 
-            <view class="content-item two">
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.teamRank }}</view>
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">No.{{ item.teamId }}</view>
-                    <view class="item-sub">
-                        
-                    </view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.teamAchieveNum }}</view>
-            </view>
-        </block>
-
-        <block wx:elif="{{ item.teamRank == 3 }}"> 
-            <view class="content-item three">
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.teamRank }}</view>
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">No.{{ item.teamId }}</view>
-                    <view class="item-sub">
-                        
-                    </view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.teamAchieveNum }}</view>
-            </view>
-        </block>
-
-        <block wx:else> 
-            <view class="content-item">
-                <view class="content-item-left">
-                    <view class="rank-num">{{ item.teamRank }}</view>
-                </view>
-                <view class="content-item-mid">
-                    <view class="item-name">No.{{ item.teamId }}</view>
-                    <view class="item-sub">
-                        
-                    </view>
-                </view>
-                <view class="content-item-badage">
-                    <image src="/asserts/image/card/cup.png" class="cup-class">
-                </view>
-                <view class="content-item-right">{{ item.teamAchieveNum }}</view>
-            </view>
-        </block>
-
-    </view>
+        </view>
+        <view class="content-item-badage">
+            <image src="/asserts/image/card/cup.png" class="cup-class">
+        </view>
+        <view class="content-item-right">{{ teamItem.teamAchieveNum }}</view>
+    </view>  
 </template>
 
 <script>
@@ -82,7 +23,7 @@
 
     export default class teamItem extends wepy.component {
         props = {
-            item: {}
+            teamItem: {}
         }
     }
 </script>
