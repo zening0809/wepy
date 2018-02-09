@@ -1,0 +1,61 @@
+<template>
+    <view class="container">
+        <repeat for={{4}}>
+            <view class="item">
+                <view class="item-header">
+                    <text class="item-title">系统通知消息</text>
+                    <text class="item-date">2018-01-02</text>
+                </view>
+                <view class="item-content">
+                    酸辣粉解放路思伟雄看来发偶翁偶铺破拖若破女女女女为了离开了健康了规范宏伟安分守己可分为理论女性从，打发来看看了违法及考试分为非。
+                </view>
+            </view>
+        </repeat>
+        <BtnCom></BtnCom>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import BtnCom from '../../components/btnCom'
+    export default class Message extends wepy.page {
+        config = {
+            navigationBarTitleText: '消息'
+        }
+        components = {
+            BtnCom
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .container {
+        height: 100%;
+        width: 100%;
+        padding: 40rpx 0;
+        font-size: 24rpx;
+        background-color: #f0f0f0;
+    }
+    .item {
+        padding: 20rpx 30rpx;
+        margin-bottom: 30rpx;
+        background-color: #fff;
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        &-title {
+            font: 36rpx Arial, Helvetica, sans-serif;
+        }
+        &-date {
+            font-size: 26rpx;
+            color: #ccc;
+        }
+        &-content {
+            padding: 10rpx 0;
+            font: 28rpx Arial, Helvetica, sans-serif;
+            color: #ccc;
+        }
+    }
+</style>

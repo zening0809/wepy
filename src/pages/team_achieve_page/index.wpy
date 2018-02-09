@@ -2,24 +2,24 @@
     <view class="addCardContainer">
         <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
         <view class="achive-tab">
-            <view class="tab">
+            <view @tap="navigate('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
             </view>
             <view class="diver"></view>
-            <view class="tab">
+            <view @tap="navigate('personal_achieve_page')" class="tab">
                 <span class="span-tab">个人成就</span>
             </view>
-            <view class="diver"></view>            
-            <view class="tab active-tab">
+            <view class="diver"></view>
+            <view @tap="navigate('team_achieve_page')" class="tab active-tab">
                 <span class="span-tab">团队成就</span>
             </view>
         </view>
         <view class="achive-content">
-            <view  class="achive-content-title">团队成就排名</view>
+            <view class="achive-content-title">团队成就排名</view>
             <repeat for="{{ teamList }}" key="index" index="index" item="teamItem">
                 <TeamItem :teamItem="teamItem"> </TeamItem>
             </repeat>
-        </view>  
+        </view>
         <BtnCom></BtnCom>
     </view>
 </template>
@@ -29,40 +29,47 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import TeamItem from '../../components/teamItem'
-
     export default class PersonalAchievePage extends wepy.page {
         config = {
-            navigationBarTitleText: '卡片盒'
+            navigationBarTitleText: '成就'
         }
         data = {
             personalNum: '555',
             teamNum: '8989',
             teamList: [{
-                    teamRank: 1,
-                    avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                    teamId: '3648',
-                    teamAchieveNum: '8686'
-                }, {
-                    teamRank: 2,
-                    avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                    teamId: '4123',
-                    teamAchieveNum: '7258'
-                }, {
-                    teamRank: 3,
-                    avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                    teamId: '2321',
-                    teamAchieveNum: '6436'
-                }, {
-                    teamRank: 4,
-                    avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png',  '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                    teamId: '1234',
-                    teamAchieveNum: '3453'
+                teamRank: 1,
+                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+                teamId: '3648',
+                teamAchieveNum: '8686'
+            }, {
+                teamRank: 2,
+                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+                teamId: '4123',
+                teamAchieveNum: '7258'
+            }, {
+                teamRank: 3,
+                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+                teamId: '2321',
+                teamAchieveNum: '6436'
+            }, {
+                teamRank: 4,
+                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+                teamId: '1234',
+                teamAchieveNum: '3453'
             }]
         }
         components = {
             AchieveHead,
             BtnCom,
             TeamItem
+        }
+        methods = {
+            // 路由跳转
+            navigate(pageName) {
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index`
+                })
+            }
         }
     }
 </script>
@@ -76,7 +83,8 @@
             height: 75rpx;
             box-shadow: 0px 3px 5px #dee6f3;
             display: flex;
-            align-items: center;/*垂直居中*/
+            align-items: center;
+            /*垂直居中*/
             .tab {
                 font-size: 11px;
                 text-align: center;
@@ -100,7 +108,6 @@
                 height: 12px;
                 background: #dee6f3;
             }
-
         }
         .achive-content {
             padding: 0 24rpx;

@@ -1,27 +1,26 @@
 <template>
     <view class="ownContainer">
-       
-        <image class="titlePng" src='/asserts/image/own/title.png'/>
+        <image class="titlePng" src='/asserts/image/own/title.png' />
         <view class='name'>乐小舟</view>
         <view class='groupNum'>乐小舟</view>
         <view class='groupNumContent'>No.262</view>
-        <view class='messageContainer'>
+        <view @tap="navigate('message_page')" class='messageContainer'>
             <view>
-                <image src='/asserts/image/own/notify.png'/>
+                <image src='/asserts/image/own/notify.png' />
                 <text>消息</text>
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>
-        <view class='messageContainer'>
+        <view @tap="navigate('my_comment_page')" class='messageContainer'>
             <view>
-                <image src='/asserts/image/own/msg.png'/>
+                <image src='/asserts/image/own/msg.png' />
                 <text>意见反馈</text>
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>
-        <view class='messageContainer'>
+        <view @tap="back()" class='messageContainer'>
             <view>
-                <image src='/asserts/image/own/own.png'/>
+                <image src='/asserts/image/own/own.png' />
                 <text>我的</text>
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
@@ -35,31 +34,41 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
-
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '个人主页'
         }
-        data = {
-         
-        }
+        data = {}
         components = {
             AchieveHead,
             BtnCom,
             PersonItem
         }
+        methods = {
+            // 路由跳转
+            navigate(pageName) {
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index`
+                })
+            },
+            back() {
+                wepy.navigateBack({
+                    delta: 10
+                })
+            }
+        }
     }
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
     .ownContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-top: 60rpx; 
+        padding-top: 60rpx;
         background: #f7f9fa;
         height: 100%;
-        .messageContainer{
+        .messageContainer {
             width: 94%;
             height: 70rpx;
             background: #fff;
@@ -68,46 +77,43 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            view{
+            view {
                 height: 100%;
                 display: flex;
                 align-items: center;
-                image{
+                image {
                     width: 30rpx;
                     height: 30rpx;
-                    margin:0 24rpx;
+                    margin: 0 24rpx;
                 }
-                text{
+                text {
                     color: #ccc;
                     font-size: 28rpx;
                 }
             }
-              .rightImg{
-                    width: 20rpx;
-                    height: 30rpx;
-                    margin-right: 28rpx;
-                }
+            .rightImg {
+                width: 20rpx;
+                height: 30rpx;
+                margin-right: 28rpx;
+            }
         }
-        .titlePng{
+        .titlePng {
             width: 94rpx;
             height: 94rpx;
         }
-        .name{
+        .name {
             font-size: 32rpx;
             color: #333;
-            margin: 14rpx 0; 
+            margin: 14rpx 0;
         }
-        .groupNum{
+        .groupNum {
             font-size: 28rpx;
             color: #ccc;
         }
-        .groupNumContent{
+        .groupNumContent {
             font-size: 38rpx;
             color: #367be8;
-            margin-bottom: 24rpx; 
+            margin-bottom: 24rpx;
         }
     }
-    
-
 </style>
-

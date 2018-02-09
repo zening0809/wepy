@@ -1,123 +1,111 @@
-
 <template>
     <view style="homeConatine" src="/asserts/image/home/bg.png">
         <view class="headContainer">
-            <image class="logo" src="/asserts/image/home/logo.png"/>
-            <view  class="cardContainer">
+            <image class="logo" src="/asserts/image/home/logo.png" />
+            <view class="cardContainer">
                 <view class="logoCardContainer">
                     <view>
-                        <image src="/asserts/image/home/nav.png"/>
+                        <image src="/asserts/image/home/nav.png" />
                     </view>
                     <text>筛选</text>
                 </view>
                 <view class="logoCardContainer">
                     <view style="background:#fff;box-shadow: 0 2px 8px rgba(0, 0, 0, .45)">
-                        <image src="/asserts/image/home/box.png"/>
+                        <image src="/asserts/image/home/box.png" />
                     </view>
                     <text>卡片盒</text>
                 </view>
             </view>
         </view>
-        <ProductCard/>
+        <ProductCard />
         <BtnCom/>
     </view>
 </template>
 
 <script>
-  import wepy from 'wepy'
-  import BtnCom from '../components/btnCom'
-  import ProductCard from '../components/productCard'
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: '首页'
+    import wepy from 'wepy'
+    import BtnCom from '../components/btnCom'
+    import ProductCard from '../components/productCard'
+    export default class Index extends wepy.page {
+        config = {
+            navigationBarTitleText: '首页'
+        }
+        components = {
+            BtnCom,
+            ProductCard
+        }
+        data = {
+        }
+        computed = {
+        }
+        methods = {
+            // 路由跳转
+            navigate(pageName) {
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index`
+                })
+            }
+        }
+        events = {
+        }
+        onLoad() {}
     }
-    components = {
-        BtnCom,
-        ProductCard
-    }
+</script>
 
-
-    data = {
-     
-    }
-
-    computed = {
-     
-    }
-
-    methods = {
-        // 路由跳转
-        navigate(pageName) {
-            wepy.navigateTo({
-                url: `/pages/${pageName}/index`
-            })
+<style lang="scss" scoped>
+    .homeConatine {
+        height: 100%;
+        width: 100%;
+        .bgStyle {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: -1;
         }
     }
-
-    events = {
-
-    }
-
-    onLoad() {
-    }
-  }
-</script>
-<style lang="scss" scoped>
-.homeConatine{
-    height: 100%;
-    width: 100%;
-    .bgStyle{
+    .headContainer {
+        height: 180rpx;
         width: 100%;
-        height: 100%;
-        position: absolute;
-        z-index: -1;
-    }
-}
-.headContainer{
-    height: 180rpx;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .logo{
-        width: 165rpx;
-        height: 86rpx;
-        margin-left: 60rpx;
-    }
-    .cardContainer{
-        width: 300rpx;
-        height: 100%;
         display: flex;
-        .logoCardContainer{
-            width: 120rpx;
+        justify-content: space-between;
+        align-items: center;
+        .logo {
+            width: 165rpx;
+            height: 86rpx;
+            margin-left: 60rpx;
+        }
+        .cardContainer {
+            width: 300rpx;
             height: 100%;
-            text-align: center;
-            align-items: center;
             display: flex;
-            flex-direction: column;
-            margin-left: 10rpx;
-            view{
-                width: 100rpx;
-                height: 100rpx;
-                border-radius: 50%;
-                background: #256af2;
-                margin-top: 28rpx;
-                display: flex;
+            .logoCardContainer {
+                width: 120rpx;
+                height: 100%;
+                text-align: center;
                 align-items: center;
-                justify-content: center;
-                image{
-                    width: 42rpx;
-                    height: 42rpx;
+                display: flex;
+                flex-direction: column;
+                margin-left: 10rpx;
+                view {
+                    width: 100rpx;
+                    height: 100rpx;
+                    border-radius: 50%;
+                    background: #256af2;
+                    margin-top: 28rpx;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    image {
+                        width: 42rpx;
+                        height: 42rpx;
+                    }
+                }
+                text {
+                    color: #849ff5;
+                    font-size: 26rpx;
+                    margin-top: 12rpx;
                 }
             }
-            text{
-                color: #849ff5;
-                font-size: 26rpx;
-                margin-top: 12rpx;
-            }
         }
     }
-}
-
-
 </style>

@@ -2,16 +2,11 @@
     <view class="addCardContainer">
         <view class='title'>待获得徽章</view>
         <view class='iconsContainer'>
-               <repeat
-            for="{{20}}"
-            key="index"
-            item="item"
-            index= "index"
-        >
-            <view>
-                <image src='/asserts/image/icons/1.png'/>
-            </view>
-        </repeat>
+            <repeat for="{{20}}" key="index" item="item" index="index">
+                <view>
+                    <image src='/asserts/image/icons/1.png' />
+                </view>
+            </repeat>
         </view>
         <BtnCom></BtnCom>
     </view>
@@ -22,14 +17,11 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
-
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '已获得成就'
         }
-        data = {
-         
-        }
+        data = {}
         components = {
             AchieveHead,
             BtnCom,
@@ -38,22 +30,22 @@
     }
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
     .addCardContainer {
         background: #f7f9fa;
         height: 100%;
-        .iconsContainer{
-            padding:0 24rpx;
+        .iconsContainer {
+            padding: 0 24rpx;
             display: flex;
             flex-wrap: wrap;
-            view{
+            view {
                 width: 175rpx;
                 height: 175rpx;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-            image{
+            image {
                 width: 120rpx;
                 height: 120rpx;
             }
@@ -70,7 +62,8 @@
             height: 75rpx;
             box-shadow: 0px 3px 5px #dee6f3;
             display: flex;
-            align-items: center;/*垂直居中*/
+            align-items: center;
+            /*垂直居中*/
             .tab {
                 font-size: 11px;
                 text-align: center;
@@ -94,7 +87,6 @@
                 height: 12px;
                 background: #dee6f3;
             }
-
         }
         .achive-content {
             padding: 0 24rpx;
@@ -115,7 +107,7 @@
             border-bottom: 1px solid #f0f1f2;
             border-top: 1px solid #f0f1f2;
             justify-content: space-between;
-            .leftContainer{
+            .leftContainer {
                 display: flex;
                 height: 100%;
                 align-items: center;
@@ -125,23 +117,19 @@
                 height: 116rpx;
                 margin-left: 24rpx;
             }
-            .rightImg{
+            .rightImg {
                 width: 24rpx;
                 height: 38rpx;
                 margin-right: 28rpx;
             }
-            .imageTitle{
+            .imageTitle {
                 margin-left: 24rpx;
                 font-size: 28rpx;
-              
-                text{
+                text {
                     font-size: 32rpx;
                     color: #367be8;
                 }
             }
         }
     }
-    
-
 </style>
-

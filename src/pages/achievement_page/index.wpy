@@ -2,39 +2,33 @@
     <view class="addCardContainer">
         <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
         <view class="achive-tab">
-            <view class="tab">
+            <view @tap="navigate('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
             </view>
             <view class="diver"></view>
-            <view class="tab active-tab">
+            <view @tap="navigate('personal_achieve_page')" class="tab active-tab">
                 <span class="span-tab">个人成就</span>
             </view>
-            <view class="diver"></view>            
-            <view class="tab">
+            <view class="diver"></view>
+            <view @tap="navigate('team_achieve_page')" class="tab">
                 <span class="span-tab">团队成就</span>
             </view>
         </view>
-         <view class='imgContainer'>
-             <view class="leftContainer">
-                 <image  src='/asserts/image/home/title.png' />
-                 <view class='imageTitle'>已获得徽章<text>34</text>个</view>
-             </view>
+        <view @tap="navigate('get_achievement_page')" class='imgContainer'>
+            <view class="leftContainer">
+                <image src='/asserts/image/home/title.png' />
+                <view class='imageTitle'>已获得徽章<text>34</text>个</view>
+            </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>
         <view class='title'>待获得徽章</view>
         <view class='iconsContainer'>
-               <repeat
-            for="{{8}}"
-            key="index"
-            item="item"
-            index= "index"
-        >
-            <view>
-                <image src='/asserts/image/icons/1.png'/>
-            </view>
-        </repeat>
+            <repeat for="{{8}}" key="index" item="item" index="index">
+                <view>
+                    <image src='/asserts/image/icons/1.png' />
+                </view>
+            </repeat>
         </view>
-        
         <BtnCom></BtnCom>
     </view>
 </template>
@@ -44,38 +38,44 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
-
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '成就'
         }
         data = {
-         
         }
         components = {
             AchieveHead,
             BtnCom,
             PersonItem
         }
+        methods = {
+            // 路由跳转
+            navigate(pageName) {
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index`
+                })
+            }
+        }
     }
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
     .addCardContainer {
         background: #f7f9fa;
         height: 100%;
-        .iconsContainer{
-            padding:0 24rpx;
+        .iconsContainer {
+            padding: 0 24rpx;
             display: flex;
             flex-wrap: wrap;
-            view{
+            view {
                 width: 175rpx;
                 height: 175rpx;
                 display: flex;
                 align-items: center;
                 justify-content: center;
             }
-            image{
+            image {
                 width: 120rpx;
                 height: 120rpx;
             }
@@ -92,7 +92,8 @@
             height: 75rpx;
             box-shadow: 0px 3px 5px #dee6f3;
             display: flex;
-            align-items: center;/*垂直居中*/
+            align-items: center;
+            /*垂直居中*/
             .tab {
                 font-size: 11px;
                 text-align: center;
@@ -116,7 +117,6 @@
                 height: 12px;
                 background: #dee6f3;
             }
-
         }
         .achive-content {
             padding: 0 24rpx;
@@ -137,7 +137,7 @@
             border-bottom: 1px solid #f0f1f2;
             border-top: 1px solid #f0f1f2;
             justify-content: space-between;
-            .leftContainer{
+            .leftContainer {
                 display: flex;
                 height: 100%;
                 align-items: center;
@@ -147,23 +147,19 @@
                 height: 116rpx;
                 margin-left: 24rpx;
             }
-            .rightImg{
+            .rightImg {
                 width: 24rpx;
                 height: 38rpx;
                 margin-right: 28rpx;
             }
-            .imageTitle{
+            .imageTitle {
                 margin-left: 24rpx;
                 font-size: 28rpx;
-              
-                text{
+                text {
                     font-size: 32rpx;
                     color: #367be8;
                 }
             }
         }
     }
-    
-
 </style>
-

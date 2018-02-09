@@ -1,4 +1,4 @@
-<template>       
+<template>
     <view class="content-item {{ teamItem.teamRank == 1 ? 'one' : ( teamItem.teamRank == 2 ? 'two' : (teamItem.teamRank == 3 ? 'three' : ''))}}">
         <view class="content-item-left">
             <view class="rank-num">{{ teamItem.teamRank }}</view>
@@ -7,7 +7,7 @@
             <view class="item-name">No.{{ teamItem.teamId }}</view>
             <view class="item-sub">
                 <repeat for="{{ teamItem.avatarList }}" item="avatar">
-                    <image src="{{ avatar }}" class="samll-img"> </image>
+                    <image src="{{ avatar }}" class="samll-img" />
                 </repeat>
             </view>
         </view>
@@ -15,12 +15,11 @@
             <image src="/asserts/image/card/cup.png" class="cup-class">
         </view>
         <view class="content-item-right">{{ teamItem.teamAchieveNum }}</view>
-    </view>  
+    </view>
 </template>
 
 <script>
     import wepy from "wepy"
-
     export default class teamItem extends wepy.component {
         props = {
             teamItem: {}
@@ -41,55 +40,60 @@
             width: 120rpx;
             border-radius: 5px;
             display: flex;
-            align-items: center; /*垂直居中*/
-            justify-content: center; /*水平居中*/
+            align-items: center;
+            /*垂直居中*/
+            justify-content: center;
+            /*水平居中*/
             .rank-num {
-            font-size: 13px;
-            color: #ffffff;
-            background-color: #aac9f7;
-            height: 60rpx;
-            width: 60rpx;
-            text-align: center;
-            line-height: 60rpx;
-            border-radius: 5px;
+                font-size: 13px;
+                color: #ffffff;
+                background-color: #aac9f7;
+                height: 60rpx;
+                width: 60rpx;
+                text-align: center;
+                line-height: 60rpx;
+                border-radius: 5px;
             }
             .avatar-class {
-            height: 100%;
-            width: 120rpx;
-            border-radius: 5px;
+                height: 100%;
+                width: 120rpx;
+                border-radius: 5px;
             }
             .title-class {
-            height: 100%;
-            width: 120rpx;
+                height: 100%;
+                width: 120rpx;
             }
         }
         .content-item-mid {
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /*水平居中*/
+            justify-content: center;
+            /*水平居中*/
             .item-name {
-            color: #aac9f7;
-            font-size: 12px;
+                color: #aac9f7;
+                font-size: 12px;
             }
             .item-sub {
-            overflow: hidden;
-            .samll-img {
-                width: 48rpx;
-                height: 48rpx;
-                margin-right: 6rpx;
-                border-radius: 2px;
-            }
+                overflow: hidden;
+                .samll-img {
+                    width: 48rpx;
+                    height: 48rpx;
+                    margin-right: 6rpx;
+                    border-radius: 2px;
+                }
             }
         }
         .content-item-badage {
             width: 80rpx;
             display: flex;
-            align-items: center; /*垂直居中*/
-            justify-content: center; /*水平居中*/
+            align-items: center;
+            /*垂直居中*/
+            justify-content: center;
+            /*水平居中*/
             .cup-class {
-            height: 30rpx;
-            width: 30rpx;
+                height: 30rpx;
+                width: 30rpx;
             }
         }
         .content-item-right {
@@ -106,12 +110,12 @@
     .content-item.one {
         .content-item-left {
             .rank-num {
-            background-color: #e58837;
+                background-color: #e58837;
             }
         }
         .content-item-mid {
             .item-name {
-            color: #e58837;
+                color: #e58837;
             }
         }
         .content-item-right {
@@ -121,12 +125,12 @@
     .content-item.two {
         .content-item-left {
             .rank-num {
-            background-color: #f4b847;
+                background-color: #f4b847;
             }
         }
         .content-item-mid {
             .item-name {
-            color: #f4b847;
+                color: #f4b847;
             }
         }
         .content-item-right {
@@ -136,12 +140,12 @@
     .content-item.three {
         .content-item-left {
             .rank-num {
-            background-color: #f1d466;
+                background-color: #f1d466;
             }
         }
         .content-item-mid {
             .item-name {
-            color: #f1d466;
+                color: #f1d466;
             }
         }
         .content-item-right {
