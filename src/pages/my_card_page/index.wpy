@@ -1,0 +1,202 @@
+<template>
+    <view class="myCardContainer">
+        <view class="cardItem">
+            <view class="cardTop">
+                <view class="cardFun">
+                    <view class="zanFun">
+                        <image src="/asserts/image/card/suport_one.png" class="icon-class"></image>
+                        <view class="text-num">22</view>
+                    </view>
+                    <view class="place"></view>
+                    <view class="zanFun">
+                        <image src="/asserts/image/card/text_one.png" class="icon-class2"></image>
+                        <view class="text-num">44</view>
+                    </view>
+                </view>
+                <view class="cardTitle">我校本次的特殊活动</view>                
+            </view>
+            <view class="cardMid">
+                为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
+            </view>
+            <view class="cardBtm">
+                <view class="show">查看卡片</view>
+                <view class="date">2017-09-08</view>
+                <view class="zan">
+                    <image src="/asserts/image/card/suport_two.png" class="icon-class"></image>
+                    <span class="num">33</span>
+                </view>
+                <view class="zan">
+                    <image src="/asserts/image/card/text_two.png" class="icon-class2"></image>
+                    <span class="num">33</span>
+                </view>
+                <view class="del">删除</view>
+            </view>
+        </view>
+        <view class="cardItem dead">
+            <view class="cardTop">
+                <view class="cardFun">
+                    已过期
+                </view>
+                <view class="cardTitle">我校本次的特殊活动</view>                
+            </view>
+            <view class="cardMid">
+                为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
+            </view>
+            <view class="cardBtm">
+                <view class="show">查看卡片</view>
+                <view class="date">2017-09-08</view>
+                <view class="zan">
+                    <image src="/asserts/image/card/suport_two.png" class="icon-class"></image>
+                    <span class="num">33</span>
+                </view>
+                <view class="zan">
+                    <image src="/asserts/image/card/text_two.png" class="icon-class2"></image>
+                    <span class="num">33</span>
+                </view>
+                <view class="del">删除</view>
+            </view>
+        </view>
+
+
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+
+    export default class MyCardPage extends wepy.page {
+        config = {
+            navigationBarTitleText: '我的卡片'
+        }
+
+        data = {
+
+        }
+
+        components = {
+
+        }
+    }
+</script>
+
+<style  lang="scss" scoped>
+    .myCardContainer {
+        padding-top: 35rpx; 
+        background: #f7f9fa;
+        .cardItem {
+            height: 180rpx;
+            padding: 20rpx 30rpx;
+            background: #ffffff;
+            border-bottom: 1rpx solid #eeeff0;
+            display: flex;
+            flex-direction: column;
+            .cardTop {
+                height: 40rpx;
+                display: flex;
+                flex-direction: row-reverse;
+                .cardTitle {
+                    flex: 1;
+                    text-align: left;
+                    font-size: 14px;
+                }
+                .cardFun {
+                    width: 130rpx;
+                    background-color: #357beb;
+                    border-radius: 10px;
+                    display: flex;
+                    margin: 6rpx 0rpx;
+                    padding: 0px 14rpx;
+                    .zanFun {
+                        flex: 1;
+                        display: flex;
+                        align-items: center;/*垂直居中*/
+                        justify-content: center;/*水平居中*/
+                        .icon-class {
+                            width: 14rpx;
+                            height: 14rpx;
+                        }
+                        .icon-class2 {
+                            width: 18rpx;
+                            height: 14rpx;
+                        }
+                        .text-num {
+                            flex: 1;
+                            font-size: 10px;
+                            color: #ffffff;
+                            text-align: left;
+                            padding-left: 10rpx;
+                            box-sizing: border-box;
+                        }
+                    }
+                    .place {
+                        width: 10rpx;
+                    }
+                }
+            }
+            .cardMid {
+                flex: 1;
+                font-size: 12px;
+                margin: 10rpx 0rpx;
+                color: #cbcccd;
+            }
+            .cardBtm {
+                height: 40rpx;
+                display: flex;
+                .show {
+                   width: 150rpx;
+                   background: #357beb;
+                   font-size: 11px;
+                   color: #ffffff;
+                   text-align: center;
+                   line-height: 40rpx;  
+                }
+                .date {
+                   width: 180rpx;
+                   font-size: 10px;
+                   color: #cbcccd;
+                   text-align: center;
+                   line-height: 40rpx;  
+                }
+                .zan {
+                    width: 100rpx;
+                    font-size: 10px;
+                    color: #cbcccd;
+                    text-align: left;
+                    line-height: 40rpx;
+                    .icon-class {
+                        width: 18rpx;
+                        height: 18rpx;
+                    }
+                    .icon-class2 {
+                        width: 22rpx;
+                        height: 18rpx;
+                    }
+                    .num {
+                        padding-left: 14rpx;
+                    }
+                }
+                .del {
+                    flex: 1;
+                    text-align: right;
+                    color: #357beb;
+                    font-size: 10px;
+                    line-height: 40rpx;                    
+                }
+            }
+        }
+
+        .cardItem.dead {
+            background: #f7f9fa;
+            .cardFun {
+                width: 80rpx;
+                background-color: #dedfe0;
+                border-radius: 10px;
+                font-size:  10px;
+                align-items: center;/*垂直居中*/
+                justify-content: center;/*水平居中*/
+            }
+                   
+        }
+    }
+</style>
+

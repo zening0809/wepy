@@ -1,0 +1,151 @@
+<template>       
+    <view class="content-item {{ teamItem.teamRank == 1 ? 'one' : ( teamItem.teamRank == 2 ? 'two' : (teamItem.teamRank == 3 ? 'three' : ''))}}">
+        <view class="content-item-left">
+            <view class="rank-num">{{ teamItem.teamRank }}</view>
+        </view>
+        <view class="content-item-mid">
+            <view class="item-name">No.{{ teamItem.teamId }}</view>
+            <view class="item-sub">
+                <repeat for="{{ teamItem.avatarList }}" item="avatar">
+                    <image src="{{ avatar }}" class="samll-img"> </image>
+                </repeat>
+            </view>
+        </view>
+        <view class="content-item-badage">
+            <image src="/asserts/image/card/cup.png" class="cup-class">
+        </view>
+        <view class="content-item-right">{{ teamItem.teamAchieveNum }}</view>
+    </view>  
+</template>
+
+<script>
+    import wepy from "wepy"
+
+    export default class teamItem extends wepy.component {
+        props = {
+            teamItem: {}
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .content-item {
+        background: #ffffff;
+        height: 120rpx;
+        border-radius: 5px;
+        display: flex;
+        box-shadow: 2px 0px 2px #dee6f3;
+        margin-bottom: 18rpx;
+        .content-item-left {
+            height: 100%;
+            width: 120rpx;
+            border-radius: 5px;
+            display: flex;
+            align-items: center; /*垂直居中*/
+            justify-content: center; /*水平居中*/
+            .rank-num {
+            font-size: 13px;
+            color: #ffffff;
+            background-color: #aac9f7;
+            height: 60rpx;
+            width: 60rpx;
+            text-align: center;
+            line-height: 60rpx;
+            border-radius: 5px;
+            }
+            .avatar-class {
+            height: 100%;
+            width: 120rpx;
+            border-radius: 5px;
+            }
+            .title-class {
+            height: 100%;
+            width: 120rpx;
+            }
+        }
+        .content-item-mid {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /*水平居中*/
+            .item-name {
+            color: #aac9f7;
+            font-size: 12px;
+            }
+            .item-sub {
+            overflow: hidden;
+            .samll-img {
+                width: 48rpx;
+                height: 48rpx;
+                margin-right: 6rpx;
+                border-radius: 2px;
+            }
+            }
+        }
+        .content-item-badage {
+            width: 80rpx;
+            display: flex;
+            align-items: center; /*垂直居中*/
+            justify-content: center; /*水平居中*/
+            .cup-class {
+            height: 30rpx;
+            width: 30rpx;
+            }
+        }
+        .content-item-right {
+            height: 100%;
+            line-height: 120rpx;
+            width: 140rpx;
+            border-radius: 0px 5px 5px 0px;
+            background: #aac9f7;
+            color: #ffffff;
+            font-weight: 700;
+            text-align: center;
+        }
+    }
+    .content-item.one {
+        .content-item-left {
+            .rank-num {
+            background-color: #e58837;
+            }
+        }
+        .content-item-mid {
+            .item-name {
+            color: #e58837;
+            }
+        }
+        .content-item-right {
+            background: #e58837;
+        }
+    }
+    .content-item.two {
+        .content-item-left {
+            .rank-num {
+            background-color: #f4b847;
+            }
+        }
+        .content-item-mid {
+            .item-name {
+            color: #f4b847;
+            }
+        }
+        .content-item-right {
+            background: #f4b847;
+        }
+    }
+    .content-item.three {
+        .content-item-left {
+            .rank-num {
+            background-color: #f1d466;
+            }
+        }
+        .content-item-mid {
+            .item-name {
+            color: #f1d466;
+            }
+        }
+        .content-item-right {
+            background: #f1d466;
+        }
+    }
+</style>
