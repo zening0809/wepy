@@ -6,18 +6,27 @@
                 <span class="span-tab">我的徽章</span>
             </view>
             <view class="diver"></view>
-            <view @tap="navigate('personal_achieve_page')" class="tab">
+            <view @tap="navigate('personal_achieve_page')" class="tab active-tab">
                 <span class="span-tab">个人成就</span>
             </view>
             <view class="diver"></view>
-            <view @tap="navigate('team_achieve_page')" class="tab active-tab">
+            <view @tap="navigate('team_achieve_page')" class="tab">
                 <span class="span-tab">团队成就</span>
             </view>
         </view>
-        <view class="achive-content">
-            <view class="achive-content-title">团队成就排名</view>
-            <repeat for="{{ teamList }}" key="index" index="index" item="teamItem">
-                <TeamItem :teamItem="teamItem"> </TeamItem>
+        <view @tap="navigate('get_achievement_page')" class='imgContainer'>
+            <view class="leftContainer">
+                <image src='/asserts/image/home/title.png' />
+                <view class='imageTitle'>已获得徽章<text>34</text>个</view>
+            </view>
+            <image class='rightImg' src='/asserts/image/card/right.png' />
+        </view>
+        <view class='title'>待获得徽章</view>
+        <view class='iconsContainer'>
+            <repeat for="{{8}}" key="index" item="item" index="index">
+                <view>
+                    <image src='/asserts/image/icons/1.png' />
+                </view>
             </repeat>
         </view>
         <BtnCom></BtnCom>
@@ -28,40 +37,17 @@
     import wepy from 'wepy'
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
-    import TeamItem from '../../components/teamItem'
+    import PersonItem from '../../components/personItem'
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '成就'
         }
         data = {
-            personalNum: '555',
-            teamNum: '8989',
-            teamList: [{
-                teamRank: 1,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '3648',
-                teamAchieveNum: '8686'
-            }, {
-                teamRank: 2,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '4123',
-                teamAchieveNum: '7258'
-            }, {
-                teamRank: 3,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '2321',
-                teamAchieveNum: '6436'
-            }, {
-                teamRank: 4,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '1234',
-                teamAchieveNum: '3453'
-            }]
         }
         components = {
             AchieveHead,
             BtnCom,
-            TeamItem
+            PersonItem
         }
         methods = {
             // 路由跳转
@@ -78,6 +64,29 @@
     .addCardContainer {
         background: #f7f9fa;
         height: 100%;
+        .iconsContainer {
+            padding: 0 24rpx;
+            display: flex;
+            flex-wrap: wrap;
+            view {
+                width: 175rpx;
+                height: 175rpx;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            image {
+                width: 120rpx;
+                height: 120rpx;
+            }
+        }
+        .title {
+            height: 70rpx;
+            line-height: 70rpx;
+            font-size: 28rpx;
+            padding-left: 24rpx;
+            color: #333;
+        }
         .achive-tab {
             background: #ffffff;
             height: 75rpx;
@@ -111,12 +120,45 @@
         }
         .achive-content {
             padding: 0 24rpx;
-            overflow: auto;
             padding-bottom: 130rpx;
             background: #f7f9fa;
+            overflow: auto;
             .achive-content-title {
                 padding: 35rpx 0rpx 25rpx 0rpx;
                 font-size: 12px;
+            }
+        }
+        .imgContainer {
+            height: 220rpx;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            background: #ffffff;
+            border-bottom: 1px solid #f0f1f2;
+            border-top: 1px solid #f0f1f2;
+            justify-content: space-between;
+            .leftContainer {
+                display: flex;
+                height: 100%;
+                align-items: center;
+            }
+            image:nth-child(1) {
+                width: 116rpx;
+                height: 116rpx;
+                margin-left: 24rpx;
+            }
+            .rightImg {
+                width: 24rpx;
+                height: 38rpx;
+                margin-right: 28rpx;
+            }
+            .imageTitle {
+                margin-left: 24rpx;
+                font-size: 28rpx;
+                text {
+                    font-size: 32rpx;
+                    color: #367be8;
+                }
             }
         }
     }
