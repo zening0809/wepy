@@ -13,8 +13,7 @@
                             <view class="item-number">No.123</view>
                         </view>
                         <view class="item-header--right">
-                            <image src="/asserts/image/home/suport_card.png" class="item-like" />
-                            456
+                            <image src="/asserts/image/home/suport_card.png" class="item-like" /> 456
                         </view>
                     </view>
                     <view class="item-content">

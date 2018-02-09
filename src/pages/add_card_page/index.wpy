@@ -4,14 +4,9 @@
         <input placeholder="请输入新增标题" placeholder-style="color:#c7c7c7" class='titleInput' auto-focus/>
         <view class='title'>TAG标签</view>
         <view class='tagContainer'>
-        <repeat
-            for="{{tagList}}"
-            key="index"
-            item="item"
-            index= "index"
-        >
-            <view style="background:{{index === curTag?item.color: ''}}" @tap="chooseTag({{index}})">{{item.text}}</view>
-        </repeat>
+            <repeat for="{{tagList}}" key="index" item="item" index="index">
+                <view style="background:{{index === curTag?item.color: ''}}" @tap="chooseTag(index)">{{item.text}}</view>
+            </repeat>
         </view>
         <view class='title'>内容</view>
         <textarea class='contentArea' bindblur="bindTextAreaBlur" placeholder-style="color:#c7c7c7" placeholder="请输入新增内容" />
@@ -23,6 +18,7 @@
         <view class='formBtn'>发 布</view>
     </view>
 </template>
+
 <script>
     import wepy from 'wepy'
     export default class AddCard extends wepy.page {
@@ -31,8 +27,7 @@
         }
         data = {
             curTag: -1,
-            tagList: [
-                {
+            tagList: [{
                     color: '#256af2',
                     text: '技能交换'
                 },
@@ -53,7 +48,7 @@
             chooseImgPath: ''
         }
         methods = {
-            chooseTag(index){
+            chooseTag(index) {
                 this.curTag = index;
                 this.$apply();
             },
@@ -74,6 +69,7 @@
         }
     }
 </script>
+
 <style lang='scss' scoped>
     .addCardContainer {
         background: #f7f9fa;
@@ -138,11 +134,11 @@
                 margin-left: 24rpx;
             }
         }
-        .formBtn{
+        .formBtn {
             width: 90%;
             margin: 36rpx auto;
             height: 88rpx;
-            border-radius: 14rpx; 
+            border-radius: 14rpx;
             text-align: center;
             color: #fff;
             line-height: 88rpx;
@@ -151,6 +147,3 @@
         }
     }
 </style>
-
-
-

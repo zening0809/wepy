@@ -1,103 +1,129 @@
 <template>
-  <!-- <view class=""></view> -->
-  <view class="cardContainer">
-    <view class="ownCard">
-        <text class="cardTitle">我的卡片</text>
-        <view class="suportContainer">
-            <image src="/asserts/image/card/suport_one.png"  class="img-suport"/>
-             <text>22</text>
-            <image src="/asserts/image/card/text_one.png"  class="img-suport"/>
-             <text>22</text>
+    <view class="cardContainer">
+        <view @tap="navigate('my_card_page')" class="ownCard">
+            <text class="cardTitle">我的卡片</text>
+            <view class="suportContainer">
+                <image src="/asserts/image/card/suport_one.png" class="img-suport" />
+                <text>22</text>
+                <image src="/asserts/image/card/text_one.png" class="img-suport" />
+                <text>22</text>
+            </view>
+            <view class="suportContainer_two">
+                <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
+                <text>22</text>
+                <image src="/asserts/image/card/text_two.png" class="img-suport" />
+                <text>22</text>
+            </view>
+            <image src="/asserts/image/card/right.png" class="right" />
         </view>
-        <view class="suportContainer_two">
-            <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png"  class="img-suport"/>
-             <text>22</text>
-            <image src="/asserts/image/card/text_two.png"  class="img-suport"/>
-             <text>22</text>
+        <view @tap="navigate('my_comment_page')" class="ownCard">
+            <text class="cardTitle">我的评论</text>
+            <view class="suportContainer">
+                <image src="/asserts/image/card/suport_one.png" class="img-suport" />
+                <text>22</text>
+            </view>
+            <view class="suportContainer_two">
+                <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
+                <text>22</text>
+                <image src="/asserts/image/card/text_two.png" class="img-suport" />
+                <text>22</text>
+            </view>
+            <image src="/asserts/image/card/right.png" class="right" />
         </view>
-            <image src="/asserts/image/card/right.png"  class="right"/>
-    </view>
-    <BtnCom/>
+        <BtnCom />
     </view>
 </template>
 
 <script>
     import wepy from 'wepy'
     import BtnCom from '../../components/btnCom'
-
     export default class CardPage extends wepy.page {
         config = {
-            navigationBarTitleText: '卡片盒'
+            navigationBarTitleText: '当前页面',
+            navigationStyle: 'custom'
         }
         components = {
-           BtnCom
+            BtnCom
+        }
+        onLoad() {
+            wepy.setNavigationBarTitle({
+                title: '卡片盒'
+            })
+        }
+        methods = {
+            // 路由跳转
+            navigate(pageName) {
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index`
+                })
+            }
         }
     }
 </script>
 
-<style  lang="scss" scoped>
-
-    .cardContainer{
+<style lang="scss" scoped>
+    .cardContainer {
         background: #f7f9fa;
         height: 100%;
         padding-top: 24rpx;
     }
-    .ownCard{
+    .ownCard {
         height: 140rpx;
         background: #fff;
         border-bottom: 1px solid #f0f1f2;
         padding: 24rpx;
         padding-left: 32rpx;
+        margin-bottom: 20rpx;
         position: relative;
-        .right{
+        .right {
             width: 21rpx;
             height: 33rpx;
             position: absolute;
             right: 24rpx;
             top: 69rpx;
         }
-        .suportContainer_two{
+        .suportContainer_two {
             height: 50rpx;
             font-size: 28rpx;
             color: #aaa;
             margin-top: 24rpx;
-              text{
+            text {
                 display: inline-block;
                 margin-left: 20rpx;
             }
-            .img-suport{
+            .img-suport {
                 width: 32rpx;
                 height: 32rpx;
                 margin-left: 20rpx;
                 margin-top: 6rpx;
             }
         }
-        .suportContainer{
+        .suportContainer {
             display: inline-block;
             margin-left: 28rpx;
-            width: 220rpx;
+            padding: 5rpx 20rpx;
             height: 36rpx;
-            background:#1a5fef;
+            background: #1a5fef;
             border-radius: 18rpx;
             font-size: 24rpx;
             color: #fff;
             line-height: 36rpx;
-            text{
-                display: inline-block;
+            image:nth-of-type(2) {
                 margin-left: 20rpx;
             }
-            .img-suport{
+            text {
+                display: inline-block;
+                margin-left: 10rpx;
+            }
+            .img-suport {
                 width: 24rpx;
                 height: 24rpx;
-                margin-left: 20rpx;
                 margin-top: 6rpx;
             }
         }
     }
-    .cardTitle{
+    .cardTitle {
         color: #333;
         font-size: 36rpx;
     }
-
 </style>
-

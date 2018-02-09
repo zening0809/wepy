@@ -1,100 +1,84 @@
 <template>
-    <block>
-        <view class="tab-bar">
-          <view class="one-bar">
-            <image
-              class="img-bookshelf"
-              src="/asserts/image/card/cup.png"
-            />
-            <view>成就</view>
-          </view>
-          <view class="one-bar">
-          </view>
-          <view
-            @tap="navigate('sellBook')"
-            class="curSelectBtn"
-          >
-            <image
-              class="img-sale"
-              src="/asserts/image/card/export.png"
-            />
-            <view>探索</view>
-          </view>
-          <view
-            @tap="navigate('shoppingCart')"
-            class="one-bar"
-          >
-            <image
-              class="img-shop-car"
-              src="/asserts/image/card/own.png"
-            />
-            <view>我的</view>
-          </view>
-        </view>
-      </block> 
+  <block>
+    <view class="tab-bar">
+      <view @tap="navigate('personal_achieve_page')" class="one-bar">
+        <image class="img-bookshelf" src="/asserts/image/card/cup.png" />
+        <view>成就</view>
+      </view>
+      <view class="one-bar"></view>
+      <view @tap="navigate('card_page')" class="curSelectBtn">
+        <image class="img-sale" src="/asserts/image/card/export.png" />
+        <view>探索</view>
+      </view>
+      <view @tap="navigate('own_comment_page')" class="one-bar">
+        <image class="img-shop-car" src="/asserts/image/card/own.png" />
+        <view>我的</view>
+      </view>
+    </view>
+  </block>
 </template>
 
 <script>
-    import wepy from 'wepy'
-
-    export default class BtnCom extends wepy.component {
-        
+  import wepy from 'wepy'
+  export default class BtnCom extends wepy.component {
+    methods = {
+      // 路由跳转
+      navigate(pageName) {
+        wepy.navigateTo({
+          url: `/pages/${pageName}/index`
+        })
+      }
     }
-</script>
-<style lang="scss" scoped>
-.tab-bar {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  display: flex;
-  width: 100%;
-  height: 120rpx;
-  background: #fefefe;
-  border-top: 1px solid #f0f1f2;
-}
-
-.one-bar {
-  position: relative;
-  flex: 1;
-  text-align: center;
-  font-size: 28rpx;
-  color: #333;
-
-//   &:nth-child(1) {
-//     color: #406EEE;
-//   }
-
-  view {
-    position: absolute;
-    bottom: 6rpx;
-    left: 50%;
-    transform: translate3d(-50%, 0, 0);
   }
-}
-.img-bookshelf {
-  width: 54rpx;
-  height: 50rpx;
-  margin-top: 19rpx;
-}
+</script>
 
-.img-sale {
-  width: 54rpx;
-  height: 54rpx;
-  margin-top: 20rpx;
-}
-
-.img-shop-car {
-   width: 54rpx;
-  height: 50rpx;
-  margin-top: 28rpx;
-}
-
-.img-my {
-  width: 54rpx;
-  height: 50rpx;
-  margin-top: 18rpx;
-}
-.curSelectBtn{
+<style lang="scss" scoped>
+  .tab-bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    width: 100%;
+    height: 120rpx;
+    background: #fefefe;
+    border-top: 1px solid #f0f1f2;
+  }
+  .one-bar {
+    position: relative;
+    flex: 1;
+    text-align: center;
+    font-size: 28rpx;
+    color: #333; //   &:nth-child(1) {
+    //     color: #406EEE;
+    //   }
+    view {
+      position: absolute;
+      bottom: 6rpx;
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+  .img-bookshelf {
+    width: 54rpx;
+    height: 50rpx;
+    margin-top: 19rpx;
+  }
+  .img-sale {
+    width: 54rpx;
+    height: 54rpx;
+    margin-top: 20rpx;
+  }
+  .img-shop-car {
+    width: 54rpx;
+    height: 50rpx;
+    margin-top: 28rpx;
+  }
+  .img-my {
+    width: 54rpx;
+    height: 50rpx;
+    margin-top: 18rpx;
+  }
+  .curSelectBtn {
     background: #1a5fef;
     position: absolute;
     height: 140rpx;
@@ -103,14 +87,13 @@
     left: 250rpx;
     text-align: center;
     font-size: 28rpx;
-    image{
-        display: inline-block;
-        margin-top: 20rpx; 
+    image {
+      display: inline-block;
+      margin-top: 20rpx;
     }
-    view{
-        color: #fff;
-        margin-top:16rpx; 
+    view {
+      color: #fff;
+      margin-top: 16rpx;
     }
-}
+  }
 </style>
-

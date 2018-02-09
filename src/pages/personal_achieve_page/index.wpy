@@ -2,24 +2,24 @@
     <view class="addCardContainer">
         <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
         <view class="achive-tab">
-            <view class="tab">
+            <view @tap="navigate('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
             </view>
             <view class="diver"></view>
-            <view class="tab active-tab">
+            <view @tap="navigate('personal_achieve_page')" class="tab active-tab">
                 <span class="span-tab">个人成就</span>
             </view>
-            <view class="diver"></view>            
-            <view class="tab">
+            <view class="diver"></view>
+            <view @tap="navigate('team_achieve_page')" class="tab">
                 <span class="span-tab">团队成就</span>
             </view>
         </view>
         <view class="achive-content">
-            <view  class="achive-content-title">个人成就排名</view>
+            <view class="achive-content-title">个人成就排名</view>
             <repeat for="{{ personalList }}" key="index" index="index" item="item">
                 <PersonItem :item="item"></PersonItem>
             </repeat>
-        </view>  
+        </view>
         <BtnCom></BtnCom>
     </view>
 </template>
@@ -29,10 +29,9 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
-
     export default class PersonalAchievePage extends wepy.page {
         config = {
-            navigationBarTitleText: '卡片盒'
+            navigationBarTitleText: '成就'
         }
         data = {
             personalNum: '121',
@@ -43,31 +42,31 @@
                 personName: 'CG猎人TIM',
                 teamId: '823',
                 achieveNum: '8686'
-            },{
+            }, {
                 personRank: 2,
                 avatar: '/asserts/image/home/title.png',
                 personName: 'UDPonline',
                 teamId: '523',
                 achieveNum: '7258'
-            },{
+            }, {
                 personRank: 3,
                 avatar: '/asserts/image/home/title.png',
                 personName: '你好大海',
                 teamId: '321',
                 achieveNum: '6436'
-            },{
+            }, {
                 personRank: 4,
                 avatar: '/asserts/image/home/title.png',
                 personName: '欧巴酱',
                 teamId: '451',
                 achieveNum: '5366'
-            },{
+            }, {
                 personRank: 5,
                 avatar: '/asserts/image/home/title.png',
                 personName: '欧巴酱',
                 teamId: '451',
                 achieveNum: '5366'
-            },{
+            }, {
                 personRank: 6,
                 avatar: '/asserts/image/home/title.png',
                 personName: '欧巴酱',
@@ -80,10 +79,18 @@
             BtnCom,
             PersonItem
         }
+        methods = {
+            // 路由跳转
+            navigate(pageName) {
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index`
+                })
+            }
+        }
     }
 </script>
 
-<style  lang="scss" scoped>
+<style lang="scss" scoped>
     .addCardContainer {
         background: #f7f9fa;
         height: 100%;
@@ -92,7 +99,8 @@
             height: 75rpx;
             box-shadow: 0px 3px 5px #dee6f3;
             display: flex;
-            align-items: center;/*垂直居中*/
+            align-items: center;
+            /*垂直居中*/
             .tab {
                 font-size: 11px;
                 text-align: center;
@@ -116,7 +124,6 @@
                 height: 12px;
                 background: #dee6f3;
             }
-
         }
         .achive-content {
             padding: 0 24rpx;
@@ -130,4 +137,3 @@
         }
     }
 </style>
-

@@ -3,7 +3,6 @@
         <view class="title">
             <image src="/asserts/image/home/title.png" />
             <text class="name">乐小舟</text>
-            <!-- <view></view> -->
             <view class="numberTitleContainer">
                 <view class="numberTitle">团队项目编号</view>
                 <view class="number">No.262</view>
@@ -20,21 +19,27 @@
             </view>
         </view>
         <view class="btnContainer">
-                <view class="comment">
-                    <image src="/asserts/image/home/commit.png"  class="suportCard"/>    
-                    评论
-                </view>
-                <view class="suport">
-                    <image src="/asserts/image/home/btn_suport.png"  class="suportCard"/>    
-                    点赞
-                </view>
+            <view @tap="navigate('team_comment_page')" class="comment">
+                <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
+            <view class="suport">
+                <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
+            </view>
+        </view>
     </view>
 </template>
 
 <script>
     import wepy from 'wepy'
     export default class ProductCard extends wepy.component {
+        methods = {
+            // 路由跳转
+            navigate(pageName) {
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index`
+                })
+            }
+        }
     }
 </script>
 
