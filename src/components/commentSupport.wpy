@@ -1,0 +1,49 @@
+<template>
+    <view class="sub-container">
+        <view class="comment">
+            <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
+        </view>
+        <view class="suport">
+            <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class CommentSupport extends wepy.component {
+
+    }
+</script>
+
+<style lang="scss" scoped>
+    .sub-container {
+        position: fixed;
+        width: 100%;
+        height: 80rpx;
+        bottom: 0;
+        border-top: 1rpx solid #b9b9b9;
+        font-size: 28rpx;
+        display: flex;
+        background-color: #fff;
+        image {
+            width: 30rpx;
+            height: 30rpx;
+            margin-right: 12rpx;
+        }
+        .comment {
+            flex: 1;
+            color: #256af2;
+            line-height: 80rpx;
+            text-align: center;
+        }
+        .suport {
+            flex: 1;
+            color: #ffa14e;
+            text-align: center;
+            line-height: 80rpx;
+            box-sizing: border-box;
+            border-left: 1rpx solid #b9b9b9;
+        }
+    }
+</style>

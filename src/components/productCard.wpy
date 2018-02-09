@@ -1,25 +1,25 @@
 <template>
     <view class="productCard">
-            <view class="title">
-                <image src="/asserts/image/home/title.png"/>
-                <text class="name">乐小舟</text>
-                <!-- <view></view> -->
-                <view class="numberTitleContainer">
-                    <view class="numberTitle">团队项目编号</view>
-                    <view class="number">No.262</view>
-                </view>
+        <view class="title">
+            <image src="/asserts/image/home/title.png" />
+            <text class="name">乐小舟</text>
+            <!-- <view></view> -->
+            <view class="numberTitleContainer">
+                <view class="numberTitle">团队项目编号</view>
+                <view class="number">No.262</view>
             </view>
-            <image class="content" src="/asserts/image/home/content.png"/>
-            <view class="productTitle">实质检测水质的新发现 !</view>
-            <view class="productContent">我们选择了四个典型采集点进行水的取样并进行检测、 统计排污口、 沿河道观察是否有直排现象并拍照记录。</view>
-            <view class="groupDevContainer">
-                <view class="cardTag">团队进展</view>
-                <view class="sportCardContainer">
-                      <image src="/asserts/image/home/suport_card.png"  class="suportCard"/>
-                      <text>666</text>
-                </view>
+        </view>
+        <image class="content" src="/asserts/image/home/content.png" />
+        <view class="productTitle">实质检测水质的新发现 !</view>
+        <view class="productContent">我们选择了四个典型采集点进行水的取样并进行检测、 统计排污口、 沿河道观察是否有直排现象并拍照记录。</view>
+        <view class="groupDevContainer">
+            <view class="cardTag">团队进展</view>
+            <view class="sportCardContainer">
+                <image src="/asserts/image/home/suport_card.png" class="suportCard" />
+                <text>666</text>
             </view>
-            <view class="btnContainer">
+        </view>
+        <view class="btnContainer">
                 <view class="comment">
                     <image src="/asserts/image/home/commit.png"  class="suportCard"/>    
                     评论
@@ -29,131 +29,127 @@
                     点赞
                 </view>
             </view>
-        </view>
+    </view>
 </template>
 
 <script>
     import wepy from 'wepy'
-
     export default class ProductCard extends wepy.component {
-        
     }
 </script>
+
 <style lang="scss" scoped>
-    .productCard{
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, .45);
-    width: 610rpx;
-    left: 70rpx;
-    top: 30rpx;
-    height: 800rpx;
-    position: relative;
-    border-radius: 10rpx;
-    overflow: hidden;
-    .title{
-        height: 120rpx;
-        display: flex;
-        align-items: center;
-        background: #256af2;
-        padding: 0 24rpx; 
-        color: #fff;
-        image{
-            width: 94rpx;
-            height: 94rpx;
-        }
-        .name{
-            margin-left: 15rpx;
-            font-size: 28rpx; 
-        }
-        .numberTitleContainer{
-            width: 370rpx;
-            height: 80rpx;;
-            text-align: right;
-            .numberTitle{
-                font-size: 24rpx;
-            }
-            .number{
-                font-size: 32rpx;
-            }
-        }
-        
-    }
-    .content{
-        width: 100%;
-        height: 340rpx;
-    }
-    .productTitle{
-        color: #333;
-        padding-left: 24rpx;
-        margin: 12rpx 0;
-        font-size: 32rpx;
-    }
-    .productContent{
-        color: #b9b9b9;
-        padding:0 24rpx;
-        margin: 12rpx 0;
-        font-size: 24rpx;
-    }
-    .groupDevContainer{
-        display: flex;
-        justify-content: space-between;
-        padding: 0 24rpx;
-        .cardTag{
-            height: 24rpx;
-            font-size: 20rpx;
-            line-height: 24rpx;
-            border-radius:10rpx;
-            padding: 12rpx 20rpx;
+    .productCard {
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, .45);
+        width: 610rpx;
+        left: 70rpx;
+        top: 30rpx;
+        height: 800rpx;
+        position: relative;
+        border-radius: 10rpx;
+        overflow: hidden;
+        .title {
+            height: 120rpx;
+            display: flex;
+            align-items: center;
             background: #256af2;
+            padding: 0 24rpx;
             color: #fff;
+            image {
+                width: 94rpx;
+                height: 94rpx;
+            }
+            .name {
+                margin-left: 15rpx;
+                font-size: 28rpx;
+            }
+            .numberTitleContainer {
+                width: 370rpx;
+                height: 80rpx;
+                ;
+                text-align: right;
+                .numberTitle {
+                    font-size: 24rpx;
+                }
+                .number {
+                    font-size: 32rpx;
+                }
+            }
         }
-    }
-    .sportCardContainer{
-        display: flex;
-        width: 140rpx;
-        justify-content: space-between;
-        align-items: center;
-        .suportCard{
-            width: 45rpx;
-            height: 45rpx;
+        .content {
+            width: 100%;
+            height: 340rpx;
         }
-        text{
+        .productTitle {
             color: #333;
+            padding-left: 24rpx;
+            margin: 12rpx 0;
+            font-size: 32rpx;
+        }
+        .productContent {
+            color: #b9b9b9;
+            padding: 0 24rpx;
+            margin: 12rpx 0;
+            font-size: 24rpx;
+        }
+        .groupDevContainer {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 24rpx;
+            .cardTag {
+                height: 24rpx;
+                font-size: 20rpx;
+                line-height: 24rpx;
+                border-radius: 10rpx;
+                padding: 12rpx 20rpx;
+                background: #256af2;
+                color: #fff;
+            }
+        }
+        .sportCardContainer {
+            display: flex;
+            width: 140rpx;
+            justify-content: space-between;
+            align-items: center;
+            .suportCard {
+                width: 45rpx;
+                height: 45rpx;
+            }
+            text {
+                color: #333;
+                font-size: 28rpx;
+                font-weight: 700;
+                margin-right: 24rpx;
+            }
+        }
+        .btnContainer {
+            position: absolute;
+            width: 100%;
+            height: 80rpx;
+            bottom: 0;
+            border-top: 1rpx dashed #b9b9b9;
             font-size: 28rpx;
-            font-weight: 700;
-            margin-right: 24rpx;
+            display: flex;
+            image {
+                width: 30rpx;
+                height: 30rpx;
+                margin-right: 12rpx;
+            }
+            .comment {
+                flex: 1;
+                color: #256af2;
+                line-height: 80rpx;
+                text-align: center;
+            }
+            .suport {
+                flex: 1;
+                color: #ffa14e;
+                text-align: center;
+                line-height: 80rpx;
+                box-sizing: border-box;
+                border-left: 1rpx dashed #b9b9b9;
+            }
         }
     }
-    .btnContainer{
-        position: absolute;
-        width: 100%;
-        height: 80rpx;
-        bottom: 0;
-        border-top: 1rpx dashed #b9b9b9;
-        font-size: 28rpx;
-        display: flex;
-        image{
-            width: 30rpx;
-            height: 30rpx;
-            margin-right: 12rpx;
-
-        }
-        .comment{
-            flex:1;   
-            color: #256af2;
-            line-height: 80rpx;
-            text-align: center;
-        }
-        .suport{
-            flex:1;   
-            color: #ffa14e;
-            text-align: center;
-            line-height: 80rpx;
-            box-sizing: border-box;
-            border-left: 1rpx dashed #b9b9b9;
-        }
-    }
-  
-}
 </style>
-
