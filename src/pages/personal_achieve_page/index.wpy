@@ -16,7 +16,6 @@
         </view>
         <view class="achive-content">
             <view  class="achive-content-title">个人成就排名</view>
-
             <repeat for="{{ personalList }}" key="index" index="index" item="item">
                 <PersonItem :item="item"></PersonItem>
             </repeat>
@@ -88,7 +87,6 @@
     .addCardContainer {
         background: #f7f9fa;
         height: 100%;
-        
         .achive-tab {
             background: #ffffff;
             height: 75rpx;
@@ -131,7 +129,5 @@
             }
         }
     }
-    
-
 </style>
 
