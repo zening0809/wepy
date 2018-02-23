@@ -18,14 +18,6 @@
                 <text>666</text>
             </view>
         </view>
-        <view class="btnContainer" >
-            <view @tap="navigate('team_comment_page')" class="comment">
-                <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
-            </view>
-            <view class="suport">
-                <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
-            </view>
-        </view>
     </view>
 </template>
 
@@ -95,13 +87,14 @@
         .productContent {
             color: #b9b9b9;
             padding: 0 24rpx;
-            margin: 12rpx 0;
+            margin: 30rpx 0;
             font-size: 24rpx;
         }
         .groupDevContainer {
             display: flex;
             justify-content: space-between;
             padding: 0 24rpx;
+            margin-top: 50rpx;
             .cardTag {
                 height: 24rpx;
                 font-size: 20rpx;

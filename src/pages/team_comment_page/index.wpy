@@ -31,12 +31,16 @@
 
 <script>
     import wepy from 'wepy'
-    import ProductCard from '../../components/productCard'
+    import ProductCard from '../../components/productNoComment'
     import CommentSupport from '../../components/commentSupport'
     export default class TeamComment extends wepy.page {
+        data = {
+            isComment: true
+        }
         config = {
             navigationBarTitleText: '团队评论'
         }
+
         components = {
             ProductCard,
             CommentSupport
@@ -56,6 +60,7 @@
     .comment {
         padding: 50rpx 0 0;
         background-color: #fff;
+        margin-top: 80rpx;
     }
     .header {
         padding: 20rpx 40rpx;

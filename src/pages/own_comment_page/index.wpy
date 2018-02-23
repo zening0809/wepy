@@ -67,7 +67,6 @@
         align-items: center;
         padding-top: 60rpx;
         background: #f7f9fa;
-        height: 100%;
         .messageContainer {
             width: 94%;
             height: 70rpx;

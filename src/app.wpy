@@ -8,9 +8,12 @@
 <script>
     import wepy from "wepy";
     import "wepy-async-function";
+    import Login from "./utils/login";
     export default class extends wepy.app {
         config = {
             pages: [
+                // 添加卡片
+                "pages/add_card_page/index",
                 // 首页
                 "pages/index",
                 // 团队评论
@@ -31,8 +34,7 @@
                 "pages/my_comment_page/index",
                 // 我的卡片
                 "pages/my_card_page/index",
-                // 添加卡片
-                "pages/add_card_page/index",
+                
                 // 卡片盒页
                 "pages/card_page/index",
             ],
@@ -44,7 +46,8 @@
             }
         };
         globalData = {
-            userInfo: null
+            userInfo: null,
+            backgroundCheckUrl: 'http://127.0.0.1:3001'  //127.0.0.1:3000  192.168.0.68:3000 https://m.yunhe.mobi
         };
         constructor() {
             super();

@@ -1,32 +1,37 @@
 <template>
     <view class='addCardContainer'>
         <view class='title'>标题</view>
-        <input placeholder="请输入新增标题" placeholder-style="color:#c7c7c7" class='titleInput' auto-focus/>
+        <input placeholder="请输入新增标题" @input="inputChange('title')" placeholder-style="color:#c7c7c7" class='titleInput' auto-focus/>
         <view class='title'>TAG标签</view>
         <view class='tagContainer'>
             <repeat for="{{tagList}}" key="index" item="item" index="index">
-                <view style="background:{{index === curTag?item.color: ''}}" @tap="chooseTag(index)">{{item.text}}</view>
+                <view style="background:{{index === curTag?item.color: ''}}" data-index="{{index}}" @tap="chooseTag">{{item.text}}</view>
             </repeat>
         </view>
         <view class='title'>内容</view>
-        <textarea class='contentArea' bindblur="bindTextAreaBlur" placeholder-style="color:#c7c7c7" placeholder="请输入新增内容" />
+        <textarea class='contentArea' @input="inputChange('content')" bindblur="bindTextAreaBlur" placeholder-style="color:#c7c7c7" placeholder="请输入新增内容" />
         <view class='title'>添加图片</view>
         <view class='imgContainer'>
             <image wx:if="{{chooseImg}}" src='{{chooseImgPath}}' />
             <image @tap="addImg()" src='/asserts/image/card/add_img.png' />
         </view>
-        <view class='formBtn'>发 布</view>
+        <view class='formBtn' @tap="sumiteForm()">发 布</view>
     </view>
 </template>
 
 <script>
-    import wepy from 'wepy'
+    import wepy from 'wepy';
+    import {POST} from '../../utils';
     export default class AddCard extends wepy.page {
         config = {
             navigationBarTitleText: '新增卡片'
         }
         data = {
-            curTag: -1,
+            formObj: {
+                title: '',
+                content: ''
+            },
+            curTag: 0,
             tagList: [{
                     color: '#256af2',
                     text: '技能交换'
@@ -48,8 +53,17 @@
             chooseImgPath: ''
         }
         methods = {
-            chooseTag(index) {
+            chooseTag(e) {
+                let index = e.currentTarget.dataset.index;
                 this.curTag = index;
+                this.$apply();
+            },
+            inputChange(type,values ){
+                if(type === 'title'){
+                    this.formObj.title = values.detail.value;
+                }else if(type === 'content'){
+                    this.formObj.content = values.detail.value;
+                }
                 this.$apply();
             },
             addImg() {
@@ -64,6 +78,22 @@
                         _this.chooseImg = true;
                         _this.$apply();
                     }
+                })
+            },
+            sumiteForm(){
+                let curData = this.data;
+                let addCard = {};
+                addCard.title = curData.formObj.title;
+                addCard.content = curData.formObj.content;
+                addCard.tag = (curData.curTag);
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                POST(`${localUrl}/card/saveCard`, addCard, ()=>{
+                    wepy.showModal({
+                        title: '存储成功',
+                        icon: 'success',
+                        confirmColor: '#6CACF4',
+                        showCancel: false
+                    })
                 })
             }
         }

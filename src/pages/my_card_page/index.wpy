@@ -1,6 +1,6 @@
 <template>
     <view class="myCardContainer">
-        <view class="cardItem">
+        <view class="cardItem" @tap="navigate('team_comment_page')">
             <view class="cardTop">
                 <view class="cardFun">
                     <view class="zanFun">
