@@ -4,15 +4,15 @@
             <text class="cardTitle">我的卡片</text>
             <view class="suportContainer">
                 <image src="/asserts/image/card/suport_one.png" class="img-suport" />
-                <text>22</text>
+                <text>{{cardSupportCount}}</text>
                 <image src="/asserts/image/card/text_one.png" class="img-suport" />
-                <text>22</text>
+                <text>{{cardCommentCount}}</text>
             </view>
             <view class="suportContainer_two">
                 <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
-                <text>22</text>
+                <text>{{cardSupportCount}}</text>
                 <image src="/asserts/image/card/text_two.png" class="img-suport" />
-                <text>22</text>
+                <text>{{cardCommentCount}}</text>
             </view>
             <image src="/asserts/image/card/right.png" class="right" />
         </view>
@@ -20,16 +20,17 @@
             <text class="cardTitle">我的评论</text>
             <view class="suportContainer">
                 <image src="/asserts/image/card/suport_one.png" class="img-suport" />
-                <text>22</text>
+                <text>{{commentSupportCount}}</text>
             </view>
             <view class="suportContainer_two">
                 <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
-                <text>22</text>
+                <text>{{commentSupportCount}}</text>
                 <image src="/asserts/image/card/text_two.png" class="img-suport" />
-                <text>22</text>
+                <text>{{commentCount}}</text>
             </view>
             <image src="/asserts/image/card/right.png" class="right" />
         </view>
+        <view @tap="navigate('add_card_page')" class="newCard">写卡片</view>
         <BtnCom />
     </view>
 </template>
@@ -49,6 +50,12 @@
             wepy.setNavigationBarTitle({
                 title: '卡片盒'
             })
+        }
+        data = {
+            cardSupportCount: 123,
+            cardCommentCount: 24,
+            commentSupportCount: 278,
+            commentCount: 39
         }
         methods = {
             // 路由跳转
@@ -121,6 +128,15 @@
                 margin-top: 6rpx;
             }
         }
+    }
+    .newCard {
+        padding: 20rpx;
+        margin-left: 10%;
+        width: 80%;
+        text-align: center;
+        border-radius: 10rpx;
+        color: #fff;
+        background-color: #1a5fef;
     }
     .cardTitle {
         color: #333;
