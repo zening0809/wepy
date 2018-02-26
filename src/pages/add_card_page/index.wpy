@@ -15,7 +15,7 @@
             <image wx:if="{{chooseImg}}" src='{{chooseImgPath}}' />
             <image @tap="addImg()" src='/asserts/image/card/add_img.png' />
         </view>
-        <view class='formBtn' @tap="sumiteForm()">发 布</view>
+        <view class='formBtn' @tap="submitForm()">发 布</view>
     </view>
 </template>
 
@@ -80,7 +80,7 @@
                     }
                 })
             },
-            sumiteForm(){
+            submitForm(){
                 let curData = this.data;
                 let addCard = {};
                 addCard.title = curData.formObj.title;

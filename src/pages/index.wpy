@@ -17,7 +17,7 @@
                 </view>
             </view>
         </view>
-        <ProductCard />
+        <ProductCard :teamInfo.sync="teamInfo" />
         <BtnCom/>
     </view>
 </template>
@@ -35,6 +35,15 @@
             ProductCard
         }
         data = {
+            teamInfo: {
+                leader: '乐小舟',
+                title: '团队项目编号',
+                number: 'No.262',
+                productTitle: '实质检测水质的新发现 !',
+                productContent: '我们选择了四个典型采集点进行水的取样并进行检测、统计排污口、沿河道观察是否有直排现象并拍照记录。',
+                cardTag: '团队进展',
+                supportCount: '666'
+            }
         }
         computed = {
         }

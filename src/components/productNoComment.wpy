@@ -2,20 +2,20 @@
     <view class="productCard">
         <view class="title">
             <image src="/asserts/image/home/title.png" />
-            <text class="name">乐小舟</text>
+            <text class="name">{{teamInfo.leader}}</text>
             <view class="numberTitleContainer">
-                <view class="numberTitle">团队项目编号</view>
-                <view class="number">No.262</view>
+                <view class="numberTitle">{{teamInfo.title}}</view>
+                <view class="number">{{teamInfo.number}}</view>
             </view>
         </view>
         <image class="content" src="/asserts/image/home/content.png" />
-        <view class="productTitle">实质检测水质的新发现 !</view>
-        <view class="productContent">我们选择了四个典型采集点进行水的取样并进行检测、 统计排污口、 沿河道观察是否有直排现象并拍照记录。</view>
+        <view class="productTitle">{{teamInfo.productTitle}}</view>
+        <view class="productContent">{{teamInfo.productContent}}</view>
         <view class="groupDevContainer">
-            <view class="cardTag">团队进展</view>
+            <view class="cardTag">{{teamInfo.cardTag}}</view>
             <view class="sportCardContainer">
                 <image src="/asserts/image/home/suport_card.png" class="suportCard" />
-                <text>666</text>
+                <text>{{teamInfo.supportCount}}</text>
             </view>
         </view>
     </view>
@@ -24,6 +24,11 @@
 <script>
     import wepy from 'wepy'
     export default class ProductCard extends wepy.component {
+        props = {
+            teamInfo: {
+                type: Object
+            }
+        }
         methods = {
             // 路由跳转
             navigate(pageName) {
