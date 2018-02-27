@@ -75,10 +75,10 @@
         
         }
         events = {
-            'support-event': ($event, ...args) {
-                // console.log(`${this.name} receive ${$event.name} from ${$event.source.name}`);
-                console.log($event, ...args);
-            }
+            // 'support-event': ($event, ...args) {
+            //     // console.log(`${this.name} receive ${$event.name} from ${$event.source.name}`);
+            //     console.log($event, ...args);
+            // }
         };
         onLoad() {
 
