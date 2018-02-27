@@ -3,7 +3,7 @@
         <view class="comment">
             <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
         </view>
-        <view class="suport">
+        <view @tap="support()" class="suport">
             <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
         </view>
     </view>
@@ -11,7 +11,22 @@
 
 <script>
     import wepy from 'wepy'
+    import { POST } from '../utils'
     export default class CommentSupport extends wepy.component {
+        methods = {
+            support(){
+                let open_id = wx.getStorageSync('open_id');
+                let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
+                POST(`${localUrl}/card/support`,{open_id: open_id}, (res)=>{
+                    if(res.status === 1){
+                        $this.$emit('support-event', 1, 2, 3, 4);
+                        // this.teamInfo = res.data.data.data[0];
+                        // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                        // this.$apply();
+                    }
+                })
+            }
+        }
     }
 </script>
 
