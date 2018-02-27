@@ -17,7 +17,7 @@
                 </view>
             </view>
         </view>
-        <ProductCard :teamInfo.sync="teamInfo" />
+                <ProductCard :teamInfo.sync="teamInfo" />
         <BtnCom/>
     </view>
 </template>
@@ -26,6 +26,7 @@
     import wepy from 'wepy'
     import BtnCom from '../components/btnCom'
     import ProductCard from '../components/productCard'
+    import {GET} from '../utils';
     export default class Index extends wepy.page {
         config = {
             navigationBarTitleText: '首页'
@@ -36,14 +37,31 @@
         }
         data = {
             teamInfo: {
-                leader: '乐小舟',
-                title: '团队项目编号',
-                number: 'No.262',
-                productTitle: '实质检测水质的新发现 !',
-                productContent: '我们选择了四个典型采集点进行水的取样并进行检测、统计排污口、沿河道观察是否有直排现象并拍照记录。',
-                cardTag: '团队进展',
-                supportCount: '666'
-            }
+                tag: '',
+                nickname: '',
+                content: '',
+                title: '',
+                support: 0,
+                avatar_url: '',
+                group: 0
+            },
+               tagList: [{
+                    color: '#256af2',
+                    text: '技能交换'
+                },
+                {
+                    color: '#b4e99f',
+                    text: '团队进展'
+                },
+                {
+                    color: '#fb91af',
+                    text: '求助'
+                },
+                {
+                    color: '#f7cd8b',
+                    text: '资源分享'
+                }
+            ]
         }
         computed = {
         }
@@ -54,10 +72,32 @@
                     url: `/pages/${pageName}/index`
                 })
             }
+        
         }
         events = {
+            'support-event': ($event, ...args) {
+                // console.log(`${this.name} receive ${$event.name} from ${$event.source.name}`);
+                console.log($event, ...args);
+            }
+        };
+        onLoad() {
+
         }
-        onLoad() {}
+        refresh(){
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            GET(`${localUrl}/card/getList`,{}, (res)=>{
+                if(res.data.status === 1){
+                    this.teamInfo = res.data.data.data[0];
+                    this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                    this.teamInfo.support = this.teamInfo.support.length;
+                    console.log(this.teamInfo.support);
+                    this.$apply();
+                }
+            })
+            }
+        onShow(){
+          this.refresh()
+        }
     }
 </script>
 

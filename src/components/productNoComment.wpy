@@ -4,15 +4,15 @@
             <image src="/asserts/image/home/title.png" />
             <text class="name">{{teamInfo.leader}}</text>
             <view class="numberTitleContainer">
-                <view class="numberTitle">{{teamInfo.title}}</view>
-                <view class="number">{{teamInfo.number}}</view>
+                <view class="numberTitle">团队项目编号</view>
+                <view class="number">No.{{teamInfo.number}}</view>
             </view>
         </view>
-        <image class="content" src="/asserts/image/home/content.png" />
-        <view class="productTitle">{{teamInfo.productTitle}}</view>
-        <view class="productContent">{{teamInfo.productContent}}</view>
+        <image class="content" src="{{teamInfo.img_url}}" />
+        <view class="productTitle">{{teamInfo.title}}</view>
+        <view class="productContent">{{teamInfo.content}}</view>
         <view class="groupDevContainer">
-            <view class="cardTag">{{teamInfo.cardTag}}</view>
+            <view class="cardTag">{{teamInfo.tag}}</view>
             <view class="sportCardContainer">
                 <image src="/asserts/image/home/suport_card.png" class="suportCard" />
                 <text>{{teamInfo.supportCount}}</text>

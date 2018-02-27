@@ -50,11 +50,14 @@ export function UPLOADFILE(url, formData, filePath) {
     })
 }
 
-export function GET(url, data) {
+export function GET(url, data, callback) {
     return request({
         url,
         data,
-        method: 'GET'
+        method: 'GET',
+        success: (res)=>{
+            callback(res)
+        }
     })
 }
 

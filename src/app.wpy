@@ -47,14 +47,16 @@
         };
         globalData = {
             userInfo: null,
-            backgroundCheckUrl: 'http://zeningtest.free.ngrok.cc'  //127.0.0.1:3000  192.168.0.68:3000 https://m.yunhe.mobi
+            backgroundCheckUrl: 'http://zeningtest.free.ngrok.cc'   //127.0.0.1:3000  192.168.0.68:3000 https://m.yunhe.mobi
         };
         constructor() {
             super();
             this.use("requestfix");
         }
         onLaunch() {
+             wx.setStorageSync('open_id', 'zening');
             this.testAsync();
+            // Login();
         }
         sleep(s) {
             return new Promise((resolve, reject) => {

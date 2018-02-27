@@ -1,28 +1,28 @@
 <template>
-    <view class="productCard">
+     <view class="productCard">
         <view class="title">
-            <image src="/asserts/image/home/title.png" />
-            <text class="name">{{teamInfo.leader}}</text>
+            <image src="{{teamInfo.avatar_url}}" />
+            <text class="name">{{teamInfo.nickname}}</text>
             <view class="numberTitleContainer">
-                <view class="numberTitle">{{teamInfo.title}}</view>
-                <view class="number">{{teamInfo.number}}</view>
+                <view class="numberTitle">团队项目编号</view>
+                <view class="number">No.{{teamInfo.group}}</view>
             </view>
         </view>
-        <image class="content" src="/asserts/image/home/content.png" />
-        <view class="productTitle">{{teamInfo.productTitle}}</view>
-        <view class="productContent">{{teamInfo.productContent}}</view>
+        <image class="content" src="{{teamInfo.img_url}}" />
+        <view class="productTitle">{{teamInfo.title}}</view>
+        <view class="productContent">{{teamInfo.content}}</view>
         <view class="groupDevContainer">
-            <view class="cardTag">{{teamInfo.cardTag}}</view>
+            <view class="cardTag">{{teamInfo.tag}}</view>
             <view class="sportCardContainer">
                 <image src="/asserts/image/home/suport_card.png" class="suportCard" />
-                <text>{{teamInfo.supportCount}}</text>
+                <text>{{teamInfo.support}}</text>
             </view>
         </view>
         <view class="btnContainer" >
             <view @tap="navigate('team_comment_page')" class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
-            <view class="suport">
+            <view class="suport" @tap="support()">
                 <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
             </view>
         </view>
@@ -31,6 +31,7 @@
 
 <script>
     import wepy from 'wepy'
+     import {POST} from '../utils';
     export default class ProductCard extends wepy.component {
         props = {
             teamInfo: {
@@ -42,6 +43,18 @@
             navigate(pageName) {
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index`
+                })
+            },
+            support(){
+                let open_id = wx.getStorageSync('open_id');
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                POST(`${localUrl}/card/support`,{open_id: open_id}, (res)=>{
+                    if(res.status === 1){
+                        $this.$emit('support-event', 1, 2, 3, 4);
+                        // this.teamInfo = res.data.data.data[0];
+                        // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                        // this.$apply();
+                    }
                 })
             }
         }

@@ -1,5 +1,5 @@
 
-module.exports = function (ctx) {
+module.exports = function () {
     wx.login({
         success: function (result) {
             //   console.log(result.code);
@@ -9,7 +9,7 @@ module.exports = function (ctx) {
                         wx.setStorageSync('userInfo', res.userInfo)
                         //发起网络请求
                         wx.request({
-                            url: ctx.globalData.backgroundCheckUrl + '/public/wxLogin',
+                            url: this.$parent.globalData.backgroundCheckUrl + '/public/wxLogin',
                             data: { code: result.code },
                             method: 'GET',
                             header: {
