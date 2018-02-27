@@ -9,7 +9,7 @@
                     </view>
                     <text>筛选</text>
                 </view>
-                <view class="logoCardContainer" @tap="navigate('my_card_page')">
+                <view class="logoCardContainer" @tap="navigate('card_page')">
                     <view style="background:#fff;box-shadow: 0 2px 8px rgba(0, 0, 0, .45)">
                         <image src="/asserts/image/home/box.png" />
                     </view>
