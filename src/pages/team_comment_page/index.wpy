@@ -1,7 +1,7 @@
 <template>
     <view class="container">
         <CommentSupport />
-        <ProductCard :teamInfo="teamInfo" />
+        <ProductCard :teamInfo.sync="teamInfo" />
         <view class="comment">
             <view class="header">全部评论</view>
             <repeat for="{{commentList}}" key="index" index="index" item="item">
@@ -31,25 +31,58 @@
 
 <script>
     import wepy from 'wepy'
-    import ProductCard from '../../components/productNoComment'
+    import ProductCard from '../../components/productCard'
     import CommentSupport from '../../components/commentSupport'
+    import {GET} from '../../utils';
     export default class TeamComment extends wepy.page {
         data = {
-            isComment: true,
+            tagList: [{
+                    color: '#256af2',
+                    text: '技能交换'
+                },
+                {
+                    color: '#b4e99f',
+                    text: '团队进展'
+                },
+                {
+                    color: '#fb91af',
+                    text: '求助'
+                },
+                {
+                    color: '#f7cd8b',
+                    text: '资源分享'
+                }
+            ],
             teamInfo: {
-                leader: '乐小舟',
-                title: '团队项目编号',
-                number: 'No.262',
-                productTitle: '实质检测水质的新发现 !',
-                productContent: '我们选择了四个典型采集点进行水的取样并进行检测、统计排污口、沿河道观察是否有直排现象并拍照记录。',
-                cardTag: '团队进展',
-                supportCount: '666'
+                tag: '',
+                nickname: '',
+                content: '',
+                title: '',
+                support: 0,
+                avatar_url: '',
+                group: 0
             },
             commentList: [
                 {avatar: 'title.png', name: '失去的春天', number: 'No.123', supportCount: 456, commentContent: '本案中哇哦撒可富来接我困了士大夫撒飞洒地方萨芬，索拉卡佛我为富兰克林开发了快速士大夫士大夫撒。', time: '刚刚'},
                 {avatar: 'title.png', name: '就在那天', number: 'No.232', supportCount: 222, commentContent: '就卡死覅四分五裂萨菲立刻来了', time: '五分钟前'},
                 {avatar: 'title.png', name: '过往不及', number: 'No.6', supportCount: 341, commentContent: '撒服务二期温热武器为你戊二醛无热无若', time: '半小时前'}
             ]
+        }
+        refresh(){
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            GET(`${localUrl}/card/getList`,{id:1}, (res)=>{
+                if(res.data.status === 1){
+                    this.teamInfo = res.data.data;
+                    console.log(this.teamInfo);
+                    this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                    this.teamInfo.support = this.teamInfo.support.length;
+                    this.teamInfo.isshow = true;
+                    this.$apply();
+                }
+            })
+        }
+        onShow(){
+          this.refresh()
         }
         config = {
             navigationBarTitleText: '团队评论'

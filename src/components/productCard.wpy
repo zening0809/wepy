@@ -18,7 +18,7 @@
                 <text>{{teamInfo.support}}</text>
             </view>
         </view>
-        <view class="btnContainer" >
+        <view class="btnContainer" wx:if="{{teamInfo.isshow}}" >
             <view @tap="navigate('team_comment_page')" class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
@@ -31,7 +31,7 @@
 
 <script>
     import wepy from 'wepy'
-     import {POST} from '../utils';
+    import {POST} from '../utils';
     export default class ProductCard extends wepy.component {
         props = {
             teamInfo: {
