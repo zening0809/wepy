@@ -47,7 +47,7 @@
             },
             support(){
                 let open_id = wx.getStorageSync('open_id');
-                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
                 POST(`${localUrl}/card/support`,{open_id: open_id}, (res)=>{
                     if(res.status === 1){
                         $this.$emit('support-event', 1, 2, 3, 4);

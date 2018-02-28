@@ -64,12 +64,13 @@
 
 <script>
     import wepy from 'wepy'
+    import { POST } from '../../utils'
     export default class MyCardPage extends wepy.page {
         config = {
             navigationBarTitleText: '我的卡片'
         }
         data = {
-            sttuas: false
+            status: false
         }
         components = {}
         methods = {
@@ -86,7 +87,7 @@
                     title: '确定删除？',
                     icon: 'success',
                     confirmColor: '#6CACF4',
-                    showCancel: false,
+                    showCancel: true,
                     success: ()=>{
                         let localUrl = this.$parent.globalData.backgroundCheckUrl;
                         POST(`${localUrl}/card/delete`,{id: id}, (res)=>{
