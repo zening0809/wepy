@@ -1,0 +1,76 @@
+<template>
+    <view class="backLayerContainer" wx:if="{{state}}" >
+        <view class='backLayer' @tap="disabled()"></view>
+        <view class='comentCotioner'>
+             <textarea placeholder="请输入评论" focus="{{true}}" />
+             <view @tap="sendComment()" class='button'>发 布</view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class SendComment extends wepy.component {
+        data = {
+            state: false
+        }
+        props = {
+            personal: String,
+            team: String,
+            commentMsg: Object
+        }
+        methods = {
+            sendComment(){
+                console.log(11111);
+            },
+            disabled(){
+                this.state = false;
+                this.$apply();
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .backLayerContainer {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 100000;
+        .backLayer{
+            background: #000;            
+            width: 100%;
+            height: 100%; 
+            opacity: 0.6;
+        }
+        .comentCotioner{
+            width: 70%;
+            height: 600rpx;
+            background: #fff;
+            margin: 0 auto;
+            position: absolute;
+            top: 20%;
+            left: 15%;
+        textarea{
+            width: 70%;
+            height: 300rpx;
+            top: 80rpx;
+            left: 15%;
+            position: absolute;
+        }
+        .button{
+            width: 100%;
+            position: absolute;
+            height: 60rpx;
+            line-height: 60rpx;
+            background: rgb(60, 99, 228);
+            text-align: center;
+            color: #fff;
+            font-size: 32rpx;
+            bottom: 0;
+            z-index: 999999999
+        }
+        }
+        
+    }
+</style>

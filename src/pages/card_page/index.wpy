@@ -38,6 +38,7 @@
 <script>
     import wepy from 'wepy'
     import BtnCom from '../../components/btnCom'
+    import {GET} from '../../utils';
     export default class CardPage extends wepy.page {
         config = {
             navigationBarTitleText: '当前页面',
@@ -56,6 +57,18 @@
             cardCommentCount: 24,
             commentSupportCount: 278,
             commentCount: 39
+        }
+        onShow(){
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                let openid = wx.getStorageSync('openid');
+                GET(`${localUrl}/user/getList`,{openid: openid}, (res)=>{
+                    if(res.data.status === 1){
+                        console.log(this.data);
+                        this.cardSupportCount = res.data.data.suport,
+                        this.cardCommentCount = res.data.data.comment,
+                        this.$apply();
+                    }
+                })
         }
         methods = {
             // 路由跳转

@@ -1,5 +1,4 @@
-
-module.exports = function () {
+export function Login(_url) {
     wx.login({
         success: function (result) {
             //   console.log(result.code);
@@ -9,16 +8,17 @@ module.exports = function () {
                         wx.setStorageSync('userInfo', res.userInfo)
                         //发起网络请求
                         wx.request({
-                            url: this.$parent.globalData.backgroundCheckUrl + '/public/wxLogin',
-                            data: { code: result.code },
+                            url: _url + '/public/wxLogin',
+                            data: { code: result.code,
+                            userInfo:  res.userInfo },
                             method: 'GET',
                             header: {
                                 'content-type': 'application/json' // 默认值
                             },
                             success: function (res) {
-                                console.log(res);
                                 if (res.data.status == 1) {
-                                    wx.setStorageSync('sessionKey', res.data.data.session_key)
+                                    wx.setStorageSync('openid', res.data.data.openid);
+                                    // wx.setStorageSync('sessionKey', res.data.data.session_key)
                                 } else {
                                     wx.showToast({
                                         title: res.data.errmsg,

@@ -1,6 +1,6 @@
 <template>
     <view class="sub-container">
-        <view class="comment">
+        <view  @tap="commentContainer()" class="comment">
             <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
         </view>
         <view @tap="support()" class="suport">
@@ -25,6 +25,9 @@
                         // this.$apply();
                     }
                 })
+            },
+            commentContainer(){
+                console.log(11111);
             }
         }
     }

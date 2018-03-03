@@ -26,7 +26,7 @@
     import wepy from 'wepy'
     import BtnCom from '../components/btnCom'
     import ProductCard from '../components/productCard'
-    import {GET} from '../utils';
+    import {GET, Login} from '../utils';
     export default class Index extends wepy.page {
         config = {
             navigationBarTitleText: '首页'
@@ -81,7 +81,7 @@
             // }
         };
         onLoad() {
-
+            Login(this.$parent.globalData.backgroundCheckUrl);
         }
         refresh(){
             let localUrl = this.$parent.globalData.backgroundCheckUrl;

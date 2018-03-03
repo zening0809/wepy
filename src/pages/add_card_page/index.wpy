@@ -82,10 +82,12 @@
             },
             submitForm(){
                 let curData = this.data;
+                let openid = wx.getStorageSync('openid');
                 let addCard = {};
                 addCard.title = curData.formObj.title;
                 addCard.content = curData.formObj.content;
                 addCard.tag = (curData.curTag);
+                addCard.openid = openid;
                 let localUrl = this.$parent.globalData.backgroundCheckUrl;
                 POST(`${localUrl}/card/saveCard`, addCard, ()=>{
                     wepy.showModal({
