@@ -32,7 +32,7 @@
 <script>
     import wepy from 'wepy'
     import { POST } from '../../utils'
-    import ProductCard from '../../components/productNoComment'
+    import ProductCard from '../../components/productCard'
     import CommentSupport from '../../components/commentSupport'
     export default class TeamComment extends wepy.page {
         data = {
