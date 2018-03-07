@@ -66,7 +66,9 @@ export function POST(url, data, callback) {
         url,
         data,
         method: 'POST',
-        success: callback()
+        success: (res)=>{
+            callback(res)
+        }
     })
 }
 

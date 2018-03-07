@@ -107,17 +107,29 @@
                 return;
             },
             support() {
-                let comment_id = 1
-                let open_id = wx.getStorageSync('openid');
-                let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/comment/support`,{open_id: openid, id: comment_id}, (res)=>{
-                    if(res.status === 1){
-                        $this.$emit('support-event', 1, 2, 3, 4);
-                        // this.teamInfo = res.data.data.data[0];
-                        // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                        // this.$apply();
+                //TODO: data里面id的值要改
+                let data = {
+                    openid: wx.getStorageSync('openid'),
+                    id: 1
+                }
+                let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
+                POST(`${localUrl}/comment/support`,data, (res)=>{
+                    // 添加成功
+                    if (res.data.data.status == 1) {
+                        this.getCommentList(this.card_id)
                     }
                 })
+                // let comment_id = 1
+                // let open_id = wx.getStorageSync('openid');
+                // let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                // POST(`${localUrl}/comment/support`,{open_id: openid, id: comment_id}, (res)=>{
+                //     if(res.status === 1){
+                //         $this.$emit('support-event', 1, 2, 3, 4);
+                //         // this.teamInfo = res.data.data.data[0];
+                //         // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                //         // this.$apply();
+                //     }
+                // })
             }
         }
         events = {
@@ -131,17 +143,18 @@
                     this.getCommentList(this.card_id)
                 }
                 this.$apply()
+            },
+            addSupport: () => {
+                this.teamInfo.support += 1
             }
         }
         // 获取评论列表
         getCommentList(id){
-            console.log(1111)
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             GET(`${localUrl}/comment/getList`,{card_id: id}, (res)=>{
                 if(res.data.status === 1){
                     this.commentList = res.data.data;
                     this.$apply();
-                    console.log(this.commentList)
                 }
             })
         }

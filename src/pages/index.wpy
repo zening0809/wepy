@@ -75,15 +75,16 @@
         
         }
         events = {
-            // 'support-event': ($event, ...args) {
-            //     // console.log(`${this.name} receive ${$event.name} from ${$event.source.name}`);
-            //     console.log($event, ...args);
-            // }
+            addSupport: () => {
+                this.teamInfo.support += 1
+            }
+            
         };
         onLoad() {
             Login(this.$parent.globalData.backgroundCheckUrl);
         }
         refresh(){
+            
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
                 GET(`${localUrl}/card/getList`,{id:1}, (res)=>{
                     if(res.data.status === 1){
@@ -92,7 +93,7 @@
                         this.teamInfo.support = this.teamInfo.support.length;
                         this.teamInfo.isshow = true;
                         // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
-                        this.teamInfo.id = 1;
+                        this.teamInfo.card_id = 1;
                         this.$apply();
                     }
                 })

@@ -42,20 +42,23 @@
             // 评论路由跳转
             navigate(pageName) {
                 wepy.navigateTo({
-                    url: `/pages/${pageName}/index?id=${this.teamInfo.id}`
+                    url: `/pages/${pageName}/index?id=${this.teamInfo.card_id}`
                 })
             },
+            // 点赞
             support(){
-                let open_id = wx.getStorageSync('open_id');
+                let data = {
+                    openid: wx.getStorageSync('openid'),
+                    id: this.teamInfo.card_id
+                }
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`,{open_id: open_id}, (res)=>{
-                    if(res.status === 1){
-                        $this.$emit('support-event', 1, 2, 3, 4);
-                        // this.teamInfo = res.data.data.data[0];
-                        // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                        // this.$apply();
+                POST(`${localUrl}/card/support`,data, (res)=>{
+                    // 添加成功
+                    if (res.data.data.status == 1) {
+                        this.$emit('addSupport')
                     }
                 })
+                
             }
         }
         onLoad () {
