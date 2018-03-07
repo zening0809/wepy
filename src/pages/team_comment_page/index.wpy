@@ -1,7 +1,7 @@
 <template>
     <view class="container">
-        <CommentSupport />
-        <SendComment wx:if="{{commentStatus}}"/>
+        <CommentSupport :cardId.sync = "card_id"/>
+        <SendComment :cardId.sync = "card_id" wx:if="{{commentStatus}}"/>
         <ProductCard :teamInfo.sync = "teamInfo" />
         <view class="comment">
             <view class="header">全部评论</view>
@@ -9,7 +9,7 @@
                 <view class="item">
                     <view class="item-header">
                         <view class="item-header--left">
-                            <image src="{{'/asserts/image/home/' + item.avatar_url}}" class="item-avatar" />
+                            <image src="{{ item.avatar_url}}" class="item-avatar" />
                             <text class="item-name">{{item.nickname}}</text>
                             <view class="item-number">No.{{item.id}}</view>
                         </view>
@@ -40,37 +40,41 @@
         data = {
             isComment: true,
             commentStatus: false,
-            teamInfo: {
-                leader: '乐小舟',
-                title: '团队项目编号',
-                number: 'No.262',
-                productTitle: '实质检测水质的新发现 !',
-                productContent: '我们选择了四个典型采集点进行水的取样并进行检测、统计排污口、沿河道观察是否有直排现象并拍照记录。',
-                cardTag: '团队进展',
-                supportCount: '666'
+            // teamInfo: {
+            //     avatar_url: '/asserts/image/home/title.png',
+            //     nickname: '乐小舟',
+            //     group: '262',
+            //     img_url: '/asserts/image/home/content.png',
+            //     title: '实质检测水质的新发现 !',
+            //     content: '我们选择了四个典型采集点进行水的取样并进行检测、统计排污口、沿河道观察是否有直排现象并拍照记录。',
+            //     tag: '团队进展',
+            //     support: '666',
+            //     isshow: false
+            // },
+            teamInfo: {},
+            commentList: [],
+            // commentList: [
+            //     {avatar_url: 'title.png', nickname: '失去的春天', id: '123', support: [1], content: '本案中哇哦撒可富来接我困了士大夫撒飞洒地方萨芬，索拉卡佛我为富兰克林开发了快速士大夫士大夫撒。', create_time: '刚刚'},
+            //     {avatar_url: 'title.png', nickname: '就在那天', id: '232', support: [1], content: '就卡死覅四分五裂萨菲立刻来了', create_time: '五分钟前'},
+            //     {avatar_url: 'title.png', nickname: '过往不及', id: '6', support: [1], content: '撒服务二期温热武器为你戊二醛无热无若', create_time: '半小时前'}
+            // ],
+            tagList: [{
+                color: '#256af2',
+                text: '技能交换'
             },
-            commentList: [
-                {avatar_url: 'title.png', nickname: '失去的春天', id: '123', support: [1], content: '本案中哇哦撒可富来接我困了士大夫撒飞洒地方萨芬，索拉卡佛我为富兰克林开发了快速士大夫士大夫撒。', create_time: '刚刚'},
-                {avatar_url: 'title.png', nickname: '就在那天', id: '232', support: [1], content: '就卡死覅四分五裂萨菲立刻来了', create_time: '五分钟前'},
-                {avatar_url: 'title.png', nickname: '过往不及', id: '6', support: [1], content: '撒服务二期温热武器为你戊二醛无热无若', create_time: '半小时前'}
-            ],
-             tagList: [{
-                    color: '#256af2',
-                    text: '技能交换'
-                },
-                {
-                    color: '#b4e99f',
-                    text: '团队进展'
-                },
-                {
-                    color: '#fb91af',
-                    text: '求助'
-                },
-                {
-                    color: '#f7cd8b',
-                    text: '资源分享'
-                }
-            ]
+            {
+                color: '#b4e99f',
+                text: '团队进展'
+            },
+            {
+                color: '#fb91af',
+                text: '求助'
+            },
+            {
+                color: '#f7cd8b',
+                text: '资源分享'
+            }],
+            card_id: 0
         }
         config = {
             navigationBarTitleText: '团队评论'
@@ -116,19 +120,36 @@
                 })
             }
         }
+        events = {
+            openPopup: () => {
+                this.commentStatus = true
+            },
+            closePopup: (type) => {
+                
+                this.commentStatus = false
+                if (type == 1) {
+                    this.getCommentList(this.card_id)
+                }
+                this.$apply()
+            }
+        }
+        // 获取评论列表
         getCommentList(id){
+            console.log(1111)
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            POST(`${localUrl}/comment/getList`,{card_id: id}, (res)=>{
+            GET(`${localUrl}/comment/getList`,{card_id: id}, (res)=>{
                 if(res.data.status === 1){
-                    this.commentList = res.data.data.data;
+                    this.commentList = res.data.data;
                     this.$apply();
+                    console.log(this.commentList)
                 }
             })
         }
+        // 获取卡片信息
         getCardMsg(id){
+        
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
                 GET(`${localUrl}/card/getList`,{id:id}, (res)=>{
-                    console.log(res);
                     if(res.data.status === 1){
                         this.teamInfo = res.data.data;
                         this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
@@ -139,8 +160,9 @@
                 })
         }
         onLoad(options){
-            console.log(1111);
-            this.getCardMsg(options.id);
+            this.card_id = options.id
+            this.getCardMsg(options.id)
+            this.getCommentList(options.id)
         }
     }
 </script>

@@ -39,10 +39,10 @@
             }
         }
         methods = {
-            // 路由跳转
+            // 评论路由跳转
             navigate(pageName) {
                 wepy.navigateTo({
-                    url: `/pages/${pageName}/index`
+                    url: `/pages/${pageName}/index?id=${this.teamInfo.id}`
                 })
             },
             support(){
@@ -58,6 +58,9 @@
                 })
             }
         }
+        onLoad () {
+            // console.log(this.$data.teamInfo)
+        }
     }
 </script>
 
@@ -68,7 +71,6 @@
         width: 610rpx;
         left: 70rpx;
         top: 30rpx;
-        height: 800rpx;
         position: relative;
         border-radius: 10rpx;
         overflow: hidden;
@@ -120,6 +122,7 @@
             display: flex;
             justify-content: space-between;
             padding: 0 24rpx;
+            margin-bottom: 22rpx;
             .cardTag {
                 height: 24rpx;
                 font-size: 20rpx;
@@ -147,10 +150,8 @@
             }
         }
         .btnContainer {
-            position: absolute;
             width: 100%;
             height: 80rpx;
-            bottom: 0;
             border-top: 1rpx dashed #b9b9b9;
             font-size: 28rpx;
             display: flex;

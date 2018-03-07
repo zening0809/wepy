@@ -27,7 +27,7 @@
                 })
             },
             commentContainer(){
-                console.log(11111);
+                this.$emit('openPopup')
             }
         }
     }

@@ -91,6 +91,8 @@
                         this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
                         this.teamInfo.support = this.teamInfo.support.length;
                         this.teamInfo.isshow = true;
+                        // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
+                        this.teamInfo.id = 1;
                         this.$apply();
                     }
                 })

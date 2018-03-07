@@ -12,12 +12,12 @@
     export default class extends wepy.app {
         config = {
             pages: [
+                // 首页
+                "pages/index",  
                 // 我的卡片
                 "pages/my_card_page/index",
                 // 我的评论
                 "pages/my_comment_page/index",
-                // 首页
-                "pages/index",  
                 // 添加卡片
                 "pages/add_card_page/index",
                 // 团队评论
@@ -46,7 +46,7 @@
         };
         globalData = {
             userInfo: null,
-            backgroundCheckUrl: 'http://zeningtest.free.ngrok.cc'   //127.0.0.1:3000  192.168.0.68:3000 https://m.yunhe.mobi
+            backgroundCheckUrl: 'http://127.0.0.1:3001'   //127.0.0.1:3000  192.168.0.68:3000 https://m.yunhe.mobi
         };
         constructor() {
             super();

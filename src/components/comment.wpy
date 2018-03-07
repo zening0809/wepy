@@ -1,8 +1,8 @@
 <template>
-    <view class="backLayerContainer" wx:if="{{state}}" >
+    <view class="backLayerContainer">
         <view class='backLayer' @tap="disabled()"></view>
         <view class='comentCotioner'>
-             <textarea placeholder="请输入评论" focus="{{true}}" />
+             <textarea @input="getContent" placeholder="请输入评论" />
              <view @tap="sendComment()" class='button'>发 布</view>
         </view>
     </view>
@@ -10,21 +10,42 @@
 
 <script>
     import wepy from 'wepy'
+    import { POST, GET } from '../utils'
     export default class SendComment extends wepy.component {
         data = {
-            state: false
+            content: ''
         }
         props = {
-            personal: String,
-            team: String,
-            commentMsg: Object
+            cardId: Number
         }
         methods = {
+            getContent (e) {
+                this.content = e.detail.value
+            },
             sendComment(){
-                console.log(11111);
+                let commentData = {}
+                let localUrl = this.$parent.$parent.globalData.backgroundCheckUrl
+                let openid = wx.getStorageSync('openid')
+                commentData.openid = openid
+                commentData.content = this.content
+                commentData.card_id = this.cardId
+                let that = this
+                POST(`${localUrl}/comment/saveComment`, commentData, (res)=>{
+                    wepy.showModal({
+                        title: '存储成功',
+                        icon: 'success',
+                        confirmColor: '#6CACF4',
+                        showCancel: false,
+                        success () {
+                            that.$emit('closePopup', 1)
+                        }
+                    })
+                    
+                })
+                
             },
             disabled(){
-                this.state = false;
+                this.$emit('closePopup')
                 this.$apply();
             }
         }
