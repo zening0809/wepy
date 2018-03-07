@@ -13,7 +13,7 @@
                             <text class="item-name">{{item.nickname}}</text>
                             <view class="item-number">No.{{item.id}}</view>
                         </view>
-                        <view @tap="support()" class="item-header--right">
+                        <view @tap="support" class="item-header--right" data-index="{{index}}">
                             <image src="/asserts/image/home/suport_card.png" class="item-like" />{{item.support.length}}
                         </view>
                     </view>
@@ -106,11 +106,13 @@
                 })
                 return;
             },
-            support() {
+            support(e) {
                 //TODO: data里面id的值要改
+                let index = e.currentTarget.dataset.index;
+                
                 let data = {
                     openid: wx.getStorageSync('openid'),
-                    id: 1
+                    id: this.data.commentList[index].id
                 }
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
                 POST(`${localUrl}/comment/support`,data, (res)=>{
