@@ -1,6 +1,6 @@
 <template>
     <view class="addCardContainer">
-        <view class='title'>待获得徽章</view>
+        <view class='title'>已获得徽章</view>
         <view class='iconsContainer'>
             <repeat for="{{20}}" key="index" item="item" index="index">
                 <view>
