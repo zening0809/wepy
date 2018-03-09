@@ -11,7 +11,7 @@
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>
-        <view @tap="navigate('my_comment_page')" class='messageContainer'>
+        <view @tap="feedback()" class='messageContainer'>
             <view>
                 <image src='/asserts/image/own/msg.png' />
                 <text>意见反馈</text>
@@ -25,6 +25,7 @@
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>
+        <Feedback :userId.sync="user_id" wx:if="{{feedbackStatus}}" />
         <BtnCom></BtnCom>
     </view>
 </template>
@@ -34,15 +35,20 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
+    import Feedback from '../../components/feedback'
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '个人主页'
         }
-        data = {}
+        data = {
+            feedbackStatus: false,
+            user_id: 111
+        }
         components = {
             AchieveHead,
             BtnCom,
-            PersonItem
+            PersonItem,
+            Feedback
         }
         methods = {
             // 路由跳转
@@ -55,6 +61,17 @@
                 wepy.navigateBack({
                     delta: 10
                 })
+            },
+            feedback() {
+                this.$emit('openPopup')
+            }
+        }
+        events = {
+            openPopup: () => {
+                this.feedbackStatus = true
+            },
+            closePopup: () => {
+                this.feedbackStatus = false
             }
         }
     }

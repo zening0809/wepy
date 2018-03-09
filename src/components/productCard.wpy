@@ -22,7 +22,7 @@
             <view @tap="navigate('team_comment_page')" class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
-            <view class="suport" @tap="support()">
+            <view class="suport" @tap="support">
                 <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
             </view>
         </view>

@@ -1,0 +1,97 @@
+<template>
+    <view class="backLayerContainer">
+        <view class='backLayer' @tap="disabled"></view>
+        <view class='comentCotioner'>
+             <textarea @input="getContent" placeholder="请输入反馈" />
+             <view @tap="sendFeedback" class='button'>确 认</view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import { POST, GET } from '../utils'
+    export default class Feedback extends wepy.component {
+        data = {
+            content: ''
+        }
+        props = {
+            userId: Number
+        }
+        methods = {
+            getContent (e) {
+                this.content = e.detail.value
+            },
+            sendFeedback(){
+                let feedbackData = {}
+                let localUrl = this.$parent.$parent.globalData.backgroundCheckUrl
+                let openid = wx.getStorageSync('openid')
+                feedbackData.openid = openid
+                feedbackData.content = this.content
+                feedbackData.user_id = this.userId
+                let that = this
+                POST(`${localUrl}/feedback/saveFeedback`, feedbackData, (res)=>{
+                    wepy.showModal({
+                        title: '存储成功',
+                        icon: 'success',
+                        confirmColor: '#6CACF4',
+                        showCancel: false,
+                        success () {
+                            that.$emit('closePopup')
+                        }
+                    })
+                    
+                })
+                
+            },
+            disabled(){
+                this.$emit('closePopup')
+                this.$apply();
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .backLayerContainer {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 100000;
+        .backLayer{
+            background: #000;            
+            width: 100%;
+            height: 100%; 
+            opacity: 0.6;
+        }
+        .comentCotioner{
+            width: 70%;
+            height: 600rpx;
+            background: #fff;
+            margin: 0 auto;
+            position: absolute;
+            top: 20%;
+            left: 15%;
+        textarea{
+            width: 70%;
+            height: 300rpx;
+            top: 80rpx;
+            left: 15%;
+            position: absolute;
+        }
+        .button{
+            width: 100%;
+            position: absolute;
+            height: 60rpx;
+            line-height: 60rpx;
+            background: rgb(60, 99, 228);
+            text-align: center;
+            color: #fff;
+            font-size: 32rpx;
+            bottom: 0;
+            z-index: 999999999
+        }
+        }
+        
+    }
+</style>

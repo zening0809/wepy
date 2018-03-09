@@ -1,5 +1,5 @@
 <template>
-    <view style="homeConatine" src="/asserts/image/home/bg.png">
+    <view class="homeContainer" @touchstart="handleTouchstart" @touchmove="handleTouchmove" @tounchend="handleTouchend">
         <view class="headContainer">
             <image class="logo" src="/asserts/image/home/logo.png" />
             <view class="cardContainer">
@@ -17,7 +17,7 @@
                 </view>
             </view>
         </view>
-                <ProductCard :teamInfo.sync="teamInfo" />
+        <ProductCard :teamInfo.sync="teamInfo" />
         <BtnCom/>
     </view>
 </template>
@@ -36,6 +36,15 @@
             ProductCard
         }
         data = {
+            // 请求状态
+            isFetching: false,
+            // 鼠标滑动数据
+            mouseData: {
+                lastX: 0,
+                lastY: 0,
+                // text: '没有滑动',
+                // currentGesture: 0
+            },
             teamInfo: {
                 tag: '',
                 nickname: '',
@@ -71,8 +80,46 @@
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index`
                 })
-            }
-        
+            },
+            handleTouchmove(e) {
+                var currentX = e.touches[0].pageX
+                var currentY = e.touches[0].pageY
+                var tx = currentX - this.mouseData.lastX
+                var ty = currentY - this.mouseData.lastY
+                var text = ''
+                // 左右方向滑动
+                if (Math.abs(tx) > Math.abs(ty)) {
+                    if (tx < 0) {
+                        text = '左'
+                    } else  if (tx > 0) {
+                        text = '右'
+                    }
+                } else {
+                    if (ty < 0) {
+                        text = '上'
+                    } else  if (ty > 0) {
+                        text = '下'
+                    }
+                }
+                // 将当前坐标保存进行下次计算
+                this.mouseData.lastX = currentX
+                this.mouseData.lastY = currentY
+                // this.mouseData.text = text
+                if (text === '左' && !this.isFetching) {
+                    this.refresh(1)
+                }
+                if (text === '右' && !this.isFetching) {
+                    this.refresh(11)
+                }
+            },
+            handleTouchstart(e) {
+                this.mouseData.lastX = e.touches[0].pageX
+                this.mouseData.lastY = e.touches[0].pageY
+            },
+            // handleTouchend(e) {
+            //     this.currentGesture = 0;
+            //     this.mouseData.text = '没有滑动'
+            // }    
         }
         events = {
             addSupport: () => {
@@ -83,29 +130,30 @@
         onLoad() {
             Login(this.$parent.globalData.backgroundCheckUrl);
         }
-        refresh(){
-            
+        refresh(id){
+            this.isFetching = true;
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                GET(`${localUrl}/card/getList`,{id:1}, (res)=>{
-                    if(res.data.status === 1){
-                        this.teamInfo = res.data.data;
-                        this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                        this.teamInfo.support = this.teamInfo.support.length;
-                        this.teamInfo.isshow = true;
-                        // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
-                        this.teamInfo.card_id = 1;
-                        this.$apply();
-                    }
-                })
+            GET(`${localUrl}/card/getList`,{id}, (res)=>{
+                if(res.data.status === 1){
+                    this.teamInfo = res.data.data;
+                    this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                    this.teamInfo.support = this.teamInfo.support.length;
+                    this.teamInfo.isshow = true;
+                    // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
+                    this.teamInfo.card_id = 1;
+                }
+                this.isFetching = false;
+                this.$apply();
+            })
         }
         onShow(){
-          this.refresh()
+            this.refresh(1)
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .homeConatine {
+    .homeContainer {
         height: 100%;
         width: 100%;
         .bgStyle {
