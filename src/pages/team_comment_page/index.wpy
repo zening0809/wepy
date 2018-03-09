@@ -107,7 +107,7 @@
                 return;
             },
             support(e) {
-                //TODO: data里面id的值要改
+                
                 let index = e.currentTarget.dataset.index;
                 
                 let data = {

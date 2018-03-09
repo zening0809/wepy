@@ -1,6 +1,6 @@
 <template>
     <view class="addCardContainer">
-        <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
+        <AchieveHead :personal.sync="personalNum" :team.sync="teamNum"></AchieveHead>
         <view class="achive-tab">
             <view @tap="navigate('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
@@ -29,50 +29,52 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
+    import {GET, POST} from '../../utils'
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '成就'
         }
         data = {
-            personalNum: '121',
-            teamNum: '6666',
-            personalList: [{
-                personRank: 1,
-                avatar: '/asserts/image/home/title.png',
-                personName: 'CG猎人TIM',
-                teamId: '823',
-                achieveNum: '8686'
-            }, {
-                personRank: 2,
-                avatar: '/asserts/image/home/title.png',
-                personName: 'UDPonline',
-                teamId: '523',
-                achieveNum: '7258'
-            }, {
-                personRank: 3,
-                avatar: '/asserts/image/home/title.png',
-                personName: '你好大海',
-                teamId: '321',
-                achieveNum: '6436'
-            }, {
-                personRank: 4,
-                avatar: '/asserts/image/home/title.png',
-                personName: '欧巴酱',
-                teamId: '451',
-                achieveNum: '5366'
-            }, {
-                personRank: 5,
-                avatar: '/asserts/image/home/title.png',
-                personName: '欧巴酱',
-                teamId: '451',
-                achieveNum: '5366'
-            }, {
-                personRank: 6,
-                avatar: '/asserts/image/home/title.png',
-                personName: '欧巴酱',
-                teamId: '451',
-                achieveNum: '5366'
-            }]
+            personalNum: 0,
+            teamNum: 0,
+            personalList: []
+            // personalList: [{
+            //     personRank: 1,
+            //     avatar: '/asserts/image/home/title.png',
+            //     personName: 'CG猎人TIM',
+            //     teamId: '823',
+            //     achieveNum: '8686'
+            // }, {
+            //     personRank: 2,
+            //     avatar: '/asserts/image/home/title.png',
+            //     personName: 'UDPonline',
+            //     teamId: '523',
+            //     achieveNum: '7258'
+            // }, {
+            //     personRank: 3,
+            //     avatar: '/asserts/image/home/title.png',
+            //     personName: '你好大海',
+            //     teamId: '321',
+            //     achieveNum: '6436'
+            // }, {
+            //     personRank: 4,
+            //     avatar: '/asserts/image/home/title.png',
+            //     personName: '欧巴酱',
+            //     teamId: '451',
+            //     achieveNum: '5366'
+            // }, {
+            //     personRank: 5,
+            //     avatar: '/asserts/image/home/title.png',
+            //     personName: '欧巴酱',
+            //     teamId: '451',
+            //     achieveNum: '5366'
+            // }, {
+            //     personRank: 6,
+            //     avatar: '/asserts/image/home/title.png',
+            //     personName: '欧巴酱',
+            //     teamId: '451',
+            //     achieveNum: '5366'
+            // }]
         }
         components = {
             AchieveHead,
@@ -87,6 +89,29 @@
                 })
             }
         }
+         // 获取数据
+        getData() {
+            let openid = wx.getStorageSync('openid')
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            GET(`${localUrl}/badge/getDate`,{openid: openid}, (res)=>{
+                if(res.data.status === 1){
+                    this.personalNum = res.data.data.personTotal
+                    this.teamNum = res.data.data.teamTotal
+                    this.personalList.push({
+                        personRank: 1,
+                        avatar: res.data.data.userData.avatar_url,
+                        personName: res.data.data.userData.nickname,
+                        teamId: res.data.data.userData.group,
+                        achieveNum: res.data.data.personTotal
+                    })
+                    this.$apply();
+                }
+            })
+        }
+        onLoad(){
+            this.getData()
+        }
+
     }
 </script>
 

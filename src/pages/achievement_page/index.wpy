@@ -1,12 +1,13 @@
 <template>
     <view class="addCardContainer">
-        <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
+        <Badge :badgeDetail.sync="badgeDetail"></Badge>
+        <AchieveHead :personal.sync="personalNum" :team.sync="teamNum"></AchieveHead>
         <view class="achive-tab">
             <view @tap="navigate('achievement_page')" class="tab active-tab">
                 <span class="span-tab">我的徽章</span>
             </view>
             <view class="diver"></view>
-            <view @tap="navigate('personal_achieve_page')" class="tab ">
+            <view @tap="navigate('personal_achieve_page')" class="tab">
                 <span class="span-tab">个人成就</span>
             </view>
             <view class="diver"></view>
@@ -16,20 +17,21 @@
         </view>
         <view @tap="navigate('get_achievement_page')" class='imgContainer'>
             <view class="leftContainer">
-                <image src='/asserts/image/home/title.png' />
-                <view class='imageTitle'>已获得徽章<text>34</text>个</view>
+                <image src='{{ avatar_url }}' />
+                <view class='imageTitle'>已获得徽章<text>{{ badgeNum }}</text>个</view>
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>
         <view class='title'>待获得徽章</view>
         <view class='iconsContainer'>
-            <repeat for="{{8}}" key="index" item="item" index="index">
-                <view>
-                    <image src='/asserts/image/icons/1.png' />
+            <repeat for="{{will_badgeList}}" key="index" item="item" index="index">
+                <view @tap="getDetail" data-index="{{index}}">
+                    <image src='{{item.img}}' />
                 </view>
             </repeat>
         </view>
         <BtnCom></BtnCom>
+        
     </view>
 </template>
 
@@ -38,16 +40,350 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
+    import Badge from '../../components/badge'
+    import {GET, POST} from '../../utils'
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '成就'
         }
         data = {
+            badgeDetail: {},
+            personalNum: 0,
+            teamNum: 0,
+            badgeNum: 0,
+            avatar_url: '',
+            badgeList: [
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/1.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/2.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/3.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/4.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/5.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/6.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/7.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/8.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/9.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/91.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/92.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/93.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/94.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/95.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/96.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/97.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/98.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/99.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/991.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/992.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                }
+            ],
+            get_badgeList: [],
+            will_badgeList: [
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/1.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/2.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/3.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/4.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/5.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/6.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/7.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/8.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/9.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/91.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/92.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/93.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/94.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/95.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/96.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/97.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/98.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/99.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/991.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                },
+                {
+                    name: '徽章名',
+                    img: '/asserts/image/icons/992.png',
+                    des: '徽章描述',
+                    personNum: 135,
+                    teamNum: 9,
+                    date: '2018-03-20'
+                }
+            ]
+            
         }
         components = {
             AchieveHead,
             BtnCom,
-            PersonItem
+            PersonItem,
+            Badge
         }
         methods = {
             // 路由跳转
@@ -55,7 +391,41 @@
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index`
                 })
+            },
+            getDetail(e) {
+                let index = e.currentTarget.dataset.index;
+                this.badgeDetail.show = true
+                this.badgeDetail.detail = this.will_badgeList[index]
+
             }
+        }
+        events = {
+            closePopup () {
+                this.badgeDetail.show = false
+            }
+        }
+        // 获取数据
+        getData() {
+            let openid = wx.getStorageSync('openid')
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            GET(`${localUrl}/badge/getDate`,{openid: openid}, (res)=>{
+                if(res.data.status === 1){
+                    this.personalNum = res.data.data.personTotal
+                    this.teamNum = res.data.data.teamTotal
+                    this.badgeNum = res.data.data.userData.badge.length
+                    this.avatar_url = res.data.data.userData.avatar_url
+                   
+                    res.data.data.userData.badge.forEach((value) => {
+                        this.get_badgeList.push(this.badgeList[value-1])
+                        this.will_badgeList.splice(this.badgeList[value-1], 1)
+                    })
+                    
+                    this.$apply();
+                }
+            })
+        }
+        onLoad(){
+            this.getData()
         }
     }
 </script>
@@ -68,6 +438,8 @@
             padding: 0 24rpx;
             display: flex;
             flex-wrap: wrap;
+            // TODO: 下面这个为了显示全19个未获得的
+            padding-bottom: 150rpx;
             view {
                 width: 175rpx;
                 height: 175rpx;

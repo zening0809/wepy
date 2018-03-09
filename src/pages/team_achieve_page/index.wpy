@@ -1,6 +1,6 @@
 <template>
     <view class="addCardContainer">
-        <AchieveHead :personal="personalNum" :team="teamNum"></AchieveHead>
+        <AchieveHead :personal.sync="personalNum" :team.sync="teamNum"></AchieveHead>
         <view class="achive-tab">
             <view @tap="navigate('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
@@ -29,34 +29,36 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import TeamItem from '../../components/teamItem'
+    import {GET, POST} from '../../utils'
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '成就'
         }
         data = {
-            personalNum: '555',
-            teamNum: '8989',
-            teamList: [{
-                teamRank: 1,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '3648',
-                teamAchieveNum: '8686'
-            }, {
-                teamRank: 2,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '4123',
-                teamAchieveNum: '7258'
-            }, {
-                teamRank: 3,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '2321',
-                teamAchieveNum: '6436'
-            }, {
-                teamRank: 4,
-                avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
-                teamId: '1234',
-                teamAchieveNum: '3453'
-            }]
+            personalNum: 0,
+            teamNum: 0,
+            teamList: []
+            // teamList: [{
+            //     teamRank: 1,
+            //     avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+            //     teamId: '3648',
+            //     teamAchieveNum: '8686'
+            // }, {
+            //     teamRank: 2,
+            //     avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+            //     teamId: '4123',
+            //     teamAchieveNum: '7258'
+            // }, {
+            //     teamRank: 3,
+            //     avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+            //     teamId: '2321',
+            //     teamAchieveNum: '6436'
+            // }, {
+            //     teamRank: 4,
+            //     avatarList: ['/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png', '/asserts/image/home/title.png'],
+            //     teamId: '1234',
+            //     teamAchieveNum: '3453'
+            // }]
         }
         components = {
             AchieveHead,
@@ -70,6 +72,27 @@
                     url: `/pages/${pageName}/index`
                 })
             }
+        }
+        // 获取数据
+        getData() {
+            let openid = wx.getStorageSync('openid')
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            GET(`${localUrl}/badge/getDate`,{openid: openid}, (res)=>{
+                if(res.data.status === 1){
+                    this.personalNum = res.data.data.personTotal
+                    this.teamNum = res.data.data.teamTotal
+                    this.teamList.push({
+                        teamRank: 1,
+                        avatarList: [res.data.data.userData.avatar_url],
+                        teamId: res.data.data.userData.group,
+                        teamAchieveNum: res.data.data.teamTotal
+                    })
+                    this.$apply();
+                }
+            })
+        }
+        onLoad(){
+            this.getData()
         }
     }
 </script>
