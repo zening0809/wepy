@@ -1,9 +1,9 @@
 <template>
     <view class="backLayerContainer">
-        <view class='backLayer' @tap="disabled()"></view>
+        <view class='backLayer' @tap="disabled"></view>
         <view class='comentCotioner'>
              <textarea @input="getContent" placeholder="请输入评论" />
-             <view @tap="sendComment()" class='button'>发 布</view>
+             <view @tap="sendComment" class='button'>发 布</view>
         </view>
     </view>
 </template>
