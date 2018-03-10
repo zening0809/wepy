@@ -4,8 +4,11 @@
         <view class='title'>已获得徽章</view>
         <view class='iconsContainer'>
             <repeat for="{{get_badgeList}}" key="index" item="item" index="index">
-                <view @tap="getDetail" data-index="{{index}}">
-                    <image src='{{item.img}}' />
+                <view class='achivementText'>
+                    <view @tap="getDetail" data-index="{{index}}">
+                        <image src='{{item.img}}' />
+                    </view>
+                    <view>{{item.name}}</view>
                 </view>
             </repeat>
         </view>
@@ -236,6 +239,11 @@
             padding: 0 24rpx;
             display: flex;
             flex-wrap: wrap;
+            .achivementText{
+                display: flex;
+                flex-direction: column;
+                font-size: 24rpx;
+            }
             view {
                 width: 175rpx;
                 height: 175rpx;
