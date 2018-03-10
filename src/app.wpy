@@ -25,6 +25,8 @@
                 "pages/team_comment_page/index",
                 // 消息页
                 "pages/message_page/index",
+                // 消息详情页
+                "pages/message_detail_page/index",
                 // 个人主页
                 "pages/own_comment_page/index",
                 // 已获得的徽章

@@ -1,0 +1,52 @@
+<template>
+    <view class="container">
+        <view class="body">
+            <view class="title">{{info.title}}</view>
+            <view class="content">
+                <view class="detail">{{info.detail}}</view>
+                <view class="date">{{info.date}}</view>
+            </view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class MessageDetail extends wepy.page {
+        config = {
+            navigationBarTitleText: '消息详情'
+        }
+        data = {
+            info: {}
+        }
+        onLoad(options) {
+            this.info = JSON.parse(options.info);
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .container {
+        height: 100%;
+        width: 100%;
+        padding: 40rpx 0;
+        font-size: 24rpx;
+    }
+    .body {
+        padding: 0 30rpx;
+    }
+    .title {
+        font: 32rpx Arial, Helvetica, sans-serif;
+        text-align: center;
+    }
+    .content {
+        margin-top: 20rpx;
+        font: 26rpx Arial, Helvetica, sans-serif;
+        color: #333;
+    }
+    .date {
+        float: right;
+        margin: 30rpx 50rpx 0 0;
+        color: #ccc;
+    }
+</style>
