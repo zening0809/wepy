@@ -1,13 +1,13 @@
 <template>
     <view class="container">
-        <repeat for={{4}}>
-            <view class="item">
+        <repeat for="{{infoList}}" key="index" index="index" item="item">
+            <view class="item" @tap="navigate('message_detail_page')" data-index="{{index}}">
                 <view class="item-header">
                     <text class="item-title">系统通知消息</text>
-                    <text class="item-date">2018-01-02</text>
+                    <text class="item-date">{{item.date}}</text>
                 </view>
                 <view class="item-content">
-                    酸辣粉解放路思伟雄看来发偶翁偶铺破拖若破女女女女为了离开了健康了规范宏伟安分守己可分为理论女性从，打发来看看了违法及考试分为非。
+                    {{item.title}}
                 </view>
             </view>
         </repeat>
@@ -20,10 +20,44 @@
     import BtnCom from '../../components/btnCom'
     export default class Message extends wepy.page {
         config = {
-            navigationBarTitleText: '消息'
+            navigationBarTitleText: '通知消息'
         }
         components = {
             BtnCom
+        }
+        data = {
+            infoList: [
+                {
+                    date: '2018-01-02',
+                    title: '日本爆炸',
+                    detail: '日本法神使大了累死了的酸辣粉加两块地递增的证地震啊啊啊啊99级老师反馈；历史地分开的数控技术抵扣额，这种方式第IE我已诶哦哦哦哦哦哦哦'
+                },
+                {
+                    date: '2018-02-09',
+                    title: '美国崩溃',
+                    detail: '事前水力发电就流口水了为io为哦哦特偶肉打飞机分开打死覅带 well付款项目发空间打开开发的每年的收费年份那你发递四方速递打开看看扩无日'
+                },
+                {
+                    date: '2018-03-30',
+                    title: '俄国解体',
+                    detail: '二狗设计了发的拉菲俄国终于死啦死啦了倒闭了西伯利亚大分裂德里克吉林省蝶舞速度快解放军上冻盛开的可谓偶偶哈哈代理商法律我io日如遇有'
+                },
+                {
+                    date: '2020-08-08',
+                    title: '台湾回归',
+                    detail: '党中央国务院 ADSL开发了快速的法律让我荣威哦我入围欧荣，台湾省终于回归了呵呵呵呵，中国完成了社会主义统一'
+                }
+            ]
+        }
+        methods = {
+            // 路由跳转
+            navigate(pageName, e) {
+                let infoIndex = e.currentTarget.dataset.index;
+                let info = this.infoList[infoIndex];
+                wepy.navigateTo({
+                    url: `/pages/${pageName}/index?info=${JSON.stringify(info)}`
+                })
+            }
         }
     }
 </script>
@@ -46,15 +80,15 @@
             justify-content: space-between;
         }
         &-title {
-            font: 36rpx Arial, Helvetica, sans-serif;
+            font: 32rpx Arial, Helvetica, sans-serif;
         }
         &-date {
-            font-size: 26rpx;
+            font-size: 24rpx;
             color: #ccc;
         }
         &-content {
             padding: 10rpx 0;
-            font: 28rpx Arial, Helvetica, sans-serif;
+            font: 26rpx Arial, Helvetica, sans-serif;
             color: #ccc;
         }
     }
