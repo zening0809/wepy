@@ -84,7 +84,7 @@
         methods = {
             // 路由跳转
             navigate(pageName) {
-                wepy.navigateTo({
+                wepy.redirectTo({
                     url: `/pages/${pageName}/index`
                 })
             }
