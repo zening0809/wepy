@@ -47,7 +47,7 @@
         };
         globalData = {
             userInfo: null,
-            backgroundCheckUrl: 'http://zeningtest.free.ngrok.cc'   //127.0.0.1:3001  192.168.0.68:3000 https://m.yunhe.mobi
+            backgroundCheckUrl: 'http://127.0.0.1:3001'  //'http://zeningtest.free.ngrok.cc'     192.168.0.68:3000 https://m.yunhe.mobi
         };
         constructor() {
             super();
