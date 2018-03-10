@@ -1,5 +1,5 @@
 <template>
-     <view class="productCard">
+     <view class="productCard" @tap="navigate('team_comment_page')">
         <view class="title">
             <image src="{{teamInfo.avatar_url}}" />
             <text class="name">{{teamInfo.nickname}}</text>
@@ -19,10 +19,10 @@
             </view>
         </view>
         <view class="btnContainer" wx:if="{{teamInfo.isshow}}" >
-            <view @tap="navigate('team_comment_page')" class="comment">
+            <view  class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
-            <view class="suport" @tap="support">
+            <view class="suport" catchtap="support">
                 <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
             </view>
         </view>
