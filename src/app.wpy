@@ -56,7 +56,6 @@
             this.use("requestfix");
         }
         onLaunch() {
-           
             this.testAsync();
             // Login();
         }

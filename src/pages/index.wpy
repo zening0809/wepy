@@ -17,7 +17,7 @@
                 </view>
             </view>
         </view>
-        <ProductCard :teamInfo.sync="teamInfo" />
+        <ProductCard :teamInfo.sync="teamInfo"/>
         <BtnCom/>
     </view>
 </template>
@@ -70,7 +70,10 @@
                 color: '#f7cd8b',
                 text: '资源分享'
             }
-        ]
+        ],
+        curCard: [],
+        curIndex: 0,
+        page: 1
         }
         computed = {
         }
@@ -90,27 +93,22 @@
                 // 左右方向滑动
                 if (Math.abs(tx) > Math.abs(ty)) {
                     if (tx < 0) {
-                        text = '左'
+                        text = 'left'
                     } else  if (tx > 0) {
-                        text = '右'
+                        text = 'right'
                     }
                 } else {
                     if (ty < 0) {
-                        text = '上'
+                        text = 'up'
                     } else  if (ty > 0) {
-                        text = '下'
+                        text = 'down'
                     }
                 }
                 // 将当前坐标保存进行下次计算
                 this.mouseData.lastX = currentX
                 this.mouseData.lastY = currentY
                 // this.mouseData.text = text
-                if (text === '左' && !this.isFetching) {
-                    this.refresh(1)
-                }
-                if (text === '右' && !this.isFetching) {
-                    this.refresh(11)
-                }
+                this.sliderCard(text);
             },
             handleTouchstart(e) {
                 this.mouseData.lastX = e.touches[0].pageX
@@ -130,24 +128,65 @@
         onLoad() {
             Login(this.$parent.globalData.backgroundCheckUrl);
         }
-        refresh(id){
+        sliderCard(direction){
+            switch (direction) {
+                case 'left':
+                    if(this.curIndex-- <= 0){
+                        // 当滑动到第一组特殊处理
+                        if(this.page-- <= 0){
+                            this.page = this.page + 1;
+                            this.$apply;
+                            this.refresh(this.page);
+                        }
+                    }else{
+                        this.curIndex = this.curIndex - 1;
+                        let curObj = this.curCard[this.curIndex];
+                        assignmentAction(curObj);
+                        this.$apply;
+                    }
+                    break;
+                case 'right':
+                    if(this.curIndex++ >= 5){
+                        // 当滑动到第一组特殊处理
+                            this.page = this.page + 1;
+                            this.$apply;
+                            this.refresh(this.page);
+                    }else{
+                        this.curIndex = this.curIndex + 1;
+                        let curObj = this.curCard[this.curIndex];
+                        assignmentAction(curObj);
+                        this.$apply;
+                    }
+                    break;
+            
+                default:
+                    break;
+            }
+        }
+        assignmentAction(teamInfo){
+            teamInfo.tag = this.tagList[teamInfo.tag].text;
+            teamInfo.support = teamInfo.support.length;
+            teamInfo.isshow = true;
+            // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
+            teamInfo.card_id = this.teamInfo.id;
+        }
+        refresh(page){
             this.isFetching = true;
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/card/getList`,{id}, (res)=>{
+            GET(`${localUrl}/card/getList`,{page: page}, (res)=>{
                 if(res.data.status === 1){
-                    this.teamInfo = res.data.data;
-                    this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                    this.teamInfo.support = this.teamInfo.support.length;
-                    this.teamInfo.isshow = true;
-                    // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
-                    this.teamInfo.card_id = 1;
+                    console.log(res.data.data);
+                    this.curCard = res.data.data.data;
+                    this.teamInfo = res.data.data.data[0];
+                    this.assignmentAction(this.teamInfo);
+                    this.curIndex = 0;
                 }
                 this.isFetching = false;
                 this.$apply();
             })
         }
         onShow(){
-            this.refresh(1)
+            this.refresh()
         }
     }
 </script>
