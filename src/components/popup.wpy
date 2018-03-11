@@ -1,9 +1,9 @@
 <template>
-    <view class="backLayerContainer" wx:if="{{state}}" >
+    <view class="backLayerContainer" wx:if="{{state}}">
         <view class='backLayer' @tap="disabled()"></view>
         <view class='comentCotioner'>
-             <textarea placeholder="请输入反馈" @input="getValue"/>
-             <view @tap="sendComment" class='button'>确 认</view>
+            <textarea placeholder="请输入反馈" @input="getValue" />
+            <view @tap="sendComment" class='button'>确 认</view>
         </view>
     </view>
 </template>
@@ -19,14 +19,13 @@
         }
         methods = {
             getValue(e) {
-              this.textValue = e.detail.value
+                this.textValue = e.detail.value
             },
-            sendComment(){
+            sendComment() {
                 // this.$emit('some-event', this.textValue)
                 this.$emit('some-event', this.textValue)
             },
-            disabled(){
-                
+            disabled() {
                 this.$apply();
             }
         }
@@ -42,13 +41,13 @@
         width: 100%;
         height: 100%;
         z-index: 100000;
-        .backLayer{
-            background: #000;            
+        .backLayer {
+            background: #000;
             width: 100%;
-            height: 100%; 
+            height: 100%;
             opacity: 0.6;
         }
-        .comentCotioner{
+        .comentCotioner {
             width: 70%;
             height: 600rpx;
             background: #fff;
@@ -56,26 +55,25 @@
             position: absolute;
             top: 20%;
             left: 15%;
-        textarea{
-            width: 70%;
-            height: 300rpx;
-            top: 80rpx;
-            left: 15%;
-            position: absolute;
+            textarea {
+                width: 70%;
+                height: 300rpx;
+                top: 80rpx;
+                left: 15%;
+                position: absolute;
+            }
+            .button {
+                width: 100%;
+                position: absolute;
+                height: 60rpx;
+                line-height: 60rpx;
+                background: rgb(60, 99, 228);
+                text-align: center;
+                color: #fff;
+                font-size: 32rpx;
+                bottom: 0;
+                z-index: 999999999
+            }
         }
-        .button{
-            width: 100%;
-            position: absolute;
-            height: 60rpx;
-            line-height: 60rpx;
-            background: rgb(60, 99, 228);
-            text-align: center;
-            color: #fff;
-            font-size: 32rpx;
-            bottom: 0;
-            z-index: 999999999
-        }
-        }
-        
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <view class="sub-container">
-        <view  @tap="commentContainer()" class="comment">
+        <view @tap="commentContainer()" class="comment">
             <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
         </view>
         <view @tap="support()" class="suport">
@@ -11,29 +11,29 @@
 
 <script>
     import wepy from 'wepy'
-    import { POST } from '../utils'
+    import {
+        POST
+    } from '../utils'
     export default class CommentSupport extends wepy.component {
         props = {
             cardId: Number
         }
         methods = {
             // 点赞
-            support(){
-                
+            support() {
                 let data = {
                     openid: wx.getStorageSync('openid'),
                     id: this.cardId
                 }
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`,data, (res)=>{
+                POST(`${localUrl}/card/support`, data, (res) => {
                     // 添加成功
                     if (res.data.data.status == 1) {
                         this.$emit('addSupport')
                     }
                 })
-                
             },
-            commentContainer(){
+            commentContainer() {
                 this.$emit('openPopup')
             }
         }

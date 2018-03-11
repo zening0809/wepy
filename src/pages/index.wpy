@@ -1,5 +1,5 @@
 <template>
-    <view class="homeContainer" @touchstart="handleTouchstart" @touchmove="handleTouchmove" @tounchend="handleTouchend">
+    <view class="homeContainer" @touchstart="handleTouchstart" @touchend="handleTouchend">
         <view class="headContainer">
             <image class="logo" src="/asserts/image/home/logo.png" />
             <view class="cardContainer">
@@ -17,185 +17,187 @@
                 </view>
             </view>
         </view>
-        <ProductCard :teamInfo.sync="teamInfo"/>
+        <ProductCard :teamInfo.sync="teamInfo" />
         <BtnCom/>
     </view>
 </template>
 
 <script>
-    import wepy from 'wepy'
-    import BtnCom from '../components/btnCom'
-    import ProductCard from '../components/productCard'
-    import {GET, Login} from '../utils';
+    import wepy from "wepy";
+    import BtnCom from "../components/btnCom";
+    import ProductCard from "../components/productCard";
+    import {
+        GET,
+        Login
+    } from "../utils";
     export default class Index extends wepy.page {
         config = {
-            navigationBarTitleText: '首页'
-        }
+            navigationBarTitleText: "首页"
+        };
         components = {
             BtnCom,
             ProductCard
-        }
+        };
         data = {
-            // 请求状态
-            isFetching: false,
             // 鼠标滑动数据
             mouseData: {
                 lastX: 0,
-                lastY: 0,
+                lastY: 0
                 // text: '没有滑动',
                 // currentGesture: 0
             },
             teamInfo: {
-                tag: '',
-                nickname: '',
-                content: '',
-                title: '',
+                tag: "",
+                nickname: "",
+                content: "",
+                title: "",
                 support: 0,
-                avatar_url: '',
+                avatar_url: "",
                 group: 0
             },
             tagList: [{
-                color: '#256af2',
-                text: '技能交换'
-            },
-            {
-                color: '#b4e99f',
-                text: '团队进展'
-            },
-            {
-                color: '#fb91af',
-                text: '求助'
-            },
-            {
-                color: '#f7cd8b',
-                text: '资源分享'
-            }
-        ],
-        curCard: [],
-        curIndex: 0,
-        page: 1
-        }
-        computed = {
-        }
+                    color: "#256af2",
+                    text: "技能交换"
+                },
+                {
+                    color: "#b4e99f",
+                    text: "团队进展"
+                },
+                {
+                    color: "#fb91af",
+                    text: "求助"
+                },
+                {
+                    color: "#f7cd8b",
+                    text: "资源分享"
+                }
+            ],
+            curCard: [],
+            curIndex: 0,
+            page: 1
+        };
+        computed = {};
         methods = {
             // 路由跳转
             navigate(pageName) {
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index`
-                })
+                });
             },
-            handleTouchmove(e) {
-                var currentX = e.touches[0].pageX
-                var currentY = e.touches[0].pageY
-                var tx = currentX - this.mouseData.lastX
-                var ty = currentY - this.mouseData.lastY
-                var text = ''
+            handleTouchstart(e) {
+                this.mouseData.lastX = e.touches[0].pageX;
+                this.mouseData.lastY = e.touches[0].pageY;
+            },
+            handleTouchend(e) {
+                // this.currentGesture = 0;
+                // this.mouseData.text = '没有滑动';
+                var currentX = e.changedTouches[0].pageX;
+                var currentY = e.changedTouches[0].pageY;
+                var tx = currentX - this.mouseData.lastX;
+                var ty = currentY - this.mouseData.lastY;
+                var text = "";
                 // 左右方向滑动
                 if (Math.abs(tx) > Math.abs(ty)) {
-                    if (tx < 0 && Math.abs(tx) >= 20) {
-                        text = 'left'
-                    } else  if (tx > 0 && Math.abs(tx) >= 20) {
-                        text = 'right'
+                    if (tx < 0) {
+                        text = "left";
+                    } else if (tx > 0) {
+                        text = "right";
                     }
                 } else {
                     if (ty < 0) {
-                        text = 'up'
-                    } else  if (ty > 0) {
-                        text = 'down'
+                        text = "up";
+                    } else if (ty > 0) {
+                        text = "down";
                     }
                 }
                 // 将当前坐标保存进行下次计算
-                this.mouseData.lastX = currentX
-                this.mouseData.lastY = currentY
+                this.mouseData.lastX = currentX;
+                this.mouseData.lastY = currentY;
                 // this.mouseData.text = text
                 this.sliderCard(text);
-            },
-            handleTouchstart(e) {
-                this.mouseData.lastX = e.touches[0].pageX
-                this.mouseData.lastY = e.touches[0].pageY
-            },
-            // handleTouchend(e) {
-            //     this.currentGesture = 0;
-            //     this.mouseData.text = '没有滑动'
-            // }    
-        }
+            }
+        };
         events = {
             addSupport: () => {
-                this.teamInfo.support += 1
+                this.teamInfo.support += 1;
             }
-            
         };
         onLoad() {
             Login(this.$parent.globalData.backgroundCheckUrl);
         }
-        sliderCard(direction){
+        sliderCard(direction) {
             switch (direction) {
-                case 'left':
-                    console.log('left>>', this.curIndex)
-                    if(this.curIndex <= 0){
-                        // 当滑动到第一组特殊处理
-                        if(this.page == 1){
-                            this.page = this.page + 1;
+                case "right":
+                    if (this.curIndex <= 0) {
+                        // 第一页时，向右滑动，页数无法减少，索引指向最后一条数据
+                        if (this.page == 1) {
+                            this.curIndex = this.curCard.length - 1;
+                            this.assignmentAction(this.curCard[this.curIndex]);
+                            this.$apply();
+                        } else {
+                            // 否则，读取上一页数据
+                            this.page--;
                             this.$apply();
                             this.refresh(this.page);
-                        } else if (this.curIndex == 0) {
-                            this.curIndex = this.curIndex + 1;
-                            let curObj = this.curCard[this.curIndex];
-                            this.assignmentAction(curObj);
-                            this.$apply();
                         }
-                    }else{
+                    } else {
                         this.curIndex = this.curIndex - 1;
                         let curObj = this.curCard[this.curIndex];
                         this.assignmentAction(curObj);
                         this.$apply();
                     }
                     break;
-                case 'right':
-                    console.log('right>>', this.curIndex)
-                    if(this.curIndex >= 4){
-                        // 当滑动到第一组特殊处理
-                            this.page = this.page + 1;
+                case "left":
+                    let len = this.curCard.length;
+                    // 当索引大于当前数据的索引长度
+                    if (this.curIndex >= len - 1) {
+                        // 如果数据长度小于5，说明没有更多数据，page 设置为1
+                        if (len < 5) {
+                            this.page = 1;
                             this.$apply();
                             this.refresh(this.page);
-                    }else{
+                        } else {
+                            // 否则读取下一页数据
+                            this.page++;
+                            this.$apply();
+                            this.refresh(this.page);
+                        }
+                    } else {
                         this.curIndex = this.curIndex + 1;
                         let curObj = this.curCard[this.curIndex];
                         this.assignmentAction(curObj);
                         this.$apply();
                     }
                     break;
-            
                 default:
                     break;
             }
         }
-        assignmentAction(teamInfo){
+        assignmentAction(teamInfo) {
             this.teamInfo = teamInfo;
-            this.teamInfo.tag = this.tagList[teamInfo.tag].text;
-            this.teamInfo.support = teamInfo.support.length;
+            this.teamInfo.tagName = this.tagList[teamInfo.tag].text;
+            this.teamInfo.supportNum = teamInfo.support.length;
             this.teamInfo.isshow = true;
             // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
             this.teamInfo.card_id = teamInfo.id;
         }
-        refresh(page){
-            this.isFetching = true;
+        refresh(page) {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/card/getList`,{page: page}, (res)=>{
-                if(res.data.status === 1){
+            GET(`${localUrl}/card/getList`, {
+                page: page
+            }, res => {
+                if (res.data.status === 1) {
                     console.log(res.data.data);
                     this.curCard = res.data.data.data;
                     let teamInfo = res.data.data.data[0];
-                    console.log('====', teamInfo)
                     this.assignmentAction(teamInfo);
                     this.curIndex = 0;
                 }
-                this.isFetching = false;
                 this.$apply();
-            })
+            });
         }
-        onShow(){
-            this.refresh()
+        onShow() {
+            this.refresh();
         }
     }
 </script>
