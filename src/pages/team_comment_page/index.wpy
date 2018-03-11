@@ -22,7 +22,7 @@
                     </view>
                     <view class="item-footer">
                         <view class="item-time">{{item.create_time}}</view>
-                        <view catchtap="deleteComment" class="item-del" wx:if="{{isShow}}">删除</view>
+                        <view catchtap="deleteComment" class="item-del" wx:if="{{isOwn}}">删除</view>
                     </view>
                 </view>
             </repeat>
@@ -38,9 +38,9 @@
     import SendComment from '../../components/comment'
     export default class TeamComment extends wepy.page {
         data = {
-            isShow: false,
             isComment: true,
             commentStatus: false,
+            isOwn: false,
             // teamInfo: {
             //     avatar_url: '/asserts/image/home/title.png',
             //     nickname: '乐小舟',
@@ -156,6 +156,7 @@
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             GET(`${localUrl}/comment/getList`,{card_id: id}, (res)=>{
                 if(res.data.status === 1){
+                    console.log(res.data.data)
                     this.commentList = res.data.data;
                     this.$apply();
                 }
@@ -163,9 +164,8 @@
         }
         // 获取卡片信息
         getCardMsg(id){
-        
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                GET(`${localUrl}/card/getList`,{id:id}, (res)=>{
+                GET(`${localUrl}/card/curent`,{id:id}, (res)=>{
                     if(res.data.status === 1){
                         this.teamInfo = res.data.data;
                         this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
@@ -179,6 +179,7 @@
             this.card_id = options.id
             this.getCardMsg(options.id)
             this.getCommentList(options.id)
+            this.$apply;
         }
     }
 </script>
