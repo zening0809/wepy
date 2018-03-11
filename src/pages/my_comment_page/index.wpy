@@ -64,8 +64,7 @@
         }
         components = {
         }
-        onShow(option){
-            console.log(option.id);
+        onShow(options){
         }
     }
 </script>
