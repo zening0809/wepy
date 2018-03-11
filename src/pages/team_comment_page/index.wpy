@@ -22,7 +22,7 @@
                     </view>
                     <view class="item-footer">
                         <view class="item-time">{{item.create_time}}</view>
-                        <view catchtap="deleteComment" class="item-del">删除</view>
+                        <view catchtap="deleteComment" class="item-del" wx:if="{{isShow}}">删除</view>
                     </view>
                 </view>
             </repeat>
@@ -38,6 +38,7 @@
     import SendComment from '../../components/comment'
     export default class TeamComment extends wepy.page {
         data = {
+            isShow: false,
             isComment: true,
             commentStatus: false,
             // teamInfo: {
