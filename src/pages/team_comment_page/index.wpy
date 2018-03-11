@@ -168,12 +168,23 @@
                 GET(`${localUrl}/card/curent`,{id:id}, (res)=>{
                     if(res.data.status === 1){
                         this.teamInfo = res.data.data;
-                        this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                        this.teamInfo.support = this.teamInfo.support.length;
-                        this.teamInfo.isshow = false;
+                        // console.log(this.teamInfo,1111111111);
+                        // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                        // this.teamInfo.support = this.teamInfo.support.length;
+                        // this.teamInfo.isshow = false;
+                        // this.$apply();
+                        this.assignmentAction(this.teamInfo);
                         this.$apply();
                     }
                 })
+        }
+        assignmentAction(teamInfo) {
+            this.teamInfo = teamInfo;
+            this.teamInfo.tagName = this.tagList[teamInfo.tag].text;
+            this.teamInfo.supportNum = teamInfo.support.length;
+            this.teamInfo.isshow = false;
+            // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
+            this.teamInfo.card_id = teamInfo.id;
         }
         onLoad(options){
             this.card_id = options.id

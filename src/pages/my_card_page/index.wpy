@@ -1,9 +1,9 @@
 <template>
     <view class="myCardContainer">
            <repeat for="{{ cardList }}" item="item" index="index">
-                    <view class="cardItem" data-index="{{index}}" @tap="navigate">
+                    <view class="cardItem" data-index="{{index}}">
                         <view class="cardTop">
-                            <view class="cardFun" wx:if="{{status}}">
+                            <view class="cardFun" wx:if="{{item.status}}">
                                 <view class="zanFun">
                                     <image src="/asserts/image/card/suport_one.png" class="icon-class" />
                                     <view class="text-num">{{item.support.length}}</view>
@@ -14,7 +14,7 @@
                                     <view class="text-num">{{item.comment.length}}</view>
                                 </view>
                             </view>
-                            <view class="cardItemCardFun" wx:if="{{!status}}">
+                            <view class="cardItemCardFun" wx:if="{{!item.status}}">
                                 已过期
                             </view>
                             <view class="cardTitle">{{item.title}}</view>
@@ -24,7 +24,7 @@
                         </view>
                         <view class="cardBtm">
                             
-                            <view class="show">查看卡片</view>
+                            <view class="show"  @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
                             <view class="date">{{item.create_time}}</view>
                     
                             <view class="zan">
@@ -69,27 +69,39 @@
         }
         methods = {
             // 路由跳转
-            navigate(e) {
+            toCardDetail(e) {
                 let index = e.currentTarget.dataset.index;
-                let id = this.cardList[index].id;
+                let card_id = this.cardList[index].id;
+                console.log(card_id);
                 wepy.navigateTo({
-                    url: `/pages/team_comment_page/index?id=${id}`
+                    url: `/pages/team_comment_page/index?id=${card_id}`
                 })
             },
-          
-            deleteCard(e){
+            deleteCard(e) {
                 let index = e.currentTarget.dataset.index;
                 let id = this.cardList[index].id;
+                let openid = wx.getStorageSync('openid');
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
                     icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
-                    success: ()=>{
+                    success: () => {
                         let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                        POST(`${localUrl}/card/delete`,{id: id}, (res)=>{
-                            if(res.status === 1){
+                        POST(`${localUrl}/card/delete`, {
+                            id: id
+                        }, (res) => {
+                            if (res.data.status === 1) {
+                                // 刷新页面
+                                GET(`${localUrl}/card/getUserCard`, {
+                                    openid: openid
+                                }, (res) => {
+                                    if (res.data.status === 1) {
+                                        this.cardList = res.data.data;
+                                        this.$apply();
+                                    }
+                                })
                                 // this.teamInfo = res.data.data.data[0];
                                 // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
                                 // this.$apply();
