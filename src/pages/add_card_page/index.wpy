@@ -21,7 +21,9 @@
 
 <script>
     import wepy from 'wepy';
-    import {POST} from '../../utils';
+    import {
+        POST
+    } from '../../utils';
     export default class AddCard extends wepy.page {
         config = {
             navigationBarTitleText: '新增卡片'
@@ -58,10 +60,10 @@
                 this.curTag = index;
                 this.$apply();
             },
-            inputChange(type,values ){
-                if(type === 'title'){
+            inputChange(type, values) {
+                if (type === 'title') {
                     this.formObj.title = values.detail.value;
-                }else if(type === 'content'){
+                } else if (type === 'content') {
                     this.formObj.content = values.detail.value;
                 }
                 this.$apply();
@@ -80,7 +82,7 @@
                     }
                 })
             },
-            submitForm(){
+            submitForm() {
                 let curData = this.data;
                 let openid = wx.getStorageSync('openid');
                 let addCard = {};
@@ -89,12 +91,19 @@
                 addCard.tag = (curData.curTag);
                 addCard.openid = openid;
                 let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/saveCard`, addCard, ()=>{
+                POST(`${localUrl}/card/saveCard`, addCard, () => {
                     wepy.showModal({
                         title: '存储成功',
                         icon: 'success',
                         confirmColor: '#6CACF4',
-                        showCancel: false
+                        showCancel: false,
+                        success: (res) => {
+                            if (res.confirm) {
+                                wepy.navigateTo({
+                                    url: `/pages/index`
+                                })
+                            }
+                        }
                     })
                 })
             }

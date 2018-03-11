@@ -17,7 +17,7 @@
                 </view>
             </view>
         </view>
-        <ProductCard :teamInfo.sync="teamInfo" />
+        <ProductCard :teamInfo.sync="teamInfo" wx:if="{{isShow}}" />
         <BtnCom/>
     </view>
 </template>
@@ -39,6 +39,7 @@
             ProductCard
         };
         data = {
+            isShow: false,
             // 鼠标滑动数据
             mouseData: {
                 lastX: 0,
@@ -189,9 +190,14 @@
                 if (res.data.status === 1) {
                     console.log(res.data.data);
                     this.curCard = res.data.data.data;
-                    let teamInfo = res.data.data.data[0];
-                    this.assignmentAction(teamInfo);
-                    this.curIndex = 0;
+                    if (this.curCard.length === 0) {
+                        this.isShow = false;
+                    } else {
+                        this.isShow = true;
+                        let teamInfo = res.data.data.data[0];
+                        this.assignmentAction(teamInfo);
+                        this.curIndex = 0;
+                    }
                 }
                 this.$apply();
             });

@@ -3,8 +3,8 @@
         <view class="body">
             <view class="title">{{info.title}}</view>
             <view class="content">
-                <view class="detail">{{info.detail}}</view>
-                <view class="date">{{info.date}}</view>
+                <view class="detail">{{info.content}}</view>
+                <view class="date">{{info.create_time}}</view>
             </view>
         </view>
     </view>
