@@ -1,5 +1,5 @@
 <template>
-     <view class="productCard" @tap="navigate('team_comment_page')">
+    <view class="productCard" @tap="navigate('team_comment_page')">
         <view class="title">
             <image src="{{teamInfo.avatar_url}}" />
             <text class="name">{{teamInfo.nickname}}</text>
@@ -18,8 +18,8 @@
                 <text>{{teamInfo.support}}</text>
             </view>
         </view>
-        <view class="btnContainer" wx:if="{{teamInfo.isshow}}" >
-            <view  class="comment">
+        <view class="btnContainer" wx:if="{{teamInfo.isshow}}">
+            <view class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
             <view class="suport" catchtap="support">
@@ -31,7 +31,9 @@
 
 <script>
     import wepy from 'wepy'
-    import {POST} from '../utils';
+    import {
+        POST
+    } from '../utils';
     export default class ProductCard extends wepy.component {
         props = {
             teamInfo: {
@@ -41,27 +43,32 @@
         methods = {
             // 评论路由跳转
             navigate(pageName) {
+                var pages = getCurrentPages() //获取加载的页面
+                var currentPage = pages[pages.length - 1] //获取当前页面的对象
+                var url = currentPage.route //当前页面url
+                if(url === 'pages/team_comment_page/index'){
+                    return;
+                }
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index?id=${this.teamInfo.card_id}`
                 })
             },
             // 点赞
-            support(){
+            support() {
                 let data = {
                     openid: wx.getStorageSync('openid'),
                     id: this.teamInfo.card_id
                 }
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`,data, (res)=>{
+                POST(`${localUrl}/card/support`, data, (res) => {
                     // 添加成功
                     if (res.data.data.status == 1) {
                         this.$emit('addSupport')
                     }
                 })
-                
             }
         }
-        onLoad () {
+        onLoad() {
             // console.log(this.$data.teamInfo)
         }
     }
