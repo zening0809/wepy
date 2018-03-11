@@ -69,6 +69,13 @@
                         this.$apply();
                     }
                 })
+                GET(`${localUrl}/comment/userComment`,{openid: openid}, (res)=>{
+                    if(res.data.status === 1){
+                        this.commentSupportCount = res.data.data.suportSum,
+                        this.commentCount = res.data.data.commentSum,
+                        this.$apply();
+                    }
+                })
         }
         methods = {
             // 路由跳转

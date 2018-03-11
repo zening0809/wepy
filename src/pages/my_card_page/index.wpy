@@ -45,8 +45,7 @@
 
 <script>
     import wepy from 'wepy'
-    import { POST } from '../../utils'
-    import {GET} from '../../utils';
+    import { POST, GET } from '../../utils'
     export default class MyCardPage extends wepy.page {
         config = {
             navigationBarTitleText: '卡片列表'
@@ -57,7 +56,6 @@
         }
         components = {}
         onShow(){
-            console.log(11111)
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             let openid = wx.getStorageSync('openid');
             GET(`${localUrl}/card/getUserCard`,{openid: openid}, (res)=>{

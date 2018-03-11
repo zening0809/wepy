@@ -1,70 +1,133 @@
 <template>
     <view class="myCardContainer">
-        <view class="cardItem">
-            <view class="cardTop">
-                <view class="cardFun">
-                    <view class="zanFun">
-                        <image src="/asserts/image/card/suport_one.png" class="icon-class" />
-                        <view class="text-num">22</view>
+        <repeat for="{{ commentList }}" item="comment" index="index">
+            <view class="cardItem">
+                <view class="cardTop">
+                    <view class="cardFun">
+                        <view wx:if="{{!comment.status}}" class="cardFun">
+                            已过期
+                        </view>
+                        <view wx:if="{{comment.status}}" class="zanFun">
+                            <image src="/asserts/image/card/suport_one.png" class="icon-class" />
+                            <view class="text-num">{{comment.support.length}}</view>
+                        </view>
                     </view>
+                    <view class="cardTitle">{{comment.title}}</view>
                 </view>
-                <view class="cardTitle">我校本次的特殊活动</view>
-            </view>
-            <view class="cardMid">
-                为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
-            </view>
-            <view class="cardBtm">
-                <view class="show">查看卡片</view>
-                <view class="date">2017-09-08</view>
-                <view class="zan">
-                    <image src="/asserts/image/card/suport_two.png" class="icon-class" />
-                    <span class="num">33</span>
+                <view class="cardMid">
+                    {{comment.content}}
                 </view>
-                <view class="zan">
-                    <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                    <span class="num">33</span>
+                <view class="cardBtm">
+                    <view class="show" @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
+                    <view class="date">{{comment.create_time}}</view>
+                    <view class="zan">
+                        <image src="/asserts/image/card/suport_two.png" class="icon-class" />
+                        <span class="num">{{comment.support.length}}</span>
+                    </view>
+                    <!-- <view class="zan">
+                                <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                                <span class="num">33</span>
+                            </view> -->
+                    <view catchtap="deleteCard" data-index="{{index}}" class="del">删除</view>
                 </view>
-                <view class="del">删除</view>
             </view>
-        </view>
-        <view class="cardItem dead">
-            <view class="cardTop">
-                <view class="cardFun">
-                    已过期
+        </repeat>
+        <!-- <view class="cardItem dead">
+                <view class="cardTop">
+                    <view class="cardTitle">我校本次的特殊活动</view>
                 </view>
-                <view class="cardTitle">我校本次的特殊活动</view>
-            </view>
-            <view class="cardMid">
-                为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
-            </view>
-            <view class="cardBtm">
-                <view class="show">查看卡片</view>
-                <view class="date">2017-09-08</view>
-                <view class="zan">
-                    <image src="/asserts/image/card/suport_two.png" class="icon-class" />
-                    <span class="num">33</span>
+                <view class="cardMid">
+                    为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
                 </view>
-                <view class="zan">
-                    <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                    <span class="num">33</span>
+                <view class="cardBtm">
+                    <view class="show">查看卡片</view>
+                    <view class="date">2017-09-08</view>
+                    <view class="zan">
+                        <image src="/asserts/image/card/suport_two.png" class="icon-class" />
+                        <span class="num">33</span>
+                    </view>
+                    <view class="zan">
+                        <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                        <span class="num">33</span>
+                    </view>
+                    <view class="del">删除</view>
                 </view>
-                <view class="del">删除</view>
-            </view>
-        </view>
+            </view> -->
     </view>
 </template>
 
 <script>
-    import wepy from 'wepy'
+    import wepy from 'wepy';
+    import {
+        POST,
+        GET
+    } from '../../utils'
     export default class MyCardPage extends wepy.page {
         config = {
             navigationBarTitleText: '我的评论'
         }
         data = {
+            commentList: []
         }
-        components = {
+        components = {}
+        methods = {
+            toCardDetail(e) {
+                let index = e.currentTarget.dataset.index;
+                let card_id = this.commentList[index].card_id;
+                wepy.navigateTo({
+                    url: `/pages/team_comment_page/index?id=${card_id}`
+                })
+            },
+            deleteCard(e) {
+                let index = e.currentTarget.dataset.index;
+                let id = this.commentList[index].id;
+                let openid = wx.getStorageSync('openid');
+                // e.stopPropagation(); 
+                wepy.showModal({
+                    title: '确定删除？',
+                    icon: 'success',
+                    confirmColor: '#6CACF4',
+                    showCancel: true,
+                    success: () => {
+                        let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                        POST(`${localUrl}/comment/delete`, {
+                            id: id
+                        }, (res) => {
+                            if (res.data.status === 1) {
+                                // 刷新页面
+                                GET(`${localUrl}/comment/commentList`, {
+                                    openid: openid
+                                }, (res) => {
+                                    if (res.data.status === 1) {
+                                        this.commentList = res.data.data;
+                                        this.$apply();
+                                    }
+                                })
+                                // this.teamInfo = res.data.data.data[0];
+                                // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                                // this.$apply();
+                            }
+                        })
+                    }
+                })
+                return;
+            }
         }
-        onShow(options){
+        refersh() {
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            let openid = wx.getStorageSync('openid');
+            GET(`${localUrl}/comment/commentList`, {
+                openid: openid
+            }, (res) => {
+                if (res.data.status === 1) {
+                    this.commentList = res.data.data;
+                    console.log(this.commentList);
+                    this.$apply();
+                }
+            })
+        }
+        onShow(options) {
+            this.refersh();
         }
     }
 </script>
