@@ -4,31 +4,33 @@
         <view class='comentCotioner'>
             <view class="text-center title">{{badgeDetail.detail.name}}</view>
             <view class="text-center">
-              <image class="icon" src='{{badgeDetail.detail.img}}' />
+                <image class="icon" src='{{badgeDetail.detail.img}}' />
             </view>
             <view class="text-center des">{{badgeDetail.detail.des}}</view>
             <view class="text-center achievement">
-              <text class="person">个人成就</text><text class="person-num">+{{badgeDetail.detail.personNum}}</text>
-              <text class="team">团队成就</text><text class="team-num">+{{badgeDetail.detail.teamNum}}</text>
+                <text class="person">个人成就</text><text class="person-num">+{{badgeDetail.detail.personNum}}</text>
+                <text class="team">团队成就</text><text class="team-num">+{{badgeDetail.detail.teamNum}}</text>
             </view>
             <view class="text-center limit">（限时徽章）</view>
             <view class="text-center date">截止日期： <text class="datetime">{{badgeDetail.detail.date}}</text></view>
-            <view class="btnContainer"  >
-              <view  class="comment">
-                  分享
-              </view>
-              <view class="suport" @tap="close">
-                  知道了
-              </view>
+            <view class="btnContainer">
+                <view class="comment">
+                    分享
+                </view>
+                <view class="suport" @tap="close">
+                    知道了
+                </view>
             </view>
         </view>
-        
     </view>
 </template>
 
 <script>
     import wepy from 'wepy'
-    import { POST, GET } from '../utils'
+    import {
+        POST,
+        GET
+    } from '../utils'
     export default class SendComment extends wepy.component {
         data = {
             content: '',
@@ -38,16 +40,13 @@
         }
         methods = {
             close() {
-              this.$emit('closePopup')
+                this.$emit('closePopup')
             },
-            disabled(){
-              this.$emit('closePopup')
-              this.$apply();
-          }
-                
+            disabled() {
+                this.$emit('closePopup')
+                this.$apply();
+            }
         }
-        
-        
     }
 </script>
 
@@ -58,15 +57,15 @@
         height: 100%;
         z-index: 100000;
         .text-center {
-          text-align: center;
+            text-align: center;
         }
-        .backLayer{
-            background: #000;            
+        .backLayer {
+            background: #000;
             width: 100%;
-            height: 100%; 
+            height: 100%;
             opacity: 0.6;
         }
-        .comentCotioner{
+        .comentCotioner {
             width: 70%;
             height: 600rpx;
             background: #fff;
@@ -75,47 +74,47 @@
             top: 20%;
             left: 15%;
             border-radius: 10rpx;
-          .title {
-            margin-top: 50rpx;
-            font-size: 36rpx;
-          }
-          .icon {
-            width: 120rpx;
-            height: 120rpx;
-            margin-top: 58rpx;
-          }
-          .des {
-            font-size: 26rpx;
-            margin-top: 50rpx;
-          }
-          .achievement {
-            margin-top: 10rpx;
-            .person, .team{
-              font-size: 21rpx;
-              color: #999;
+            .title {
+                margin-top: 50rpx;
+                font-size: 36rpx;
             }
-            .person-num, .team-num {
-              font-size: 26rpx;
-              color: #4590f6;
+            .icon {
+                width: 120rpx;
+                height: 120rpx;
+                margin-top: 58rpx;
             }
-            .person-num {
-              margin-right: 20rpx;
+            .des {
+                font-size: 26rpx;
+                margin-top: 50rpx;
             }
-          }
-          .limit {
-            font-size: 18rpx;
-            color: #999;
-          }
-          .date {
-            margin-top: 6rpx;
-            font-size: 21rpx;
-            color: #999;
-
-          }
-          .datetime {
-            color: #4590f6;
-          }
-          
+            .achievement {
+                margin-top: 10rpx;
+                .person,
+                .team {
+                    font-size: 21rpx;
+                    color: #999;
+                }
+                .person-num,
+                .team-num {
+                    font-size: 26rpx;
+                    color: #4590f6;
+                }
+                .person-num {
+                    margin-right: 20rpx;
+                }
+            }
+            .limit {
+                font-size: 18rpx;
+                color: #999;
+            }
+            .date {
+                margin-top: 6rpx;
+                font-size: 21rpx;
+                color: #999;
+            }
+            .datetime {
+                color: #4590f6;
+            }
         }
         .btnContainer {
             position: absolute;

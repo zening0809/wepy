@@ -12,10 +12,10 @@
         <view class="productTitle">{{teamInfo.title}}</view>
         <view class="productContent">{{teamInfo.content}}</view>
         <view class="groupDevContainer">
-            <view class="cardTag">{{teamInfo.tag}}</view>
+            <view class="cardTag">{{teamInfo.tagName}}</view>
             <view class="sportCardContainer">
                 <image src="/asserts/image/home/suport_card.png" class="suportCard" />
-                <text>{{teamInfo.support}}</text>
+                <text>{{teamInfo.supportNum}}</text>
             </view>
         </view>
         <view class="btnContainer" wx:if="{{teamInfo.isshow}}">
@@ -46,7 +46,7 @@
                 var pages = getCurrentPages() //获取加载的页面
                 var currentPage = pages[pages.length - 1] //获取当前页面的对象
                 var url = currentPage.route //当前页面url
-                if(url === 'pages/team_comment_page/index'){
+                if (url === 'pages/team_comment_page/index') {
                     return;
                 }
                 wepy.navigateTo({
