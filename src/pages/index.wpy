@@ -92,9 +92,9 @@
                 var text = ''
                 // 左右方向滑动
                 if (Math.abs(tx) > Math.abs(ty)) {
-                    if (tx < 0) {
+                    if (tx < 0 && Math.abs(tx) >= 20) {
                         text = 'left'
-                    } else  if (tx > 0) {
+                    } else  if (tx > 0 && Math.abs(tx) >= 20) {
                         text = 'right'
                     }
                 } else {
@@ -131,31 +131,38 @@
         sliderCard(direction){
             switch (direction) {
                 case 'left':
-                    if(this.curIndex-- <= 0){
+                    console.log('left>>', this.curIndex)
+                    if(this.curIndex <= 0){
                         // 当滑动到第一组特殊处理
-                        if(this.page-- <= 0){
+                        if(this.page == 1){
                             this.page = this.page + 1;
-                            this.$apply;
+                            this.$apply();
                             this.refresh(this.page);
+                        } else if (this.curIndex == 0) {
+                            this.curIndex = this.curIndex + 1;
+                            let curObj = this.curCard[this.curIndex];
+                            this.assignmentAction(curObj);
+                            this.$apply();
                         }
                     }else{
                         this.curIndex = this.curIndex - 1;
                         let curObj = this.curCard[this.curIndex];
-                        assignmentAction(curObj);
-                        this.$apply;
+                        this.assignmentAction(curObj);
+                        this.$apply();
                     }
                     break;
                 case 'right':
-                    if(this.curIndex++ >= 5){
+                    console.log('right>>', this.curIndex)
+                    if(this.curIndex >= 4){
                         // 当滑动到第一组特殊处理
                             this.page = this.page + 1;
-                            this.$apply;
+                            this.$apply();
                             this.refresh(this.page);
                     }else{
                         this.curIndex = this.curIndex + 1;
                         let curObj = this.curCard[this.curIndex];
-                        assignmentAction(curObj);
-                        this.$apply;
+                        this.assignmentAction(curObj);
+                        this.$apply();
                     }
                     break;
             
@@ -164,11 +171,12 @@
             }
         }
         assignmentAction(teamInfo){
-            teamInfo.tag = this.tagList[teamInfo.tag].text;
-            teamInfo.support = teamInfo.support.length;
-            teamInfo.isshow = true;
+            this.teamInfo = teamInfo;
+            this.teamInfo.tag = this.tagList[teamInfo.tag].text;
+            this.teamInfo.support = teamInfo.support.length;
+            this.teamInfo.isshow = true;
             // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
-            teamInfo.card_id = this.teamInfo.id;
+            this.teamInfo.card_id = teamInfo.id;
         }
         refresh(page){
             this.isFetching = true;
@@ -177,8 +185,9 @@
                 if(res.data.status === 1){
                     console.log(res.data.data);
                     this.curCard = res.data.data.data;
-                    this.teamInfo = res.data.data.data[0];
-                    this.assignmentAction(this.teamInfo);
+                    let teamInfo = res.data.data.data[0];
+                    console.log('====', teamInfo)
+                    this.assignmentAction(teamInfo);
                     this.curIndex = 0;
                 }
                 this.isFetching = false;
