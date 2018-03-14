@@ -12,7 +12,7 @@
         <view class="productTitle">{{teamInfo.title}}</view>
         <view class="productContent">{{teamInfo.content}}</view>
         <view class="groupDevContainer">
-            <view class="cardTag">{{teamInfo.tagName}}</view>
+            <view class="cardTag" style="background:{{teamInfo.tagColor}};">{{teamInfo.tagName}}</view>
             <view class="sportCardContainer">
                 <image src="/asserts/image/home/suport_card.png" class="suportCard" />
                 <text>{{teamInfo.supportNum}}</text>
