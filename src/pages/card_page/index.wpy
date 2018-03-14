@@ -41,16 +41,17 @@
     import {GET} from '../../utils';
     export default class CardPage extends wepy.page {
         config = {
-            navigationBarTitleText: '当前页面',
+            navigationBarTitleText: '卡片盒',
             navigationStyle: 'custom'
         }
         components = {
             BtnCom
         }
         onLoad() {
-            wepy.setNavigationBarTitle({
+            // 修改小程序页面标题栏
+            /* wepy.setNavigationBarTitle({
                 title: '卡片盒'
-            })
+            }) */
         }
         data = {
             cardSupportCount: 123,

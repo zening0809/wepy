@@ -18,10 +18,10 @@
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>
-        <view @tap="back()" class='messageContainer'>
+        <view @tap="navigate('about_us_page')" class='messageContainer'>
             <view>
                 <image src='/asserts/image/own/own.png' />
-                <text>我的</text>
+                <text>关于我们</text>
             </view>
             <image class='rightImg' src='/asserts/image/card/right.png' />
         </view>

@@ -1,0 +1,28 @@
+<template>
+    <view class="container">
+        <view class="title">关于我们</view>
+        <view class="content">
+            LZKJ 是一个创新的乌托邦，我们搭建了一个尊重梦想的舞台，构建了纯粹的企业环境，努力探索卓尔不群的产品之道和企业文化。没有一家公司像 LZKJ 一样，将求真品诚的理念贯穿到每一个细节，对此我们引以为傲。
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class AboutUSPage extends wepy.page {
+        config = {
+            navigationBarTitleText: '关于我们'
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .container {
+        padding: 40rpx 20rpx;
+        font-size: 24rpx;
+    }
+    .title {
+        text-align: center;
+        font: 32rpx Arial, Helvetica, sans-serif;
+    }
+</style>

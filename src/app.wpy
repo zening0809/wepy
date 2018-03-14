@@ -39,6 +39,8 @@
                 "pages/team_achieve_page/index",
                 // 卡片盒页
                 "pages/card_page/index",
+                // 关于我们
+                "pages/about_us_page/index",
             ],
             window: {
                 backgroundTextStyle: "light",
