@@ -1,51 +1,51 @@
 <template>
     <view class="myCardContainer">
-           <repeat for="{{ cardList }}" item="item" index="index">
-                    <view class="cardItem" data-index="{{index}}">
-                        <view class="cardTop">
-                            <view class="cardFun" wx:if="{{item.status}}">
-                                <view class="zanFun">
-                                    <image src="/asserts/image/card/suport_one.png" class="icon-class" />
-                                    <view class="text-num">{{item.support.length}}</view>
-                                </view>
-                                <view class="place"></view>
-                                <view class="zanFun">
-                                    <image src="/asserts/image/card/text_one.png" class="icon-class2" />
-                                    <view class="text-num">{{item.comment.length}}</view>
-                                </view>
-                            </view>
-                            <view class="cardItemCardFun" wx:if="{{!item.status}}">
-                                已过期
-                            </view>
-                            <view class="cardTitle">{{item.title}}</view>
+        <repeat for="{{ cardList }}" item="item" index="index">
+            <view class="cardItem" data-index="{{index}}">
+                <view class="cardTop">
+                    <view class="cardFun" wx:if="{{item.status}}">
+                        <view class="zanFun">
+                            <image src="/asserts/image/card/suport_one.png" class="icon-class" />
+                            <view class="text-num">{{item.support.length}}</view>
                         </view>
-                        <view class="cardMid">
-                            {{item.content}}
-                        </view>
-                        <view class="cardBtm">
-                            
-                            <view class="show"  @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
-                            <view class="date">{{item.create_time}}</view>
-                    
-                            <view class="zan">
-                                <image src="/asserts/image/card/suport_two.png" class="icon-class" />
-                                <span class="num">{{item.support.length}}</span>
-                            </view>
-                            <view class="zan">
-                                <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                                <span class="num">{{item.comment.length}}</span>
-                            </view>
-                            <view catchtap="deleteCard" data-index="{{index}}" class="del">删除</view>
+                        <view class="place"></view>
+                        <view class="zanFun">
+                            <image src="/asserts/image/card/text_one.png" class="icon-class2" />
+                            <view class="text-num">{{item.comment.length}}</view>
                         </view>
                     </view>
-            </repeat>
-      
+                    <view class="cardItemCardFun" wx:if="{{!item.status}}">
+                        已过期
+                    </view>
+                    <view class="cardTitle">{{item.title}}</view>
+                </view>
+                <view class="cardMid">
+                    {{item.content}}
+                </view>
+                <view class="cardBtm">
+                    <view class="show" @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
+                    <view class="date">{{item.create_time}}</view>
+                    <view class="zan">
+                        <image src="/asserts/image/card/suport_two.png" class="icon-class" />
+                        <span class="num">{{item.support.length}}</span>
+                    </view>
+                    <view class="zan">
+                        <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                        <span class="num">{{item.comment.length}}</span>
+                    </view>
+                    <view catchtap="deleteCard" data-index="{{index}}" class="del">删除</view>
+                </view>
+            </view>
+        </repeat>
     </view>
 </template>
 
 <script>
     import wepy from 'wepy'
-    import { POST, GET } from '../../utils'
+    import {
+        POST,
+        GET
+    } from '../../utils'
     export default class MyCardPage extends wepy.page {
         config = {
             navigationBarTitleText: '卡片列表'
@@ -55,14 +55,15 @@
             cardList: []
         }
         components = {}
-        onShow(){
+        onShow() {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             let openid = wx.getStorageSync('openid');
-            GET(`${localUrl}/card/getUserCard`,{openid: openid}, (res)=>{
-                if(res.data.status === 1){
+            GET(`${localUrl}/card/getUserCard`, {
+                openid: openid
+            }, (res) => {
+                if (res.data.status === 1) {
                     console.log(res);
                     this.cardList = res.data.data;
-                    
                     this.$apply();
                 }
             })
@@ -87,26 +88,30 @@
                     icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
-                    success: () => {
-                        let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                        POST(`${localUrl}/card/delete`, {
-                            id: id
-                        }, (res) => {
-                            if (res.data.status === 1) {
-                                // 刷新页面
-                                GET(`${localUrl}/card/getUserCard`, {
-                                    openid: openid
-                                }, (res) => {
-                                    if (res.data.status === 1) {
-                                        this.cardList = res.data.data;
-                                        this.$apply();
-                                    }
-                                })
-                                // this.teamInfo = res.data.data.data[0];
-                                // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                                // this.$apply();
-                            }
-                        })
+                    success: (res) => {
+                        if (res.confirm) {
+                            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                            POST(`${localUrl}/card/delete`, {
+                                id: id
+                            }, (res) => {
+                                if (res.data.status === 1) {
+                                    // 刷新页面
+                                    GET(`${localUrl}/card/getUserCard`, {
+                                        openid: openid
+                                    }, (res) => {
+                                        if (res.data.status === 1) {
+                                            this.cardList = res.data.data;
+                                            this.$apply();
+                                        }
+                                    })
+                                    // this.teamInfo = res.data.data.data[0];
+                                    // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
+                                    // this.$apply();
+                                }
+                            })
+                        } else if (res.cancel) {
+                            console.log('用户点击取消')
+                        }
                     }
                 })
                 return;
