@@ -11,7 +11,7 @@
                         <view class="item-header--left">
                             <image src="{{ item.avatar_url}}" class="item-avatar" />
                             <text class="item-name">{{item.nickname}}</text>
-                            <view class="item-number">No.{{item.id}}</view>
+                            <view class="item-number">No.{{item.group}}</view>
                         </view>
                         <view @tap="support" class="item-header--right" data-index="{{index}}">
                             <image src="/asserts/image/home/suport_card.png" class="item-like" />{{item.support.length}}
