@@ -40,40 +40,40 @@
             personalList: []
             // personalList: [{
             //     personRank: 1,
-            //     avatar: '/asserts/image/home/title.png',
-            //     personName: 'CG猎人TIM',
-            //     teamId: '823',
-            //     achieveNum: '8686'
+            //     avatar_url: '/asserts/image/home/title.png',
+            //     nickname: 'CG猎人TIM',
+            //     group: '823',
+            //     personTotal: '8686'
             // }, {
             //     personRank: 2,
-            //     avatar: '/asserts/image/home/title.png',
-            //     personName: 'UDPonline',
-            //     teamId: '523',
-            //     achieveNum: '7258'
+            //     avatar_url: '/asserts/image/home/title.png',
+            //     nickname: 'UDPonline',
+            //     group: '523',
+            //     personTotal: '7258'
             // }, {
             //     personRank: 3,
-            //     avatar: '/asserts/image/home/title.png',
-            //     personName: '你好大海',
-            //     teamId: '321',
-            //     achieveNum: '6436'
+            //     avatar_url: '/asserts/image/home/title.png',
+            //     nickname: '你好大海',
+            //     group: '321',
+            //     personTotal: '6436'
             // }, {
             //     personRank: 4,
-            //     avatar: '/asserts/image/home/title.png',
-            //     personName: '欧巴酱',
-            //     teamId: '451',
-            //     achieveNum: '5366'
+            //     avatar_url: '/asserts/image/home/title.png',
+            //     nickname: '欧巴酱',
+            //     group: '451',
+            //     personTotal: '5366'
             // }, {
             //     personRank: 5,
-            //     avatar: '/asserts/image/home/title.png',
-            //     personName: '欧巴酱',
-            //     teamId: '451',
-            //     achieveNum: '5366'
+            //     avatar_url: '/asserts/image/home/title.png',
+            //     nickname: '欧巴酱',
+            //     group: '451',
+            //     personTotal: '5366'
             // }, {
             //     personRank: 6,
-            //     avatar: '/asserts/image/home/title.png',
-            //     personName: '欧巴酱',
-            //     teamId: '451',
-            //     achieveNum: '5366'
+            //     avatar_url: '/asserts/image/home/title.png',
+            //     nickname: '欧巴酱',
+            //     group: '451',
+            //     personTotal: '5366'
             // }]
         }
         components = {
@@ -93,17 +93,18 @@
         getData() {
             let openid = wx.getStorageSync('openid')
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/badge/getDate`,{openid: openid}, (res)=>{
+            GET(`${localUrl}/badge/getDateList`,{openid: openid}, (res)=>{
                 if(res.data.status === 1){
                     this.personalNum = res.data.data.personTotal
-                    this.teamNum = res.data.data.teamTotal
-                    this.personalList.push({
-                        personRank: 1,
-                        avatar: res.data.data.userData.avatar_url,
-                        personName: res.data.data.userData.nickname,
-                        teamId: res.data.data.userData.group,
-                        achieveNum: res.data.data.personTotal
-                    })
+                    this.teamNum = res.data.data.teamTotal;
+                    console.log(res.data.data.userList);
+                    res.data.data.userList.forEach((item, index) => {
+                        item.personRank = index+1
+                    });
+                    this.personalList = res.data.data.userList
+                    // this.personalList.push({
+
+                    // })
                     this.$apply();
                 }
             })

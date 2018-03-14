@@ -398,14 +398,15 @@
             },
             getDetail(e) {
                 let index = e.currentTarget.dataset.index;
-                this.badgeDetail.show = true
-                this.badgeDetail.detail = this.will_badgeList[index]
-
+                this.badgeDetail.show = true;
+                this.badgeDetail.detail = this.will_badgeList[index];
+                this.$apply();
             }
         }
         events = {
             closePopup () {
-                this.badgeDetail.show = false
+                this.badgeDetail.show = false;
+                this.$apply();
             }
         }
         // 获取数据

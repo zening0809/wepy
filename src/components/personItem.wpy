@@ -4,16 +4,16 @@
             <view class="rank-num">{{ item.personRank }}</view>
             <view class="triangle-topleft">
             </view>
-            <image src="{{ item.avatar }}" class="avatar-class">
+            <image src="{{ item.avatar_url }}" class="avatar-class">
         </view>
         <view class="content-item-mid">
-            <view class="item-name">{{ item.personName }}</view>
-            <view class="item-sub">团队编号：No.{{ item.teamId }}</view>
+            <view class="item-name">{{ item.nickname }}</view>
+            <view class="item-sub">团队编号：No.{{ item.group }}</view>
         </view>
         <view class="content-item-badage">
             <image src="/asserts/image/card/cup.png" class="cup-class">
         </view>
-        <view class="content-item-right">{{ item.achieveNum }}</view>
+        <view class="content-item-right">{{ item.personTotal }}</view>
     </view>
 </template>
 

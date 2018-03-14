@@ -4,8 +4,8 @@
         <view class='title'>已获得徽章</view>
         <view class='iconsContainer'>
             <repeat for="{{get_badgeList}}" key="index" item="item" index="index">
-                <view class='achivementText'>
-                    <view @tap="getDetail" data-index="{{index}}">
+                <view  data-index="{{index}}" class='achivementText' @tap="getDetail" >
+                    <view >
                         <image src='{{item.img}}' />
                     </view>
                     <view>{{item.name}}</view>
@@ -203,13 +203,14 @@
             getDetail(e) {
                 let index = e.currentTarget.dataset.index;
                 this.badgeDetail.show = true
-                this.badgeDetail.detail = this.get_badgeList[index]
-
+                this.badgeDetail.detail = this.get_badgeList[index];
+                this.$apply;
             }
         }
         events = {
             closePopup () {
-                this.badgeDetail.show = false
+                this.badgeDetail.show = false;
+                this.$apply;
             }
         }
         // 获取数据
@@ -218,6 +219,7 @@
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             GET(`${localUrl}/badge/getDate`,{openid: openid}, (res)=>{
                 if(res.data.status === 1){
+                    console.log(res.data);
                     res.data.data.userData.badge.forEach((value) => {
                         this.get_badgeList.push(this.badgeList[value-1])
                     })
