@@ -177,6 +177,7 @@
         assignmentAction(teamInfo) {
             this.teamInfo = teamInfo;
             this.teamInfo.tagName = this.tagList[teamInfo.tag].text;
+            this.teamInfo.tagColor = this.tagList[teamInfo.tag].color;
             this.teamInfo.supportNum = teamInfo.support.length;
             this.teamInfo.isshow = true;
             // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
