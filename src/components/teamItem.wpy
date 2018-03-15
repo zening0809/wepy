@@ -4,11 +4,13 @@
             <view class="rank-num">{{ teamItem.teamRank }}</view>
         </view>
         <view class="content-item-mid">
-            <view class="item-name">No.{{ teamItem.teamId }}</view>
+            <view class="item-name">No.{{ teamItem.group }}</view>
             <view class="item-sub">
-                <repeat for="{{ teamItem.avatarList }}" item="avatar">
+                <!-- <repeat for="{{ teamItem.avatarList }}" item="avatar">
                     <image src="{{ avatar }}" class="samll-img" />
-                </repeat>
+                </repeat> -->
+                <image src="{{ teamItem.avatar_url  }}" class="samll-img" />
+                
             </view>
         </view>
         <view class="content-item-badage">

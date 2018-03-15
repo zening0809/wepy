@@ -75,18 +75,20 @@
         }
         // 获取数据
         getData() {
-            let openid = wx.getStorageSync('openid')
+           let openid = wx.getStorageSync('openid')
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/badge/getDate`,{openid: openid}, (res)=>{
+            GET(`${localUrl}/badge/getTeamList`,{openid: openid}, (res)=>{
                 if(res.data.status === 1){
+                    this.teamAchieveNum = res.data.data.personTotal
+                    this.teamNum = res.data.data.teamTotal;
                     this.personalNum = res.data.data.personTotal
-                    this.teamNum = res.data.data.teamTotal
-                    this.teamList.push({
-                        teamRank: 1,
-                        avatarList: [res.data.data.userData.avatar_url],
-                        teamId: res.data.data.userData.group,
-                        teamAchieveNum: res.data.data.teamTotal
-                    })
+                    res.data.data.userList.forEach((item, index) => {
+                        item.teamRank = index+1
+                    });
+                    this.teamList = res.data.data.userList
+                    // this.personalList.push({
+
+                    // })
                     this.$apply();
                 }
             })
