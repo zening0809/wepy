@@ -27,8 +27,7 @@
     import BtnCom from "../components/btnCom";
     import ProductCard from "../components/productCard";
     import {
-        GET,
-        Login
+        GET
     } from "../utils";
     export default class Index extends wepy.page {
         config = {
@@ -124,7 +123,6 @@
             }
         };
         onLoad() {
-            Login(this.$parent.globalData.backgroundCheckUrl);
         }
         sliderCard(direction) {
             switch (direction) {

@@ -10,8 +10,11 @@
 </template>
 
 <script>
-    import wepy from 'wepy'
-    export default class Login extends wepy.page {
+    import wepy from 'wepy';
+    import {
+        Login
+    } from "../utils";
+    export default class LoginCard extends wepy.page {
         config = {
             navigationBarTitleText: "登录"
         };
@@ -21,13 +24,20 @@
         methods = {
             // 路由跳转
             navigate() {
-                wepy.navigateTo({
-                    url: `/pages/index`
-                });
+                Login(this.$parent.globalData.backgroundCheckUrl, this.phoneNum);
             },
             inputChange(type, values) {
                 this.phoneNum = values.detail.value;
                 this.$apply();
+            }
+        }
+        onLoad() {
+            let openid = wx.getStorageSync('openid');
+            console.log(openid);
+            if (openid) {
+                wx.redirectTo({
+                    url: `/pages/index`
+                });
             }
         }
     }

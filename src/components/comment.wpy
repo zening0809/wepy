@@ -28,7 +28,7 @@
             sendComment() {
                 let commentData = {}
                 let localUrl = this.$parent.$parent.globalData.backgroundCheckUrl
-                let openid = wx.getStorageSync('openid')
+                let openid = wx.getStorageSync('openid');
                 commentData.openid = openid
                 commentData.content = this.content
                 commentData.card_id = this.cardId
