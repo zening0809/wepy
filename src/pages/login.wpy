@@ -1,0 +1,77 @@
+<template>
+    <view class="container">
+        <image class="logo" src="/asserts/image/home/whiteLogo.png" />
+        <view class="content">
+            <text class="info">输入手机号</text>
+            <input placeholder="请输入手机号" @input="inputChange('phone')" placeholder-style="color:#c7c7c7" class='phoneInput' auto-focus/>
+            <view class="login" @tap="navigate"> 登录</view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    export default class Login extends wepy.page {
+        config = {
+            navigationBarTitleText: "登录"
+        };
+        data = {
+            phoneNum: ''
+        };
+        methods = {
+            // 路由跳转
+            navigate() {
+                wepy.navigateTo({
+                    url: `/pages/index`
+                });
+            },
+            inputChange(type, values) {
+                this.phoneNum = values.detail.value;
+                this.$apply();
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .container {
+        height: 100%;
+        width: 100%;
+        padding-top: 240rpx;
+        background: #256af2;
+        .logo {
+            width: 220rpx;
+            height: 110rpx;
+            margin: 0 auto;
+            display: block;
+            margin-bottom: 60rpx;
+        }
+        .content {
+            width: 500rpx;
+            margin: 0 auto;
+            text-align: center;
+            color: #fff;
+            .phoneInput {
+                margin: 50rpx 0;
+                height: 70rpx;
+                font-size: 24rpx;
+                line-height: 70rpx;
+                color: #333;
+                background: #ffffff;
+                border-bottom: 1px solid #f0f1f2;
+                border-top: 1px solid #f0f1f2;
+                border-radius: 10rpx;
+            }
+            .login {
+                margin: 0 auto;
+                width: 180rpx;
+                height: 60rpx;
+                line-height: 60rpx;
+                cursor: pointer;
+                color: #256af2;
+                background: #fff;
+                border-radius: 20rpx;
+            }
+        }
+    }
+</style>
