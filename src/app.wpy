@@ -12,7 +12,8 @@
     export default class extends wepy.app {
         config = {
             pages: [
-                
+                // 登录页
+                "pages/login",
                 // 首页
                 "pages/index",  
                 // 我的卡片
