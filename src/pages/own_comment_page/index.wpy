@@ -85,7 +85,6 @@
             
             let localUrl = that.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
-                let openid = wx.getStorageSync('openid');
                 GET(`${localUrl}/user/user`,{session_key: session_key}, (res)=>{
                     if(res.data.status === 1){
                         let curUser = res.data.data;

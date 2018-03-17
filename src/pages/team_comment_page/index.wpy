@@ -109,16 +109,16 @@
             support(e) {
                 
                 let index = e.currentTarget.dataset.index;
-                
+                let session_key = wx.getStorageSync('session_key');
                 let data = {
-                    openid: wx.getStorageSync('openid'),
+                    session_key: session_key,
                     id: this.data.commentList[index].id
                 }
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
                 POST(`${localUrl}/comment/support`,data, (res)=>{
                     // 添加成功
                     if (res.data.data.status == 1) {
-                        this.getCommentList(this.card_id)
+                        this.getCommentList(this.card_id, session_key)
                     }
                 })
             }
