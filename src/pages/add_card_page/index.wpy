@@ -82,30 +82,72 @@
                     }
                 })
             },
-            submitForm() {
-                let curData = this.data;
-                let openid = wx.getStorageSync('openid');
-                let addCard = {};
-                addCard.title = curData.formObj.title;
-                addCard.content = curData.formObj.content;
-                addCard.tag = (curData.curTag);
-                addCard.openid = openid;
-                let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/saveCard`, addCard, () => {
-                    wepy.showModal({
-                        title: '存储成功',
-                        icon: 'success',
-                        confirmColor: '#6CACF4',
-                        showCancel: false,
-                        success: (res) => {
-                            if (res.confirm) {
-                                wepy.navigateTo({
-                                    url: `/pages/index`
-                                })
-                            }
+            upload(url, path, data) {
+                console.log(path);
+                wx.showToast({
+                        icon: "loading",
+                        title: "正在上传"
+                    }),
+                    wx.uploadFile({
+                        url: url,
+                        filePath: path,
+                        name: 'file',
+                        header: {
+                            "Content-Type": "multipart/form-data"
+                        },
+                        formData: {
+                            session_key : wx.getStorageSync('session_key'),
+                            data: data
+                        },
+                        success: function(res) {
+                            
+                            // console.log(res);
+                            // if (res.statusCode != 200) {
+                            //     wx.showModal({
+                            //         title: '提示',
+                            //         content: '上传失败',
+                            //         showCancel: false
+                            //     })
+                            //     return;
+                            // }
+                        },
+                        fail: function(e) {
+                            console.log(e);
+                            wx.showModal({
+                                title: '提示',
+                                content: '上传失败',
+                                showCancel: false
+                            })
+                        },
+                        complete: function() {
+                            wx.hideToast(); //隐藏Toast
                         }
                     })
-                })
+            },
+            submitForm() {
+                let curData = this.data;
+                let addCard = {};
+                let chooseImgPath = this.chooseImgPath;
+                addCard.title = curData.formObj.title;
+                addCard.content = curData.formObj.content;
+                addCard.tag = curData.curTag;
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                this.methods.upload(`${localUrl}/card/saveCard`, chooseImgPath, addCard);
+                // POST(, addCard, () => {
+                //     wepy.showModal({
+                //         title: '存储成功',
+                //         icon: 'success',
+                //         confirmColor: '#6CACF4',
+                //         showCancel: false,
+                //         success: (res) => {
+                //             if (res.confirm) {
+                //                 wepy.navigateTo({
+                //                     url: `/pages/index`
+                //                 })
+                //             }
+                //         }
+                //     })
+                // })
             }
         }
     }

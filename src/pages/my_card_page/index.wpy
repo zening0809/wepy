@@ -57,9 +57,9 @@
         components = {}
         onShow() {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            let openid = wx.getStorageSync('openid');
+            var session_key = wx.getStorageSync('session_key');
             GET(`${localUrl}/card/getUserCard`, {
-                openid: openid
+                session_key : session_key
             }, (res) => {
                 if (res.data.status === 1) {
                     console.log(res);

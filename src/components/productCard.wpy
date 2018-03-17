@@ -81,15 +81,13 @@
             },
             // 点赞
             support() {
-                let data = {
-                    openid: wx.getStorageSync('openid'),
-                    id: this.card_id
-                }
+                var session_key = wx.getStorageSync('session_key');
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`, data, (res) => {
+                POST(`${localUrl}/card/support`, {id: this.card_id ,session_key}, (res) => {
                     // 添加成功
-                    if (res.data.data.status == 1) {
+                    if (res.data.status == 1) {
                         this.supportNum = this.supportNum + 1;
+                        this.$apply();
                     }
                 })
             }

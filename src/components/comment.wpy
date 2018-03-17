@@ -11,8 +11,7 @@
 <script>
     import wepy from 'wepy'
     import {
-        POST,
-        GET
+        POST
     } from '../utils'
     export default class SendComment extends wepy.component {
         data = {
@@ -28,12 +27,12 @@
             sendComment() {
                 let commentData = {}
                 let localUrl = this.$parent.$parent.globalData.backgroundCheckUrl
-                let openid = wx.getStorageSync('openid');
-                commentData.openid = openid
+                var session_key = wx.getStorageSync('session_key');
+               
                 commentData.content = this.content
                 commentData.card_id = this.cardId
                 let that = this
-                POST(`${localUrl}/comment/saveComment`, commentData, (res) => {
+                POST(`${localUrl}/comment/saveComment`, {session_key, commentData}, (res) => {
                     wepy.showModal({
                         title: '存储成功',
                         icon: 'success',
