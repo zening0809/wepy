@@ -137,21 +137,6 @@
                 
                 let localUrl = this.$parent.globalData.backgroundCheckUrl;
                 this.methods.upload(`${localUrl}/card/saveCard`, chooseImgPath, JSON.stringify(addCard));
-                // POST(, addCard, () => {
-                //     wepy.showModal({
-                //         title: '存储成功',
-                //         icon: 'success',
-                //         confirmColor: '#6CACF4',
-                //         showCancel: false,
-                //         success: (res) => {
-                //             if (res.confirm) {
-                //                 wepy.navigateTo({
-                //                     url: `/pages/index`
-                //                 })
-                //             }
-                //         }
-                //     })
-                // })
             }
         }
     }
