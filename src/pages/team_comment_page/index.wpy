@@ -140,10 +140,10 @@
                 this.commentStatus = true
             },
             closePopup: (type) => {
-                
+                 var session_key = wx.getStorageSync('session_key');
                 this.commentStatus = false
                 if (type == 1) {
-                    this.getCommentList(this.card_id)
+                    this.getCommentList(this.card_id, session_key)
                 }
                 this.$apply()
             },
@@ -152,9 +152,9 @@
             }
         }
         // 获取评论列表
-        getCommentList(id){
+        getCommentList(id, session_key){
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/comment/getList`,{card_id: id}, (res)=>{
+            GET(`${localUrl}/comment/getList`,{card_id: id, session_key: session_key}, (res)=>{
                 if(res.data.status === 1){
                     console.log(res.data.data)
                     this.commentList = res.data.data;
@@ -163,9 +163,9 @@
             })
         }
         // 获取卡片信息
-        getCardMsg(id){
+        getCardMsg(id, session_key){
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                GET(`${localUrl}/card/curent`,{id:id}, (res)=>{
+                GET(`${localUrl}/card/curent`,{id:id, session_key: session_key}, (res)=>{
                     if(res.data.status === 1){
                         this.teamInfo = res.data.data;
                         // console.log(this.teamInfo,1111111111);
@@ -188,9 +188,10 @@
             this.teamInfo.card_id = teamInfo.id;
         }
         onLoad(options){
+            var session_key = wx.getStorageSync('session_key');
             this.card_id = options.id
-            this.getCardMsg(options.id)
-            this.getCommentList(options.id)
+            this.getCardMsg(options.id, session_key)
+            this.getCommentList(options.id, session_key)
             this.$apply;
         }
     }

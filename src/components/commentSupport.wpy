@@ -21,12 +21,9 @@
         methods = {
             // 点赞
             support() {
-                let data = {
-                    openid: wx.getStorageSync('openid'),
-                    id: this.cardId
-                }
+                var session_key = wx.getStorageSync('session_key');
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`, data, (res) => {
+                POST(`${localUrl}/card/support`, {id: this.cardId, session_key: session_key}, (res) => {
                     // 添加成功
                     if (res.data.data.status == 1) {
                         this.$emit('addSupport')
