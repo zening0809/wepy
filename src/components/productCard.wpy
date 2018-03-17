@@ -58,12 +58,9 @@
             },
             // 点赞
             support() {
-                let data = {
-                    openid: wx.getStorageSync('openid'),
-                    id: this.teamInfo.card_id
-                }
+                var session_key = wx.getStorageSync('session_key');
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`, data, (res) => {
+                POST(`${localUrl}/card/support`, {id: this.teamInfo.card_id ,session_key}, (res) => {
                     // 添加成功
                     if (res.data.data.status == 1) {
                         this.$emit('addSupport')
