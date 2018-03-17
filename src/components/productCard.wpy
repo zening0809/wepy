@@ -81,7 +81,7 @@
             },
             // 点赞
             support() {
-                var session_key = wx.getStorageSync('session_key');
+                let session_key = wx.getStorageSync('session_key');
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
                 POST(`${localUrl}/card/support`, {id: this.card_id ,session_key}, (res) => {
                     // 添加成功

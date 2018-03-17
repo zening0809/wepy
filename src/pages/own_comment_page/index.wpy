@@ -82,7 +82,6 @@
         }
         onLoad(){
             var that = this;
-            
             let localUrl = that.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
                 GET(`${localUrl}/user/user`,{session_key: session_key}, (res)=>{

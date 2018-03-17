@@ -21,14 +21,15 @@
         methods = {
             // 点赞
             support() {
-                var session_key = wx.getStorageSync('session_key');
-                let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`, {id: this.cardId, session_key: session_key}, (res) => {
-                    // 添加成功
-                    if (res.data.data.status == 1) {
-                        this.$emit('addSupport')
-                    }
-                })
+                // var session_key = wx.getStorageSync('session_key');
+                // let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
+                // POST(`${localUrl}/card/support`, {id: this.cardId, session_key: session_key}, (res) => {
+                //     // 添加成功
+                //     if (res.data.status == 1) {
+                        
+                //     }
+                // })
+                this.$emit('add_support')
             },
             commentContainer() {
                 this.$emit('openPopup')
