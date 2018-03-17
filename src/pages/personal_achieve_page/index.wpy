@@ -2,15 +2,15 @@
     <view class="addCardContainer">
         <AchieveHead :personal.sync="personalNum" :team.sync="teamNum"></AchieveHead>
         <view class="achive-tab">
-            <view @tap="navigate('achievement_page')" class="tab">
+            <view @tap="redirect('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
             </view>
             <view class="diver"></view>
-            <view @tap="navigate('personal_achieve_page')" class="tab active-tab">
+            <view @tap="redirect('personal_achieve_page')" class="tab active-tab">
                 <span class="span-tab">个人成就</span>
             </view>
             <view class="diver"></view>
-            <view @tap="navigate('team_achieve_page')" class="tab">
+            <view @tap="redirect('team_achieve_page')" class="tab">
                 <span class="span-tab">团队成就</span>
             </view>
         </view>
@@ -29,7 +29,10 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
-    import {GET, POST} from '../../utils'
+    import {
+        GET,
+        POST
+    } from '../../utils'
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '成就'
@@ -83,36 +86,36 @@
         }
         methods = {
             // 路由跳转
-            navigate(pageName) {
+            redirect(pageName) {
                 wepy.redirectTo({
                     url: `/pages/${pageName}/index`
                 })
             }
         }
-         // 获取数据
+        // 获取数据
         getData() {
             let session_key = wx.getStorageSync('session_key');
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/badge/getDateList`,{session_key: session_key}, (res)=>{
-                if(res.data.status === 1){
+            GET(`${localUrl}/badge/getDateList`, {
+                session_key: session_key
+            }, (res) => {
+                if (res.data.status === 1) {
                     this.personalNum = res.data.data.personTotal
                     this.teamNum = res.data.data.teamTotal;
                     console.log(res.data.data.hasLoginUser);
                     res.data.data.hasLoginUser.forEach((item, index) => {
-                        item.personRank = index+1
+                        item.personRank = index + 1
                     });
                     this.personalList = res.data.data.hasLoginUser
                     // this.personalList.push({
-
                     // })
                     this.$apply();
                 }
             })
         }
-        onLoad(){
+        onLoad() {
             this.getData()
         }
-
     }
 </script>
 

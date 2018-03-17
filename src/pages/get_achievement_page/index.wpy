@@ -1,11 +1,11 @@
 <template>
     <view class="addCardContainer">
-        <Badge :badgeDetail.sync="badgeDetail"></Badge>
+        <Badge />
         <view class='title'>已获得徽章</view>
         <view class='iconsContainer'>
             <repeat for="{{get_badgeList}}" key="index" item="item" index="index">
-                <view  data-index="{{index}}" class='achivementText' @tap="getDetail" >
-                    <view >
+                <view data-index="{{index}}" class='achivementText' @tap="getDetail">
+                    <view>
                         <image src='{{item.img}}' />
                     </view>
                     <view>{{item.name}}</view>
@@ -21,16 +21,17 @@
     import BtnCom from '../../components/btnCom'
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
-    import {GET, POST} from '../../utils'
+    import {
+        GET,
+        POST
+    } from '../../utils'
     import Badge from '../../components/badge'
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '已获得成就'
         }
         data = {
-            badgeDetail: {},
-            badgeList: [
-                {
+            badgeList: [{
                     name: '徽章名',
                     img: '/asserts/image/icons/1.png',
                     des: '徽章描述',
@@ -202,32 +203,27 @@
         methods = {
             getDetail(e) {
                 let index = e.currentTarget.dataset.index;
-                this.badgeDetail.show = true
-                this.badgeDetail.detail = this.get_badgeList[index];
-                this.$apply;
-            }
-        }
-        events = {
-            closePopup () {
-                this.badgeDetail.show = false;
-                this.$apply;
+                let badge = this.get_badgeList[index];
+                this.$broadcast('showBadge', badge);
             }
         }
         // 获取数据
         getData() {
             let session_key = wx.getStorageSync('session_key');
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/badge/getDate`,{session_key: session_key}, (res)=>{
-                if(res.data.status === 1){
+            GET(`${localUrl}/badge/getDate`, {
+                session_key: session_key
+            }, (res) => {
+                if (res.data.status === 1) {
                     console.log(res.data);
                     res.data.data.userData.badge.forEach((value) => {
-                        this.get_badgeList.push(this.badgeList[value-1])
+                        this.get_badgeList.push(this.badgeList[value - 1])
                     })
                     this.$apply();
                 }
             })
         }
-        onLoad(){
+        onLoad() {
             this.getData()
         }
     }
@@ -241,7 +237,7 @@
             padding: 0 24rpx;
             display: flex;
             flex-wrap: wrap;
-            .achivementText{
+            .achivementText {
                 display: flex;
                 flex-direction: column;
                 font-size: 24rpx;
