@@ -2,7 +2,7 @@
     <view class="container">
         <CommentSupport :cardId.sync = "card_id"/>
         <SendComment :cardId.sync = "card_id" wx:if="{{commentStatus}}"/>
-        <ProductCard />
+        <ProductCard :supportNum.sync = "supportNum" />
         <view class="comment">
             <view class="header">全部评论</view>
             <repeat for="{{commentList}}" key="index" index="index" item="item">
@@ -74,7 +74,8 @@
                 color: '#f7cd8b',
                 text: '资源分享'
             }],
-            card_id: 0
+            card_id: 0,
+            supportNum: 0
         }
         config = {
             navigationBarTitleText: '团队评论'
@@ -136,8 +137,7 @@
                 this.$apply()
             },
             addSupport: () => {
-                console.log(11111);
-                this.support += 1;
+                this.supportNum += 1;
                 this.$apply();
             }
         }
