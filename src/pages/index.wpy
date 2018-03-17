@@ -142,6 +142,7 @@
                     } else {
                         this.curIndex = this.curIndex + 1;
                         let curObj = this.curCard[this.curIndex];
+                        curObj.isShow = true;
                         this.assignmentAction(curObj);
                         this.$apply();
                     }
@@ -168,6 +169,7 @@
                     } else {
                         this.isShow = true;
                         let curObj = res.data.data.data[0];
+                        curObj.isShow = true;
                         this.assignmentAction(curObj);
                         this.curIndex = 0;
                     }

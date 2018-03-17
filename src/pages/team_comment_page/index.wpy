@@ -136,7 +136,9 @@
                 this.$apply()
             },
             addSupport: () => {
-                this.teamInfo.support += 1
+                console.log(11111);
+                this.support += 1;
+                this.$apply();
             }
         }
         // 获取评论列表
