@@ -96,20 +96,23 @@
                             "Content-Type": "multipart/form-data"
                         },
                         formData: {
-                            session_key : wx.getStorageSync('session_key'),
+                            session_key: wx.getStorageSync('session_key'),
                             data: data
                         },
                         success: function(res) {
-                            
-                            // console.log(res);
-                            // if (res.statusCode != 200) {
-                            //     wx.showModal({
-                            //         title: '提示',
-                            //         content: '上传失败',
-                            //         showCancel: false
-                            //     })
-                            //     return;
-                            // }
+                            wepy.showModal({
+                                title: '存储成功',
+                                icon: 'success',
+                                confirmColor: '#6CACF4',
+                                showCancel: false,
+                                success: (res) => {
+                                    if (res.confirm) {
+                                        wepy.navigateTo({
+                                            url: `/pages/index`
+                                        })
+                                    }
+                                }
+                            })
                         },
                         fail: function(e) {
                             console.log(e);
@@ -131,8 +134,9 @@
                 addCard.title = curData.formObj.title;
                 addCard.content = curData.formObj.content;
                 addCard.tag = curData.curTag;
+                
                 let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                this.methods.upload(`${localUrl}/card/saveCard`, chooseImgPath, addCard);
+                this.methods.upload(`${localUrl}/card/saveCard`, chooseImgPath, JSON.stringify(addCard));
                 // POST(, addCard, () => {
                 //     wepy.showModal({
                 //         title: '存储成功',

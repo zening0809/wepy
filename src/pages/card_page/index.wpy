@@ -61,8 +61,8 @@
         }
         onShow(){
                 let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                let openid = wx.getStorageSync('openid');
-                GET(`${localUrl}/user/getList`,{openid: openid}, (res)=>{
+                let session_key = wx.getStorageSync('session_key');
+                GET(`${localUrl}/user/getList`,{session_key: session_key}, (res)=>{
                     if(res.data.status === 1){
                         console.log(this.data);
                         this.cardSupportCount = res.data.data.suport,
@@ -70,7 +70,7 @@
                         this.$apply();
                     }
                 })
-                GET(`${localUrl}/comment/userComment`,{openid: openid}, (res)=>{
+                GET(`${localUrl}/comment/userComment`,{session_key: session_key}, (res)=>{
                     if(res.data.status === 1){
                         this.commentSupportCount = res.data.data.suportSum,
                         this.commentCount = res.data.data.commentSum,
