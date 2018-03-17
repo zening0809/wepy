@@ -17,7 +17,7 @@
                 </view>
             </view>
         </view>
-        <ProductCard :teamInfo.sync="teamInfo" wx:if="{{isShow}}" />
+        <ProductCard animation="{{animationData}}" wx:if="{{isShow}}" />
         <BtnCom/>
     </view>
 </template>
@@ -46,32 +46,8 @@
                 // text: '没有滑动',
                 // currentGesture: 0
             },
-            teamInfo: {
-                tag: "",
-                nickname: "",
-                content: "",
-                title: "",
-                support: 0,
-                avatar_url: "",
-                group: 0
-            },
-            tagList: [{
-                    color: "#256af2",
-                    text: "技能交换"
-                },
-                {
-                    color: "#b4e99f",
-                    text: "团队进展"
-                },
-                {
-                    color: "#fb91af",
-                    text: "求助"
-                },
-                {
-                    color: "#f7cd8b",
-                    text: "资源分享"
-                }
-            ],
+            animation: {},
+            animationData: {},
             curCard: [],
             curIndex: 0,
             page: 1
@@ -117,16 +93,18 @@
                 this.sliderCard(text);
             }
         };
-        events = {
-            addSupport: () => {
-                this.teamInfo.support += 1;
-            }
-        };
-        onLoad() {
-        }
         sliderCard(direction) {
             switch (direction) {
                 case "right":
+                    var animation = wx.createAnimation({
+                        transformOrigin: "50% 50%",
+                        duration: 1000,
+                        timingFunction: 'ease',
+                    })
+                    this.animation = animation
+                    animation.translateX(100).step()
+                    this.animationData = animation.export()
+                    this.$apply()
                     if (this.curIndex <= 0) {
                         // 第一页时，向右滑动，页数无法减少，索引指向最后一条数据
                         if (this.page == 1) {
@@ -172,14 +150,9 @@
                     break;
             }
         }
-        assignmentAction(teamInfo) {
-            this.teamInfo = teamInfo;
-            this.teamInfo.tagName = this.tagList[teamInfo.tag].text;
-            this.teamInfo.tagColor = this.tagList[teamInfo.tag].color;
-            this.teamInfo.supportNum = teamInfo.support.length;
-            this.teamInfo.isshow = true;
-            // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
-            this.teamInfo.card_id = teamInfo.id;
+        // 触发子组件更新卡片数据
+        assignmentAction(item) {
+            this.$broadcast('switchCard', item);
         }
         refresh(page) {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
@@ -194,11 +167,11 @@
                         this.isShow = false;
                     } else {
                         this.isShow = true;
-                        let teamInfo = res.data.data.data[0];
-                        this.assignmentAction(teamInfo);
+                        let curObj = res.data.data.data[0];
+                        this.assignmentAction(curObj);
                         this.curIndex = 0;
                     }
-                }else{
+                } else {
                     console.log(res, '失败');
                 }
                 this.$apply();

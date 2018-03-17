@@ -1,24 +1,24 @@
 <template>
     <view class="productCard" @tap="navigate('team_comment_page')">
         <view class="title">
-            <image src="{{teamInfo.avatar_url}}" />
-            <text class="name">{{teamInfo.nickname}}</text>
+            <image src="{{avatar_url}}" />
+            <text class="name">{{nickname}}</text>
             <view class="numberTitleContainer">
                 <view class="numberTitle">团队项目编号</view>
-                <view class="number">No.{{teamInfo.group}}</view>
+                <view class="number">No.{{group}}</view>
             </view>
         </view>
-        <image class="content" src="{{teamInfo.img_url}}" />
-        <view class="productTitle">{{teamInfo.title}}</view>
-        <view class="productContent">{{teamInfo.content}}</view>
+        <image class="content" src="{{img_url}}" />
+        <view class="productTitle">{{title}}</view>
+        <view class="productContent">{{content}}</view>
         <view class="groupDevContainer">
-            <view class="cardTag" style="background:{{teamInfo.tagColor}};">{{teamInfo.tagName}}</view>
+            <view class="cardTag" style="background:{{tagColor}};">{{tagName}}</view>
             <view class="sportCardContainer">
                 <image src="/asserts/image/home/suport_card.png" class="suportCard" />
-                <text>{{teamInfo.supportNum}}</text>
+                <text>{{supportNum}}</text>
             </view>
         </view>
-        <view class="btnContainer" wx:if="{{teamInfo.isshow}}">
+        <view class="btnContainer" wx:if="{{isShow}}">
             <view class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
@@ -35,13 +35,35 @@
         POST
     } from '../utils';
     export default class ProductCard extends wepy.component {
-        props = {
-            teamInfo: {
-                type: Object
-            }
-        }
         data = {
-            teamInfo : {}
+            isShow: false,
+            avatar_url: '',
+            nickname: '',
+            group: 0,
+            img_url: '',
+            title: '',
+            content: '',
+            tagColor: '',
+            tagName: '',
+            supportNum: 0,
+            card_id: 0,
+            tagList: [{
+                    color: "#256af2",
+                    text: "技能交换"
+                },
+                {
+                    color: "#b4e99f",
+                    text: "团队进展"
+                },
+                {
+                    color: "#fb91af",
+                    text: "求助"
+                },
+                {
+                    color: "#f7cd8b",
+                    text: "资源分享"
+                }
+            ]
         }
         methods = {
             // 评论路由跳转
@@ -52,25 +74,38 @@
                 if (url === 'pages/team_comment_page/index') {
                     return;
                 }
+                console.log('====', this.card_id)
                 wepy.navigateTo({
-                    url: `/pages/${pageName}/index?id=${this.teamInfo.card_id}`
+                    url: `/pages/${pageName}/index?id=${this.card_id}`
                 })
             },
             // 点赞
             support() {
                 var session_key = wx.getStorageSync('session_key');
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`, {id: this.teamInfo.card_id ,session_key}, (res) => {
+                POST(`${localUrl}/card/support`, {id: this.card_id ,session_key}, (res) => {
                     // 添加成功
-                    if (res.data.data.status == 1) {
-                        this.$emit('addSupport')
+                    if (res.data.status == 1) {
+                        this.supportNum = this.supportNum + 1;
+                        this.$apply();
                     }
                 })
             }
-        }
-        onLoad() {
-            console.log(1111);
-            console.log(this.$data.teamInfo);
+        };
+        events = {
+            switchCard(item) {
+                this.isShow = true;
+                this.avatar_url = item.avatar_url;
+                this.nickname = item.nickname;
+                this.group = item.group;
+                this.img_url = item.img_url;
+                this.title = item.title;
+                this.content = item.content;
+                this.tagColor = this.tagList[item.tag].color;
+                this.tagName = this.tagList[item.tag].text;
+                this.supportNum = item.support.length;
+                this.card_id = item.id;
+            }
         }
     }
 </script>
