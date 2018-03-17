@@ -1,18 +1,18 @@
 <template>
-    <view class="backLayerContainer" wx:if='{{badgeDetail.show}}'>
+    <view class="backLayerContainer" wx:if='{{isShowBadge}}'>
         <view class='backLayer' @tap="disabled"></view>
         <view class='comentCotioner'>
-            <view class="text-center title">{{badgeDetail.detail.name}}</view>
+            <view class="text-center title">{{badgeName}}</view>
             <view class="text-center">
-                <image class="icon" src='{{badgeDetail.detail.img}}' />
+                <image class="icon" src='{{badgeImgUrl}}' />
             </view>
-            <view class="text-center des">{{badgeDetail.detail.des}}</view>
+            <view class="text-center des">{{badgeInfo}}</view>
             <view class="text-center achievement">
-                <text class="person">个人成就</text><text class="person-num">+{{badgeDetail.detail.personNum}}</text>
-                <text class="team">团队成就</text><text class="team-num">+{{badgeDetail.detail.teamNum}}</text>
+                <text class="person">个人成就</text><text class="person-num">+{{badgePersonNum}}</text>
+                <text class="team">团队成就</text><text class="team-num">+{{badgeTeamNum}}</text>
             </view>
             <view class="text-center limit">（限时徽章）</view>
-            <view class="text-center date">截止日期： <text class="datetime">{{badgeDetail.detail.date}}</text></view>
+            <view class="text-center date">截止日期： <text class="datetime">{{badgeDate}}</text></view>
             <view class="btnContainer">
                 <view class="comment">
                     分享
@@ -33,18 +33,31 @@
     } from '../utils'
     export default class SendComment extends wepy.component {
         data = {
-            content: '',
-        }
-        props = {
-            badgeDetail: Object
+            isShowBadge: false,
+            badgeName: '',
+            badgeImgUrl: '',
+            badgeInfo: '',
+            badgePersonNum: 0,
+            badgeTeamNum: 0,
+            badgeDate: '',
         }
         methods = {
             close() {
-                this.$emit('closePopup')
+                this.isShowBadge = false;
             },
             disabled() {
-                this.$emit('closePopup')
-                this.$apply();
+                this.isShowBadge = false;
+            }
+        };
+        events = {
+            showBadge(badge) {
+                this.isShowBadge = true;
+                this.badgeName = badge.name;
+                this.badgeImgUrl = badge.img;
+                this.badgeInfo = badge.des;
+                this.badgePersonNum = badge.personNum;
+                this.badgeTeamNum = badge.teamNum;
+                this.badgeDate = badge.date;
             }
         }
     }
