@@ -21,9 +21,15 @@
 <script>
     import wepy from 'wepy'
     export default class AchieveHead extends wepy.component {
-        props = {
-            personal: String,
-            team: String
+        data = {
+            personal: 0,
+            team: 0
+        }
+        events = {
+            achivement(item){
+                this.personal = item.personalNum;
+                this.team = item.teamNum;
+            }
         }
     }
 </script>

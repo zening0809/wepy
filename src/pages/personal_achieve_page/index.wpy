@@ -1,6 +1,6 @@
 <template>
     <view class="addCardContainer">
-        <AchieveHead :personal.sync="personalNum" :team.sync="teamNum"></AchieveHead>
+        <AchieveHead ></AchieveHead>
         <view class="achive-tab">
             <view @tap="redirect('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
@@ -100,8 +100,10 @@
                 session_key: session_key
             }, (res) => {
                 if (res.data.status === 1) {
-                    this.personalNum = res.data.data.personTotal
-                    this.teamNum = res.data.data.teamTotal;
+                    let personalAcivement = {};
+                    personalAcivement.personalNum = res.data.data.personTotal
+                    personalAcivement.teamNum = res.data.data.teamTotal;
+                    this.$broadcast('achivement', personalAcivement);
                     console.log(res.data.data.hasLoginUser);
                     res.data.data.hasLoginUser.forEach((item, index) => {
                         item.personRank = index + 1
