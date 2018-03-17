@@ -35,6 +35,9 @@
         POST
     } from '../utils';
     export default class ProductCard extends wepy.component {
+        props = {
+            supportNum: Number
+        }
         data = {
             isShow: false,
             avatar_url: '',
@@ -87,6 +90,7 @@
                     // 添加成功
                     if (res.data.status == 1) {
                         this.supportNum = this.supportNum + 1;
+                        // this.$emit('addSupport');
                         this.$apply();
                     }
                 })
