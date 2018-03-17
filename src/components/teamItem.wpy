@@ -6,17 +6,15 @@
         <view class="content-item-mid">
             <view class="item-name">No.{{ teamItem.group }}</view>
             <view class="item-sub">
-                <!-- <repeat for="{{ teamItem.avatarList }}" item="avatar">
-                    <image src="{{ avatar }}" class="samll-img" />
-                </repeat> -->
-                <image src="{{ teamItem.avatar_url  }}" class="samll-img" />
-                
+                <repeat for="{{ teamItem.member }}" item="avatar">
+                    <image src="{{ avatar.avatar_url }}" class="samll-img" />
+                </repeat>
             </view>
         </view>
         <view class="content-item-badage">
             <image src="/asserts/image/card/cup.png" class="cup-class">
         </view>
-        <view class="content-item-right">{{ teamItem.teamAchieveNum }}</view>
+        <view class="content-item-right">{{ teamItem.sub }}</view>
     </view>
 </template>
 
