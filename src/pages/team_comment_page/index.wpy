@@ -22,7 +22,7 @@
                     </view>
                     <view class="item-footer">
                         <view class="item-time">{{item.create_time}}</view>
-                        <view catchtap="deleteComment" class="item-del" wx:if="{{isOwn}}">删除</view>
+                        <view @tap.stop="deleteComment" class="item-del" wx:if="{{isOwn}}">删除</view>
                     </view>
                 </view>
             </repeat>

@@ -33,7 +33,7 @@
                         <image src="/asserts/image/card/text_two.png" class="icon-class2" />
                         <span class="num">{{item.comment.length}}</span>
                     </view>
-                    <view catchtap="deleteCard" data-index="{{index}}" class="del">删除</view>
+                    <view @tap.stop="deleteCard" data-index="{{index}}" class="del">删除</view>
                 </view>
             </view>
         </repeat>

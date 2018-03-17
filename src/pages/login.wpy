@@ -12,6 +12,7 @@
 <script>
     import wepy from 'wepy';
     import {
+        GET,
         Login
     } from "../utils";
     export default class LoginCard extends wepy.page {
@@ -32,10 +33,13 @@
             }
         }
         onLoad() {
-            let openid = wx.getStorageSync('openid');
-            console.log(openid);
-            if (openid) {
-                wx.redirectTo({
+            let session_key = wx.getStorageSync('session_key');
+            if (!session_key) {
+                // wx.redirectTo({
+                //     url: `/pages/login`
+                // });
+            }else{
+                 wx.redirectTo({
                     url: `/pages/index`
                 });
             }

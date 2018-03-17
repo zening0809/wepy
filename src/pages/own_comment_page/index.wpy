@@ -2,7 +2,8 @@
     <view class="ownContainer">
         <image class="titlePng" src='{{userMsg.avatar_url}}' />
         <view class='name'>{{userMsg.nickname}}</view>
-        <view class='groupNum'>{{userMsg.groupname}}</view>
+        <!-- <view class='groupNum'>{{userMsg.groupname}}</view> -->
+        <view class='groupNum'>团队项目编号</view>
         <view class='groupNumContent'>No.{{userMsg.group}}</view>
         <view @tap="navigate('message_page')" class='messageContainer'>
             <view>
@@ -83,13 +84,14 @@
         }
         onLoad(){
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            let session_key = wx.getStorageSync('session_key');
                 let openid = wx.getStorageSync('openid');
-                GET(`${localUrl}/user/user`,{openid: openid}, (res)=>{
+                GET(`${localUrl}/user/user`,{session_key: session_key}, (res)=>{
                     if(res.data.status === 1){
                         console.log(res.data);
                         this.userMsg.avatar_url = res.data.data.avatar_url;
                         this.userMsg.nickname = res.data.data.nickname;
-                        this.userMsg.groupname = res.data.data.nickname;
+                        // this.userMsg.groupname = res.data.data.nickname;
                         this.userMsg.group = res.data.data.group;
                         this.user_id = res.data.data.id;
                         // this.cardSupportCount = res.data.data.suport,

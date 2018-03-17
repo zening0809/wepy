@@ -22,7 +22,7 @@
             <view class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
-            <view class="suport" catchtap="support">
+            <view class="suport" @tap.stop="support">
                 <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
             </view>
         </view>
@@ -39,6 +39,9 @@
             teamInfo: {
                 type: Object
             }
+        }
+        data = {
+            teamInfo : {}
         }
         methods = {
             // 评论路由跳转
@@ -69,7 +72,8 @@
             }
         }
         onLoad() {
-            // console.log(this.$data.teamInfo)
+            console.log(1111);
+            console.log(this.$data.teamInfo);
         }
     }
 </script>

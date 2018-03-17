@@ -13,7 +13,7 @@
         <view class="content-item-badage">
             <image src="/asserts/image/card/cup.png" class="cup-class">
         </view>
-        <view class="content-item-right">{{ item.personTotal }}</view>
+        <view class="content-item-right">{{ item.personal_achivement }}</view>
     </view>
 </template>
 

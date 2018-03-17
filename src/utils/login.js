@@ -17,12 +17,20 @@ export function Login(_url, phonenum) {
                                 'content-type': 'application/json' // 默认值
                             },
                             success: function (res) {
-                                console.log(res.data);
                                 if (res.data.status == 1) {
-                                    wx.setStorageSync('openid', res.data.data.openid);
-                                    wx.redirectTo({
-                                        url: `/pages/index`
-                                    });
+                                    let session_key = res.data.data.session_key;
+                                    wx.setStorageSync('session_key', session_key);
+                                    if(session_key){
+                                        wx.redirectTo({
+                                            url: `/pages/index`
+                                        });
+                                    }else{
+                                        wx.showToast({
+                                            title: res.data.errmsg,
+                                            icon: 'loading',
+                                            duration: 1500
+                                        });
+                                    }
                                     // wx.setStorageSync('sessionKey', res.data.data.session_key)
                                 } else {
                                     wx.showToast({

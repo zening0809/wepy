@@ -91,17 +91,17 @@
         }
          // 获取数据
         getData() {
-            let openid = wx.getStorageSync('openid')
+            let session_key = wx.getStorageSync('session_key');
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/badge/getDateList`,{openid: openid}, (res)=>{
+            GET(`${localUrl}/badge/getDateList`,{session_key: session_key}, (res)=>{
                 if(res.data.status === 1){
                     this.personalNum = res.data.data.personTotal
                     this.teamNum = res.data.data.teamTotal;
-                    console.log(res.data.data.userList);
-                    res.data.data.userList.forEach((item, index) => {
+                    console.log(res.data.data.hasLoginUser);
+                    res.data.data.hasLoginUser.forEach((item, index) => {
                         item.personRank = index+1
                     });
-                    this.personalList = res.data.data.userList
+                    this.personalList = res.data.data.hasLoginUser
                     // this.personalList.push({
 
                     // })
