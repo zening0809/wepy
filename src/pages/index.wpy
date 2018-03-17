@@ -17,7 +17,7 @@
                 </view>
             </view>
         </view>
-        <ProductCard animation="{{animationData}}" wx:if="{{isShow}}" />
+        <ProductCard wx:if="{{isShow}}" />
         <BtnCom/>
     </view>
 </template>
@@ -96,15 +96,6 @@
         sliderCard(direction) {
             switch (direction) {
                 case "right":
-                    var animation = wx.createAnimation({
-                        transformOrigin: "50% 50%",
-                        duration: 1000,
-                        timingFunction: 'ease',
-                    })
-                    this.animation = animation
-                    animation.translateX(100).step()
-                    this.animationData = animation.export()
-                    this.$apply()
                     if (this.curIndex <= 0) {
                         // 第一页时，向右滑动，页数无法减少，索引指向最后一条数据
                         if (this.page == 1) {
