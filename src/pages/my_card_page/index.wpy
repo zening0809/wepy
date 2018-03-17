@@ -62,7 +62,6 @@
                 session_key : session_key
             }, (res) => {
                 if (res.data.status === 1) {
-                    console.log(res);
                     this.cardList = res.data.data;
                     this.$apply();
                 }
@@ -81,7 +80,7 @@
             deleteCard(e) {
                 let index = e.currentTarget.dataset.index;
                 let id = this.cardList[index].id;
-                let openid = wx.getStorageSync('openid');
+                let session_key = wx.getStorageSync('session_key');
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
@@ -92,12 +91,13 @@
                         if (res.confirm) {
                             let localUrl = this.$parent.globalData.backgroundCheckUrl;
                             POST(`${localUrl}/card/delete`, {
-                                id: id
+                                id: id,
+                                session_key: session_key
                             }, (res) => {
                                 if (res.data.status === 1) {
                                     // 刷新页面
                                     GET(`${localUrl}/card/getUserCard`, {
-                                        openid: openid
+                                        session_key: session_key
                                     }, (res) => {
                                         if (res.data.status === 1) {
                                             this.cardList = res.data.data;

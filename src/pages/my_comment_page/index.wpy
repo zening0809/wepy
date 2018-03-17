@@ -81,7 +81,7 @@
             deleteCard(e) {
                 let index = e.currentTarget.dataset.index;
                 let id = this.commentList[index].id;
-                let openid = wx.getStorageSync('openid');
+                var session_key = wx.getStorageSync('session_key');
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
@@ -91,21 +91,19 @@
                     success: () => {
                         let localUrl = this.$parent.globalData.backgroundCheckUrl;
                         POST(`${localUrl}/comment/delete`, {
-                            id: id
+                            id: id,
+                            session_key: session_key
                         }, (res) => {
                             if (res.data.status === 1) {
                                 // 刷新页面
                                 GET(`${localUrl}/comment/commentList`, {
-                                    openid: openid
+                                     session_key: session_key
                                 }, (res) => {
                                     if (res.data.status === 1) {
                                         this.commentList = res.data.data;
                                         this.$apply();
                                     }
                                 })
-                                // this.teamInfo = res.data.data.data[0];
-                                // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                                // this.$apply();
                             }
                         })
                     }
@@ -115,9 +113,9 @@
         }
         refersh() {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            let openid = wx.getStorageSync('openid');
+            let session_key = wx.getStorageSync('session_key');
             GET(`${localUrl}/comment/commentList`, {
-                openid: openid
+                session_key: session_key
             }, (res) => {
                 if (res.data.status === 1) {
                     this.commentList = res.data.data;

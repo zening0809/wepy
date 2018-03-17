@@ -2,7 +2,7 @@
     <view class="container">
         <CommentSupport :cardId.sync = "card_id"/>
         <SendComment :cardId.sync = "card_id" wx:if="{{commentStatus}}"/>
-        <ProductCard :teamInfo.sync = "teamInfo" />
+        <ProductCard />
         <view class="comment">
             <view class="header">全部评论</view>
             <repeat for="{{commentList}}" key="index" index="index" item="item">
@@ -52,7 +52,6 @@
             //     support: '666',
             //     isshow: false
             // },
-            teamInfo: {},
             commentList: [],
             // commentList: [
             //     {avatar_url: 'title.png', nickname: '失去的春天', id: '123', support: [1], content: '本案中哇哦撒可富来接我困了士大夫撒飞洒地方萨芬，索拉卡佛我为富兰克林开发了快速士大夫士大夫撒。', create_time: '刚刚'},
@@ -110,29 +109,18 @@
             support(e) {
                 
                 let index = e.currentTarget.dataset.index;
-                
+                let session_key = wx.getStorageSync('session_key');
                 let data = {
-                    openid: wx.getStorageSync('openid'),
+                    session_key: session_key,
                     id: this.data.commentList[index].id
                 }
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
                 POST(`${localUrl}/comment/support`,data, (res)=>{
                     // 添加成功
                     if (res.data.data.status == 1) {
-                        this.getCommentList(this.card_id)
+                        this.getCommentList(this.card_id, session_key)
                     }
                 })
-                // let comment_id = 1
-                // let open_id = wx.getStorageSync('openid');
-                // let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                // POST(`${localUrl}/comment/support`,{open_id: openid, id: comment_id}, (res)=>{
-                //     if(res.status === 1){
-                //         $this.$emit('support-event', 1, 2, 3, 4);
-                //         // this.teamInfo = res.data.data.data[0];
-                //         // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                //         // this.$apply();
-                //     }
-                // })
             }
         }
         events = {
@@ -148,7 +136,9 @@
                 this.$apply()
             },
             addSupport: () => {
-                this.teamInfo.support += 1
+                console.log(11111);
+                this.support += 1;
+                this.$apply();
             }
         }
         // 获取评论列表
@@ -167,25 +157,13 @@
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
                 GET(`${localUrl}/card/curent`,{id:id, session_key: session_key}, (res)=>{
                     if(res.data.status === 1){
-                        this.teamInfo = res.data.data;
-                        // console.log(this.teamInfo,1111111111);
-                        // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                        // this.teamInfo.support = this.teamInfo.support.length;
-                        // this.teamInfo.isshow = false;
-                        // this.$apply();
-                        this.assignmentAction(this.teamInfo);
+                        this.assignmentAction(res.data.data);
                         this.$apply();
                     }
                 })
         }
-        assignmentAction(teamInfo) {
-            this.teamInfo = teamInfo;
-            this.teamInfo.tagName = this.tagList[teamInfo.tag].text;
-            this.teamInfo.tagColor = this.tagList[teamInfo.tag].color;
-            this.teamInfo.supportNum = teamInfo.support.length;
-            this.teamInfo.isshow = false;
-            // 这个id 是卡片id 跳转路由的时候带上，同请求参数id的值
-            this.teamInfo.card_id = teamInfo.id;
+        assignmentAction(item) {
+            this.$broadcast('switchCard', item);
         }
         onLoad(options){
             var session_key = wx.getStorageSync('session_key');
