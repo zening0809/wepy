@@ -1,58 +1,60 @@
 <template>
     <view class="myCardContainer">
-        <repeat for="{{ commentList }}" item="comment" index="index">
-            <view class="cardItem">
-                <view class="cardTop">
-                    <view class="cardFun">
-                        <view wx:if="{{!comment.status}}" class="cardFun">
-                            已过期
+        <view class="myCardContent">
+            <repeat for="{{ commentList }}" item="comment" index="index">
+                <view class="cardItem">
+                    <view class="cardTop">
+                        <view class="cardFun">
+                            <view wx:if="{{!comment.status}}" class="cardFun">
+                                已过期
+                            </view>
+                            <view wx:if="{{comment.status}}" class="zanFun">
+                                <image src="/asserts/image/card/suport_one.png" class="icon-class" />
+                                <view class="text-num">{{comment.support.length}}</view>
+                            </view>
                         </view>
-                        <view wx:if="{{comment.status}}" class="zanFun">
-                            <image src="/asserts/image/card/suport_one.png" class="icon-class" />
-                            <view class="text-num">{{comment.support.length}}</view>
+                        <view class="cardTitle">{{comment.title}}</view>
+                    </view>
+                    <view class="cardMid">
+                        {{comment.content}}
+                    </view>
+                    <view class="cardBtm">
+                        <view class="show" @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
+                        <view class="date">{{comment.create_time}}</view>
+                        <view class="zan">
+                            <image src="/asserts/image/card/suport_two.png" class="icon-class" />
+                            <span class="num">{{comment.support.length}}</span>
                         </view>
+                        <!-- <view class="zan">
+                                        <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                                        <span class="num">33</span>
+                                    </view> -->
+                        <view @tap.stop="deleteCard" data-index="{{index}}" class="del">删除</view>
                     </view>
-                    <view class="cardTitle">{{comment.title}}</view>
                 </view>
-                <view class="cardMid">
-                    {{comment.content}}
-                </view>
-                <view class="cardBtm">
-                    <view class="show" @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
-                    <view class="date">{{comment.create_time}}</view>
-                    <view class="zan">
-                        <image src="/asserts/image/card/suport_two.png" class="icon-class" />
-                        <span class="num">{{comment.support.length}}</span>
-                    </view>
-                    <!-- <view class="zan">
-                                <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                                <span class="num">33</span>
-                            </view> -->
-                    <view @tap.stop="deleteCard" data-index="{{index}}" class="del">删除</view>
-                </view>
-            </view>
-        </repeat>
+            </repeat>
+        </view>
         <!-- <view class="cardItem dead">
-                <view class="cardTop">
-                    <view class="cardTitle">我校本次的特殊活动</view>
-                </view>
-                <view class="cardMid">
-                    为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
-                </view>
-                <view class="cardBtm">
-                    <view class="show">查看卡片</view>
-                    <view class="date">2017-09-08</view>
-                    <view class="zan">
-                        <image src="/asserts/image/card/suport_two.png" class="icon-class" />
-                        <span class="num">33</span>
+                    <view class="cardTop">
+                        <view class="cardTitle">我校本次的特殊活动</view>
                     </view>
-                    <view class="zan">
-                        <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                        <span class="num">33</span>
+                    <view class="cardMid">
+                        为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
                     </view>
-                    <view class="del">删除</view>
-                </view>
-            </view> -->
+                    <view class="cardBtm">
+                        <view class="show">查看卡片</view>
+                        <view class="date">2017-09-08</view>
+                        <view class="zan">
+                            <image src="/asserts/image/card/suport_two.png" class="icon-class" />
+                            <span class="num">33</span>
+                        </view>
+                        <view class="zan">
+                            <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                            <span class="num">33</span>
+                        </view>
+                        <view class="del">删除</view>
+                    </view>
+                </view> -->
     </view>
 </template>
 
@@ -85,30 +87,32 @@
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
-                    icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
-                    success: () => {
-                        let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                        POST(`${localUrl}/comment/delete`, {
-                            id: id,
-                            session_key: session_key
-                        }, (res) => {
-                            if (res.data.status === 1) {
-                                // 刷新页面
-                                GET(`${localUrl}/comment/commentList`, {
-                                     session_key: session_key
-                                }, (res) => {
-                                    if (res.data.status === 1) {
-                                        this.commentList = res.data.data;
-                                        this.$apply();
-                                    }
-                                })
-                            }
-                        })
+                    success: (res) => {
+                        if (res.confirm) {
+                            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                            POST(`${localUrl}/comment/delete`, {
+                                id: id,
+                                session_key: session_key
+                            }, (res) => {
+                                if (res.data.status === 1) {
+                                    // 刷新页面
+                                    GET(`${localUrl}/comment/commentList`, {
+                                        session_key: session_key
+                                    }, (res) => {
+                                        if (res.data.status === 1) {
+                                            this.commentList = res.data.data;
+                                            this.$apply();
+                                        }
+                                    })
+                                }
+                            })
+                        } else if(res.cancel) {
+                            console.log('用户点击取消');
+                        }
                     }
                 })
-                return;
             }
         }
         refersh() {
@@ -132,8 +136,13 @@
 
 <style lang="scss" scoped>
     .myCardContainer {
-        padding-top: 35rpx;
+        height: 100%;
         background: #f7f9fa;
+        .myCardContent {
+            padding-top: 35rpx;
+            background: #f7f9fa;
+            overflow-y: scroll;
+        }
         .cardItem {
             height: 180rpx;
             padding: 20rpx 30rpx;

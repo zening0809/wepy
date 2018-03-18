@@ -1,42 +1,44 @@
 <template>
     <view class="myCardContainer">
-        <repeat for="{{ cardList }}" item="item" index="index">
-            <view class="cardItem" data-index="{{index}}">
-                <view class="cardTop">
-                    <view class="cardFun" wx:if="{{item.status}}">
-                        <view class="zanFun">
-                            <image src="/asserts/image/card/suport_one.png" class="icon-class" />
-                            <view class="text-num">{{item.support.length}}</view>
+        <view class="myCardContent">
+            <repeat for="{{ cardList }}" item="item" index="index">
+                <view class="cardItem" data-index="{{index}}">
+                    <view class="cardTop">
+                        <view class="cardFun" wx:if="{{item.status}}">
+                            <view class="zanFun">
+                                <image src="/asserts/image/card/suport_one.png" class="icon-class" />
+                                <view class="text-num">{{item.support.length}}</view>
+                            </view>
+                            <view class="place"></view>
+                            <view class="zanFun">
+                                <image src="/asserts/image/card/text_one.png" class="icon-class2" />
+                                <view class="text-num">{{item.comment.length}}</view>
+                            </view>
                         </view>
-                        <view class="place"></view>
-                        <view class="zanFun">
-                            <image src="/asserts/image/card/text_one.png" class="icon-class2" />
-                            <view class="text-num">{{item.comment.length}}</view>
+                        <view class="cardItemCardFun" wx:if="{{!item.status}}">
+                            已过期
                         </view>
+                        <view class="cardTitle">{{item.title}}</view>
                     </view>
-                    <view class="cardItemCardFun" wx:if="{{!item.status}}">
-                        已过期
+                    <view class="cardMid">
+                        {{item.content}}
                     </view>
-                    <view class="cardTitle">{{item.title}}</view>
+                    <view class="cardBtm">
+                        <view class="show" @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
+                        <view class="date">{{item.create_time}}</view>
+                        <view class="zan">
+                            <image src="/asserts/image/card/suport_two.png" class="icon-class" />
+                            <span class="num">{{item.support.length}}</span>
+                        </view>
+                        <view class="zan">
+                            <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                            <span class="num">{{item.comment.length}}</span>
+                        </view>
+                        <view @tap.stop="deleteCard" data-index="{{index}}" class="del">删除</view>
+                    </view>
                 </view>
-                <view class="cardMid">
-                    {{item.content}}
-                </view>
-                <view class="cardBtm">
-                    <view class="show" @tap="toCardDetail" data-index="{{index}}">查看卡片</view>
-                    <view class="date">{{item.create_time}}</view>
-                    <view class="zan">
-                        <image src="/asserts/image/card/suport_two.png" class="icon-class" />
-                        <span class="num">{{item.support.length}}</span>
-                    </view>
-                    <view class="zan">
-                        <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                        <span class="num">{{item.comment.length}}</span>
-                    </view>
-                    <view @tap.stop="deleteCard" data-index="{{index}}" class="del">删除</view>
-                </view>
-            </view>
-        </repeat>
+            </repeat>
+        </view>
     </view>
 </template>
 
@@ -59,7 +61,7 @@
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             var session_key = wx.getStorageSync('session_key');
             GET(`${localUrl}/card/getUserCard`, {
-                session_key : session_key
+                session_key: session_key
             }, (res) => {
                 if (res.data.status === 1) {
                     this.cardList = res.data.data;
@@ -84,7 +86,6 @@
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
-                    icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
                     success: (res) => {
@@ -114,7 +115,6 @@
                         }
                     }
                 })
-                return;
             }
         }
     }
@@ -122,8 +122,13 @@
 
 <style lang="scss" scoped>
     .myCardContainer {
-        padding-top: 35rpx;
+        height: 100%;
         background: #f7f9fa;
+        .myCardContent {
+            padding-top: 35rpx;
+            background: #f7f9fa;
+            overflow-y: scroll;
+        }
         .cardItem {
             height: 180rpx;
             padding: 20rpx 30rpx;

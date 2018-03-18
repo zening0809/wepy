@@ -1,36 +1,38 @@
 <template>
     <view class="cardContainer">
-        <view @tap="navigate('my_card_page')" class="ownCard">
-            <text class="cardTitle">我的卡片</text>
-            <view class="suportContainer">
-                <image src="/asserts/image/card/suport_one.png" class="img-suport" />
-                <text>{{cardSupportCount}}</text>
-                <image src="/asserts/image/card/text_one.png" class="img-suport" />
-                <text>{{cardCommentCount}}</text>
+        <view class="cardContent">
+            <view @tap="navigate('my_card_page')" class="ownCard">
+                <text class="cardTitle">我的卡片</text>
+                <view class="suportContainer">
+                    <image src="/asserts/image/card/suport_one.png" class="img-suport" />
+                    <text>{{cardSupportCount}}</text>
+                    <image src="/asserts/image/card/text_one.png" class="img-suport" />
+                    <text>{{cardCommentCount}}</text>
+                </view>
+                <view class="suportContainer_two">
+                    <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
+                    <text>{{cardSupportCount}}</text>
+                    <image src="/asserts/image/card/text_two.png" class="img-suport" />
+                    <text>{{cardCommentCount}}</text>
+                </view>
+                <image src="/asserts/image/card/right.png" class="right" />
             </view>
-            <view class="suportContainer_two">
-                <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
-                <text>{{cardSupportCount}}</text>
-                <image src="/asserts/image/card/text_two.png" class="img-suport" />
-                <text>{{cardCommentCount}}</text>
+            <view @tap="navigate('my_comment_page')" class="ownCard">
+                <text class="cardTitle">我的评论</text>
+                <view class="suportContainer">
+                    <image src="/asserts/image/card/suport_one.png" class="img-suport" />
+                    <text>{{commentSupportCount}}</text>
+                </view>
+                <view class="suportContainer_two">
+                    <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
+                    <text>{{commentSupportCount}}</text>
+                    <image src="/asserts/image/card/text_two.png" class="img-suport" />
+                    <text>{{commentCount}}</text>
+                </view>
+                <image src="/asserts/image/card/right.png" class="right" />
             </view>
-            <image src="/asserts/image/card/right.png" class="right" />
+            <view @tap="navigate('add_card_page')" class="newCard">写卡片</view>
         </view>
-        <view @tap="navigate('my_comment_page')" class="ownCard">
-            <text class="cardTitle">我的评论</text>
-            <view class="suportContainer">
-                <image src="/asserts/image/card/suport_one.png" class="img-suport" />
-                <text>{{commentSupportCount}}</text>
-            </view>
-            <view class="suportContainer_two">
-                <image style="margin-left:2rpx" src="/asserts/image/card/suport_two.png" class="img-suport" />
-                <text>{{commentSupportCount}}</text>
-                <image src="/asserts/image/card/text_two.png" class="img-suport" />
-                <text>{{commentCount}}</text>
-            </view>
-            <image src="/asserts/image/card/right.png" class="right" />
-        </view>
-        <view @tap="navigate('add_card_page')" class="newCard">写卡片</view>
         <BtnCom />
     </view>
 </template>
@@ -93,6 +95,8 @@
     .cardContainer {
         background: #f7f9fa;
         height: 100%;
+    }
+    .cardContent {
         padding-top: 24rpx;
     }
     .ownCard {
