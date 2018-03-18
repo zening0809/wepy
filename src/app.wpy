@@ -12,6 +12,8 @@
     export default class extends wepy.app {
         config = {
             pages: [
+                // 加载页
+                "pages/loading_page/index",
                 // 登录页
                 "pages/login",
                 // 首页
@@ -52,7 +54,8 @@
         };
         globalData = {
             userInfo: null,
-            backgroundCheckUrl: 'http://127.0.0.1:3001'//'https://sdgo.lzkjchina.com'  //'http://zeningtest.free.ngrok.cc'     192.168.0.68:3000 https://m.yunhe.mobi
+            backgroundCheckUrl:   'http://192.168.1.107:3001' //'https://sdgo.lzkjchina.com'  //'http://zeningtest.free.ngrok.cc'     192.168.0.68:3000 https://m.yunhe.mobi
+            
         };
         constructor() {
             super();

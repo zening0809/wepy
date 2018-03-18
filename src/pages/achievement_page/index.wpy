@@ -1,7 +1,7 @@
 <template>
     <view class="addCardContainer">
         <Badge />
-        <AchieveHead :personal.sync="personalNum" :team.sync="teamNum"></AchieveHead>
+        <AchieveHead ></AchieveHead>
         <view class="achive-tab">
             <view @tap="navigate('achievement_page')" class="tab active-tab">
                 <span class="span-tab">我的徽章</span>
@@ -52,8 +52,6 @@
             navigationBarTitleText: '成就'
         }
         data = {
-            personalNum: 0,
-            teamNum: 0,
             badgeNum: 0,
             avatar_url: '',
             badgeList: [{
@@ -276,13 +274,14 @@
             }, (res) => {
                 if (res.data.status === 1) {
                     let userData = res.data.data.userData;
-                    this.personalNum = res.data.data.personTotal;
-                    this.teamNum = res.data.data.teamTotal;
+                    let personalAcivement = {};
+                    personalAcivement.personalNum = res.data.data.personTotal
+                    personalAcivement.teamNum = res.data.data.teamTotal;
+                    this.$broadcast('achivement', personalAcivement);
                     this.badgeNum = userData.badge.length;
                     this.avatar_url = userData.avatar_url;
                     let hasBadageList = userData.badge;
                     this.badgeList.forEach((item) => {
-                        console.log(item.id == hasBadageList[0])
                         if (hasBadageList.indexOf(item.id) == -1) {
                             this.noBadge.push(item);
                         }
