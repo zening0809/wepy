@@ -1,32 +1,33 @@
 <template>
     <view class="ownContainer">
-        <image class="titlePng" src='{{avatar_url}}' />
-        <view class='name'>{{nickname}}</view>
-        <!-- <view class='groupNum'>{{userMsg.groupname}}</view> -->
-        <view class='groupNum'>团队项目编号</view>
-        <view class='groupNumContent'>No.{{group}}</view>
-        <view @tap="navigate('message_page')" class='messageContainer'>
-            <view>
-                <image src='/asserts/image/own/notify.png' />
-                <text>消息</text>
-            </view>
-            <image class='rightImg' src='/asserts/image/card/right.png' />
-        </view>
-        <view @tap="feedback()" class='messageContainer'>
-            <view>
-                <image src='/asserts/image/own/msg.png' />
-                <text>意见反馈</text>
-            </view>
-            <image class='rightImg' src='/asserts/image/card/right.png' />
-        </view>
-        <view @tap="navigate('about_us_page')" class='messageContainer'>
-            <view>
-                <image src='/asserts/image/own/own.png' />
-                <text>关于我们</text>
-            </view>
-            <image class='rightImg' src='/asserts/image/card/right.png' />
-        </view>
         <Feedback :userId.sync="user_id" wx:if="{{feedbackStatus}}" />
+        <view class="content">
+            <image class="titlePng" src='{{avatar_url}}' />
+            <view class='name'>{{nickname}}</view>
+            <view class='groupNum'>团队项目编号</view>
+            <view class='groupNumContent'>No.{{group}}</view>
+            <view @tap="navigate('message_page')" class='messageContainer'>
+                <view>
+                    <image src='/asserts/image/own/notify.png' />
+                    <text>消息</text>
+                </view>
+                <image class='rightImg' src='/asserts/image/card/right.png' />
+            </view>
+            <view @tap="feedback()" class='messageContainer'>
+                <view>
+                    <image src='/asserts/image/own/msg.png' />
+                    <text>意见反馈</text>
+                </view>
+                <image class='rightImg' src='/asserts/image/card/right.png' />
+            </view>
+            <view @tap="navigate('about_us_page')" class='messageContainer'>
+                <view>
+                    <image src='/asserts/image/own/own.png' />
+                    <text>关于我们</text>
+                </view>
+                <image class='rightImg' src='/asserts/image/card/right.png' />
+            </view>
+        </view>
         <BtnCom></BtnCom>
     </view>
 </template>
@@ -37,7 +38,9 @@
     import AchieveHead from '../../components/achieveHead'
     import PersonItem from '../../components/personItem'
     import Feedback from '../../components/feedback'
-    import {GET} from '../../utils';
+    import {
+        GET
+    } from '../../utils';
     export default class PersonalAchievePage extends wepy.page {
         config = {
             navigationBarTitleText: '个人主页'
@@ -80,33 +83,39 @@
                 this.feedbackStatus = false
             }
         }
-        onLoad(){
+        onLoad() {
             var that = this;
             let localUrl = that.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
-                GET(`${localUrl}/user/user`,{session_key: session_key}, (res)=>{
-                    if(res.data.status === 1){
-                        let curUser = res.data.data;
-                        that.avatar_url = curUser.avatar_url;
-                        that.nickname = curUser.nickname;
-                        that.group = curUser.group;
-                        that.user_id = curUser.id;
-                        // this.cardSupportCount = res.data.data.suport,
-                        // this.cardCommentCount = res.data.data.comment,
-                        that.$apply();
-                    }
-                })
+            GET(`${localUrl}/user/user`, {
+                session_key: session_key
+            }, (res) => {
+                if (res.data.status === 1) {
+                    let curUser = res.data.data;
+                    that.avatar_url = curUser.avatar_url;
+                    that.nickname = curUser.nickname;
+                    that.group = curUser.group;
+                    that.user_id = curUser.id;
+                    // this.cardSupportCount = res.data.data.suport,
+                    // this.cardCommentCount = res.data.data.comment,
+                    that.$apply();
+                }
+            })
         }
     }
 </script>
 
 <style lang="scss" scoped>
     .ownContainer {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-top: 60rpx;
+        height: 100%;
+        width: 100%;
         background: #f7f9fa;
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 60rpx;
+        }
         .messageContainer {
             width: 94%;
             height: 70rpx;

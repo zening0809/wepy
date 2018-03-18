@@ -17,7 +17,7 @@
                 // 登录页
                 "pages/login",
                 // 首页
-                "pages/index",  
+                "pages/index",
                 // 我的卡片
                 "pages/my_card_page/index",
                 // 我的评论
@@ -30,8 +30,8 @@
                 "pages/message_page/index",
                 // 消息详情页
                 "pages/message_detail_page/index",
-                // 个人主页
-                "pages/own_comment_page/index",
+                // 我的个人主页
+                "pages/own_page/index",
                 // 已获得的徽章
                 "pages/get_achievement_page/index",
                 // 我的徽章
@@ -54,8 +54,7 @@
         };
         globalData = {
             userInfo: null,
-            backgroundCheckUrl:   'http://192.168.1.109:3001' //'https://sdgo.lzkjchina.com'  //'http://zeningtest.free.ngrok.cc'     192.168.0.68:3000 https://m.yunhe.mobi
-            
+            backgroundCheckUrl: 'http://192.168.1.109:3001' //'https://sdgo.lzkjchina.com'  //'http://zeningtest.free.ngrok.cc'     192.168.0.68:3000 https://m.yunhe.mobi
         };
         constructor() {
             super();

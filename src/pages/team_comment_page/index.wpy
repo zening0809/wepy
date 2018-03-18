@@ -2,30 +2,33 @@
     <view class="container">
         <CommentSupport :cardId.sync="card_id" />
         <SendComment :cardId.sync="card_id" wx:if="{{commentStatus}}" />
-        <ProductCard />
-        <view class="comment">
-            <view class="header">全部评论</view>
-            <repeat for="{{commentList}}" key="index" index="index" item="item">
-                <view class="item">
-                    <view class="item-header">
-                        <view class="item-header--left">
-                            <image src="{{ item.avatar_url}}" class="item-avatar" />
-                            <text class="item-name">{{item.nickname}}</text>
-                            <view class="item-number">No.{{item.group}}</view>
+        <view class="teamContent">
+            <ProductCard />
+            <view class="comment">
+                <view class="header" wx:if="{{!isHasComment}}">暂无评论</view>
+                <view class="header" wx:if="{{isHasComment}}">全部评论</view>
+                <repeat for="{{commentList}}" key="index" index="index" item="item">
+                    <view class="item">
+                        <view class="item-header">
+                            <view class="item-header--left">
+                                <image src="{{ item.avatar_url}}" class="item-avatar" />
+                                <text class="item-name">{{item.nickname}}</text>
+                                <view class="item-number">No.{{item.group}}</view>
+                            </view>
+                            <view @tap="support" class="item-header--right" data-index="{{index}}">
+                                <image src="/asserts/image/home/suport_card.png" class="item-like" />{{item.support.length}}
+                            </view>
                         </view>
-                        <view @tap="support" class="item-header--right" data-index="{{index}}">
-                            <image src="/asserts/image/home/suport_card.png" class="item-like" />{{item.support.length}}
+                        <view class="item-content">
+                            {{item.content}}
+                        </view>
+                        <view class="item-footer">
+                            <view class="item-time">{{item.create_time}}</view>
+                            <view @tap.stop="deleteComment" data-index="{{index}}" class="item-del" wx:if="{{item.isOwn}}">删除</view>
                         </view>
                     </view>
-                    <view class="item-content">
-                        {{item.content}}
-                    </view>
-                    <view class="item-footer">
-                        <view class="item-time">{{item.create_time}}</view>
-                        <view @tap.stop="deleteComment" class="item-del" wx:if="{{isOwn}}">删除</view>
-                    </view>
-                </view>
-            </repeat>
+                </repeat>
+            </view>
         </view>
     </view>
 </template>
@@ -41,9 +44,8 @@
     import SendComment from '../../components/comment'
     export default class TeamComment extends wepy.page {
         data = {
-            isComment: true,
+            isHasComment: false,
             commentStatus: false,
-            isOwn: false,
             // teamInfo: {
             //     avatar_url: '/asserts/image/home/title.png',
             //     nickname: '乐小舟',
@@ -78,7 +80,8 @@
                     text: '资源分享'
                 }
             ],
-            card_id: 0
+            card_id: 0,
+            open_id: ''
         }
         config = {
             navigationBarTitleText: '团队评论'
@@ -90,27 +93,31 @@
         }
         methods = {
             deleteComment(e) {
-                let comment_id = 1;
+                let index = e.currentTarget.dataset.index;
+                let id = this.commentList[index].id;
+                let session_key = wx.getStorageSync('session_key');
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
-                    icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
-                    success: () => {
-                        let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                        POST(`${localUrl}/comment/delete`, {
-                            id: comment_id
-                        }, (res) => {
-                            if (res.status === 1) {
-                                // this.teamInfo = res.data.data.data[0];
-                                // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
-                                // this.$apply();
-                            }
-                        })
+                    success: (res) => {
+                        if (res.confirm) {
+                            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                            POST(`${localUrl}/comment/delete`, {
+                                id,
+                                session_key
+                            }, (res) => {
+                                if (res.data.status === 1) {
+                                    // 刷新页面
+                                    this.getCommentList(this.card_id, session_key);
+                                }
+                            })
+                        } else if (res.cancel) {
+                            console.log('用户点击了取消')
+                        }
                     }
                 })
-                return;
             },
             support(e) {
                 let index = e.currentTarget.dataset.index;
@@ -123,22 +130,22 @@
                 POST(`${localUrl}/comment/support`, data, (res) => {
                     // 添加成功
                     if (res.data.data.status == 1) {
-                        this.getCommentList(this.card_id, session_key)
+                        this.getCommentList(this.card_id, session_key);
                     }
                 })
             }
         }
         events = {
             openPopup: () => {
-                this.commentStatus = true
+                this.commentStatus = true;
             },
             closePopup: (type) => {
-                var session_key = wx.getStorageSync('session_key');
+                let session_key = wx.getStorageSync('session_key');
                 this.commentStatus = false
                 if (type == 1) {
-                    this.getCommentList(this.card_id, session_key)
+                    this.getCommentList(this.card_id, session_key);
                 }
-                this.$apply()
+                this.$apply();
             },
             addSupport: () => {
                 this.supportNum += 1;
@@ -147,13 +154,23 @@
         }
         // 获取评论列表
         getCommentList(id, session_key) {
+            let that = this;
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             GET(`${localUrl}/comment/getList`, {
                 card_id: id,
                 session_key: session_key
             }, (res) => {
                 if (res.data.status === 1) {
-                    console.log(res.data.data)
+                    let commentList = res.data.data;
+                    if (commentList.length > 0) {
+                        this.isHasComment = true;
+                    }
+                    commentList.map(v => v.isOwn = false)
+                    commentList.map(v => {
+                        if (v.openid == that.open_id) {
+                            v.isOwn = true;
+                        }
+                    })
                     this.commentList = res.data.data;
                     this.$apply();
                 }
@@ -172,15 +189,29 @@
                 }
             })
         }
+        // 获取用户信息
+        getUserInfo(session_key) {
+            let that = this;
+            let localUrl = that.$parent.globalData.backgroundCheckUrl;
+            GET(`${localUrl}/user/user`, {
+                session_key: session_key
+            }, (res) => {
+                if (res.data.status === 1) {
+                    let curUser = res.data.data;
+                    that.open_id = curUser.openid;
+                    that.$apply();
+                }
+            })
+        }
         assignmentAction(item) {
             this.$broadcast('switchCard', item);
         }
         onLoad(options) {
-            var session_key = wx.getStorageSync('session_key');
-            this.card_id = options.id
-            this.getCardMsg(options.id, session_key)
-            this.getCommentList(options.id, session_key)
-            this.$apply;
+            let session_key = wx.getStorageSync('session_key');
+            this.getUserInfo(session_key);
+            this.card_id = options.id;
+            this.getCardMsg(options.id, session_key);
+            this.getCommentList(options.id, session_key);
         }
     }
 </script>
@@ -188,10 +219,12 @@
 <style lang="scss" scoped>
     .container {
         height: 100%;
-        width: 100%;
+        font-size: 24rpx;
+        background-color: #f0f0f0;
+    }
+    .teamContent {
         padding-bottom: 110rpx;
         overflow-y: scroll;
-        font-size: 24rpx;
         background-color: #f0f0f0;
     }
     .comment {

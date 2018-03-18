@@ -74,7 +74,6 @@
                 if (url === 'pages/team_comment_page/index') {
                     return;
                 }
-                console.log('====', this.card_id)
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index?id=${this.card_id}`
                 })

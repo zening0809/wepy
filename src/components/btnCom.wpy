@@ -10,7 +10,7 @@
                 <image class="img-sale" src="/asserts/image/card/export.png" />
                 <view>探索</view>
             </view>
-            <view @tap="navigate('own_comment_page')" class="one-bar">
+            <view @tap="navigate('own_page')" class="one-bar">
                 <image class="img-shop-car" src="/asserts/image/card/own.png" />
                 <view>我的</view>
             </view>
