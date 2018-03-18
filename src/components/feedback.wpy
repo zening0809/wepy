@@ -28,12 +28,13 @@
             sendFeedback() {
                 let feedbackData = {}
                 let localUrl = this.$parent.$parent.globalData.backgroundCheckUrl
-                let openid = wx.getStorageSync('openid')
-                feedbackData.openid = openid
-                feedbackData.content = this.content
-                feedbackData.user_id = this.userId
-                let that = this
-                POST(`${localUrl}/feedback/saveFeedback`, feedbackData, (res) => {
+                let session_key = wx.getStorageSync('session_key');
+                feedbackData.session_key = session_key;
+                feedbackData.content = this.content;
+                feedbackData.user_id = this.userId;
+                let that = this;
+                
+                POST(`${localUrl}/index/wxCheck`, feedbackData, (res) => {
                     wepy.showModal({
                         title: '存储成功',
                         icon: 'success',
