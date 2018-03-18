@@ -2,15 +2,15 @@
     <view class="addCardContainer">
         <AchieveHead :personal.sync="personalNum" :team.sync="teamNum"></AchieveHead>
         <view class="achive-tab">
-            <view @tap="redirect('achievement_page')" class="tab">
+            <view @tap="navigate('achievement_page')" class="tab">
                 <span class="span-tab">我的徽章</span>
             </view>
             <view class="diver"></view>
-            <view @tap="redirect('personal_achieve_page')" class="tab">
+            <view @tap="navigate('personal_achieve_page')" class="tab">
                 <span class="span-tab">个人成就</span>
             </view>
             <view class="diver"></view>
-            <view @tap="redirect('team_achieve_page')" class="tab active-tab">
+            <view @tap="navigate('team_achieve_page')" class="tab active-tab">
                 <span class="span-tab">团队成就</span>
             </view>
         </view>
@@ -70,10 +70,17 @@
         }
         methods = {
             // 路由跳转
-            redirect(pageName) {
-                wepy.redirectTo({
-                    url: `/pages/${pageName}/index`
-                })
+            navigate(pageName) {
+                let pageArr = getCurrentPages();
+                if (pageArr.length == 5) {
+                    wepy.redirectTo({
+                        url: `/pages/${pageName}/index`
+                    })
+                } else {
+                    wepy.navigateTo({
+                        url: `/pages/${pageName}/index`
+                    })
+                }
             }
         }
         // 获取数据
