@@ -53,19 +53,22 @@ export function GET(url, data, callback) {
         url,
         data,
         method: 'GET',
-        success: (res)=>{
-            if(res.data && res.data.data && res.data.data.islogin){
-                wepy.showModal({
+        success: (res) => {
+            if (res.data && res.data.data && res.data.data.islogin) {
+                wx.showModal({
                     content: '登录失效， 请重新登录',
                     confirmColor: '#6CACF4',
                     showCancel: false,
-                    sunccess: ()=>{
-                        wepy.removeStorageSync('session_key');
-                        wepy.redirectTo({
-                            url: `/pages/login`
-                        });
+                    success: (res) => {
+                        if (res.confirm) {
+                            wepy.removeStorageSync('session_key');
+                            wepy.redirectTo({
+                                url: `/pages/login`
+                            });
+                        }
                     }
                 })
+
             }
             callback(res)
         }
@@ -77,21 +80,28 @@ export function POST(url, data, callback) {
         url,
         data,
         method: 'POST',
-        success: (res)=>{
-            if(res.data && res.data.data && res.data.data.islogin){
-                console.log(1111);
-                wepy.showModal({
+        success: (res) => {
+            if (res.data && res.data.data && res.data.data.islogin) {
+                wx.showModal({
                     content: '登录失效， 请重新登录',
                     confirmColor: '#6CACF4',
                     showCancel: false,
-                    sunccess: ()=>{
-                        wx.removeStorageSync('session_key');
-                        wx.redirectTo({
-                            url: `/pages/login`
-                        });
+                    success: (res) => {
+                        if (res.confirm) {
+                            wepy.removeStorageSync('session_key');
+                            wepy.redirectTo({
+                                url: `/pages/login`
+                            });
+                        }
                     }
                 })
+                console.log('adadadadad')
+                wepy.removeStorageSync('session_key');
+                wepy.redirectTo({
+                    url: `/pages/login`
+                });
             }
+
             callback(res)
         }
     })
