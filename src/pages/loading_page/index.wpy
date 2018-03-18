@@ -1,0 +1,47 @@
+<template>
+    <image src='/asserts/image/own/loading.jpeg'/>
+</template>
+
+<script>
+    import wepy from "wepy";
+    import {
+        GET
+    } from "../../utils";
+    export default class Index extends wepy.page {
+        config = {
+            navigationBarTitleText: "加载中....."
+        };
+        computed = {};
+        onLoad(){
+            let session_key = wx.getStorageSync('session_key');
+            if (!session_key) {
+                wx.redirectTo({
+                    url: `/pages/login`
+                });
+            } else {
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                GET(`${localUrl}/index/wxCheck`, {
+                    session_key: session_key
+                }, (res) => {
+                    if (res.data.status === 1) {
+                        wx.redirectTo({
+                            url: `/pages/index`
+                        });
+                    }else{
+                         wx.redirectTo({
+                            url: `/pages/login`
+                        });
+                    }
+                })
+                
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+image{
+    width: 100%;
+    height: 100%;
+}
+</style>

@@ -12,7 +12,6 @@ async function request(userConfig) {
         const config = Object.assign(defaultConfig, userConfig)
         return await wepy.request(config)
     } catch (error) {
-        console.log('ajax调用失败', error)
         wepy.showModal({
             title: '数据获取失败',
             content: '请检查您的网络连接',
@@ -32,7 +31,6 @@ async function uploadFile(userConfig) {
         const config = Object.assign(defaultConfig, userConfig)
         return await wepy.uploadFile(config)
     } catch (error) {
-        console.log('文件上传失败', error)
         wepy.showModal({
             title: '文件上传失败',
             content: '请检查您的网络连接',
@@ -56,6 +54,19 @@ export function GET(url, data, callback) {
         data,
         method: 'GET',
         success: (res)=>{
+            if(res.data && res.data.data && res.data.data.islogin){
+                wepy.showModal({
+                    content: '登录失效， 请重新登录',
+                    confirmColor: '#6CACF4',
+                    showCancel: false,
+                    sunccess: ()=>{
+                        wepy.removeStorageSync('session_key');
+                        wepy.redirectTo({
+                            url: `/pages/login`
+                        });
+                    }
+                })
+            }
             callback(res)
         }
     })
@@ -67,6 +78,20 @@ export function POST(url, data, callback) {
         data,
         method: 'POST',
         success: (res)=>{
+            if(res.data && res.data.data && res.data.data.islogin){
+                console.log(1111);
+                wepy.showModal({
+                    content: '登录失效， 请重新登录',
+                    confirmColor: '#6CACF4',
+                    showCancel: false,
+                    sunccess: ()=>{
+                        wx.removeStorageSync('session_key');
+                        wx.redirectTo({
+                            url: `/pages/login`
+                        });
+                    }
+                })
+            }
             callback(res)
         }
     })

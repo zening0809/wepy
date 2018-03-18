@@ -33,16 +33,7 @@
             }
         }
         onLoad() {
-            let session_key = wx.getStorageSync('session_key');
-            if (!session_key) {
-                // wx.redirectTo({
-                //     url: `/pages/login`
-                // });
-            } else {
-                wx.redirectTo({
-                    url: `/pages/index`
-                });
-            }
+         
         }
         onShow() {
             /* var animation = wx.createAnimation({
