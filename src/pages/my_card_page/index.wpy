@@ -59,7 +59,7 @@
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             var session_key = wx.getStorageSync('session_key');
             GET(`${localUrl}/card/getUserCard`, {
-                session_key : session_key
+                session_key: session_key
             }, (res) => {
                 if (res.data.status === 1) {
                     this.cardList = res.data.data;
@@ -84,7 +84,6 @@
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
-                    icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
                     success: (res) => {
@@ -114,7 +113,6 @@
                         }
                     }
                 })
-                return;
             }
         }
     }

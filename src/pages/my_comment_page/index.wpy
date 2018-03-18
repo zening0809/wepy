@@ -25,34 +25,34 @@
                         <span class="num">{{comment.support.length}}</span>
                     </view>
                     <!-- <view class="zan">
-                                <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                                <span class="num">33</span>
-                            </view> -->
+                                    <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                                    <span class="num">33</span>
+                                </view> -->
                     <view @tap.stop="deleteCard" data-index="{{index}}" class="del">删除</view>
                 </view>
             </view>
         </repeat>
         <!-- <view class="cardItem dead">
-                <view class="cardTop">
-                    <view class="cardTitle">我校本次的特殊活动</view>
-                </view>
-                <view class="cardMid">
-                    为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
-                </view>
-                <view class="cardBtm">
-                    <view class="show">查看卡片</view>
-                    <view class="date">2017-09-08</view>
-                    <view class="zan">
-                        <image src="/asserts/image/card/suport_two.png" class="icon-class" />
-                        <span class="num">33</span>
+                    <view class="cardTop">
+                        <view class="cardTitle">我校本次的特殊活动</view>
                     </view>
-                    <view class="zan">
-                        <image src="/asserts/image/card/text_two.png" class="icon-class2" />
-                        <span class="num">33</span>
+                    <view class="cardMid">
+                        为了避免用户在微信中使用小程序服务时，注意力被周围复杂环境干扰。
                     </view>
-                    <view class="del">删除</view>
-                </view>
-            </view> -->
+                    <view class="cardBtm">
+                        <view class="show">查看卡片</view>
+                        <view class="date">2017-09-08</view>
+                        <view class="zan">
+                            <image src="/asserts/image/card/suport_two.png" class="icon-class" />
+                            <span class="num">33</span>
+                        </view>
+                        <view class="zan">
+                            <image src="/asserts/image/card/text_two.png" class="icon-class2" />
+                            <span class="num">33</span>
+                        </view>
+                        <view class="del">删除</view>
+                    </view>
+                </view> -->
     </view>
 </template>
 
@@ -85,30 +85,32 @@
                 // e.stopPropagation(); 
                 wepy.showModal({
                     title: '确定删除？',
-                    icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
-                    success: () => {
-                        let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                        POST(`${localUrl}/comment/delete`, {
-                            id: id,
-                            session_key: session_key
-                        }, (res) => {
-                            if (res.data.status === 1) {
-                                // 刷新页面
-                                GET(`${localUrl}/comment/commentList`, {
-                                     session_key: session_key
-                                }, (res) => {
-                                    if (res.data.status === 1) {
-                                        this.commentList = res.data.data;
-                                        this.$apply();
-                                    }
-                                })
-                            }
-                        })
+                    success: (res) => {
+                        if (res.confirm) {
+                            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                            POST(`${localUrl}/comment/delete`, {
+                                id: id,
+                                session_key: session_key
+                            }, (res) => {
+                                if (res.data.status === 1) {
+                                    // 刷新页面
+                                    GET(`${localUrl}/comment/commentList`, {
+                                        session_key: session_key
+                                    }, (res) => {
+                                        if (res.data.status === 1) {
+                                            this.commentList = res.data.data;
+                                            this.$apply();
+                                        }
+                                    })
+                                }
+                            })
+                        } else if(res.cancel) {
+                            console.log('用户点击取消');
+                        }
                     }
                 })
-                return;
             }
         }
         refersh() {
