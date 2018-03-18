@@ -35,9 +35,6 @@
         POST
     } from '../utils';
     export default class ProductCard extends wepy.component {
-        props = {
-            supportNum: Number
-        }
         data = {
             isShow: false,
             avatar_url: '',
@@ -86,11 +83,13 @@
             support() {
                 let session_key = wx.getStorageSync('session_key');
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`, {id: this.card_id ,session_key}, (res) => {
+                POST(`${localUrl}/card/support`, {
+                    id: this.card_id,
+                    session_key
+                }, (res) => {
                     // 添加成功
                     if (res.data.status == 1) {
                         this.supportNum = this.supportNum + 1;
-                        // this.$emit('addSupport');
                         this.$apply();
                     }
                 })
