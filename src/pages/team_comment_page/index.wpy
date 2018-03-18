@@ -1,8 +1,8 @@
 <template>
     <view class="container">
-        <CommentSupport :cardId.sync = "card_id"/>
-        <SendComment :cardId.sync = "card_id" wx:if="{{commentStatus}}"/>
-        <ProductCard :supportNum.sync = "supportNum" />
+        <CommentSupport :cardId.sync="card_id" />
+        <SendComment :cardId.sync="card_id" wx:if="{{commentStatus}}" />
+        <ProductCard />
         <view class="comment">
             <view class="header">全部评论</view>
             <repeat for="{{commentList}}" key="index" index="index" item="item">
@@ -32,7 +32,10 @@
 
 <script>
     import wepy from 'wepy'
-    import { POST, GET } from '../../utils'
+    import {
+        POST,
+        GET
+    } from '../../utils'
     import ProductCard from '../../components/productCard'
     import CommentSupport from '../../components/commentSupport'
     import SendComment from '../../components/comment'
@@ -59,23 +62,23 @@
             //     {avatar_url: 'title.png', nickname: '过往不及', id: '6', support: [1], content: '撒服务二期温热武器为你戊二醛无热无若', create_time: '半小时前'}
             // ],
             tagList: [{
-                color: '#256af2',
-                text: '技能交换'
-            },
-            {
-                color: '#b4e99f',
-                text: '团队进展'
-            },
-            {
-                color: '#fb91af',
-                text: '求助'
-            },
-            {
-                color: '#f7cd8b',
-                text: '资源分享'
-            }],
-            card_id: 0,
-            supportNum: 0
+                    color: '#256af2',
+                    text: '技能交换'
+                },
+                {
+                    color: '#b4e99f',
+                    text: '团队进展'
+                },
+                {
+                    color: '#fb91af',
+                    text: '求助'
+                },
+                {
+                    color: '#f7cd8b',
+                    text: '资源分享'
+                }
+            ],
+            card_id: 0
         }
         config = {
             navigationBarTitleText: '团队评论'
@@ -86,7 +89,7 @@
             SendComment
         }
         methods = {
-            deleteComment(e){
+            deleteComment(e) {
                 let comment_id = 1;
                 // e.stopPropagation(); 
                 wepy.showModal({
@@ -94,10 +97,12 @@
                     icon: 'success',
                     confirmColor: '#6CACF4',
                     showCancel: true,
-                    success: ()=>{
+                    success: () => {
                         let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                        POST(`${localUrl}/comment/delete`,{id: comment_id}, (res)=>{
-                            if(res.status === 1){
+                        POST(`${localUrl}/comment/delete`, {
+                            id: comment_id
+                        }, (res) => {
+                            if (res.status === 1) {
                                 // this.teamInfo = res.data.data.data[0];
                                 // this.teamInfo.tag = this.tagList[this.teamInfo.tag].text;
                                 // this.$apply();
@@ -108,7 +113,6 @@
                 return;
             },
             support(e) {
-                
                 let index = e.currentTarget.dataset.index;
                 let session_key = wx.getStorageSync('session_key');
                 let data = {
@@ -116,7 +120,7 @@
                     id: this.data.commentList[index].id
                 }
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/comment/support`,data, (res)=>{
+                POST(`${localUrl}/comment/support`, data, (res) => {
                     // 添加成功
                     if (res.data.data.status == 1) {
                         this.getCommentList(this.card_id, session_key)
@@ -129,7 +133,7 @@
                 this.commentStatus = true
             },
             closePopup: (type) => {
-                 var session_key = wx.getStorageSync('session_key');
+                var session_key = wx.getStorageSync('session_key');
                 this.commentStatus = false
                 if (type == 1) {
                     this.getCommentList(this.card_id, session_key)
@@ -142,10 +146,13 @@
             }
         }
         // 获取评论列表
-        getCommentList(id, session_key){
+        getCommentList(id, session_key) {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/comment/getList`,{card_id: id, session_key: session_key}, (res)=>{
-                if(res.data.status === 1){
+            GET(`${localUrl}/comment/getList`, {
+                card_id: id,
+                session_key: session_key
+            }, (res) => {
+                if (res.data.status === 1) {
                     console.log(res.data.data)
                     this.commentList = res.data.data;
                     this.$apply();
@@ -153,19 +160,22 @@
             })
         }
         // 获取卡片信息
-        getCardMsg(id, session_key){
+        getCardMsg(id, session_key) {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                GET(`${localUrl}/card/curent`,{id:id, session_key: session_key}, (res)=>{
-                    if(res.data.status === 1){
-                        this.assignmentAction(res.data.data);
-                        this.$apply();
-                    }
-                })
+            GET(`${localUrl}/card/curent`, {
+                id: id,
+                session_key: session_key
+            }, (res) => {
+                if (res.data.status === 1) {
+                    this.assignmentAction(res.data.data);
+                    this.$apply();
+                }
+            })
         }
         assignmentAction(item) {
             this.$broadcast('switchCard', item);
         }
-        onLoad(options){
+        onLoad(options) {
             var session_key = wx.getStorageSync('session_key');
             this.card_id = options.id
             this.getCardMsg(options.id, session_key)
