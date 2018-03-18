@@ -102,12 +102,11 @@
                         success: function(res) {
                             wepy.showModal({
                                 title: '存储成功',
-                                icon: 'success',
                                 confirmColor: '#6CACF4',
                                 showCancel: false,
                                 success: (res) => {
                                     if (res.confirm) {
-                                        wepy.navigateTo({
+                                        wepy.redirectTo({
                                             url: `/pages/index`
                                         })
                                     }
@@ -129,10 +128,29 @@
             },
             submitForm() {
                 let curData = this.data;
+                let title = curData.formObj.title;
+                let content = curData.formObj.content;
+                if (title.length <= 0 || title.length > 20) {
+                    wx.showModal({
+                        title: '提示',
+                        content: '标题不能为空或超过20字，请重新填写后发布！',
+                        showCancel: false
+                    })
+                    return;
+                }
+                if (content.length <= 0 || content.length > 70) {
+                    wx.showModal({
+                        title: '提示',
+                        content: '内容不能为空或超过70字，请重新填写后发布！',
+                        showCancel: false
+                    })
+                    return;
+                }
+
                 let addCard = {};
                 let chooseImgPath = this.chooseImgPath;
-                addCard.title = curData.formObj.title;
-                addCard.content = curData.formObj.content;
+                addCard.title = title;
+                addCard.content = content;
                 addCard.tag = curData.curTag;
                 
                 let localUrl = this.$parent.globalData.backgroundCheckUrl;
