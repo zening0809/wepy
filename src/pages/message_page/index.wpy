@@ -4,7 +4,7 @@
             <view class="item" @tap="navigate('message_detail_page')" data-index="{{index}}">
                 <view class="item-header">
                     <text class="item-title">系统通知消息</text>
-                    <text class="item-date">{{item.date}}</text>
+                    <text class="item-date">{{item.create_time}}</text>
                 </view>
                 <view class="item-content">
                     {{item.title}}
