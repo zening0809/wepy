@@ -15,9 +15,6 @@
         POST
     } from '../utils'
     export default class CommentSupport extends wepy.component {
-        props = {
-            cardId: Number
-        }
         methods = {
             // 点赞
             support() {

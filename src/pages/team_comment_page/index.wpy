@@ -1,6 +1,6 @@
 <template>
     <view class="container">
-        <CommentSupport :cardId.sync="card_id" />
+        <CommentSupport />
         <SendComment :cardId.sync="card_id" wx:if="{{commentStatus}}" />
         <view class="teamContent">
             <ProductCard />

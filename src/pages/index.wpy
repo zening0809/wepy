@@ -170,7 +170,7 @@
                 this.$apply();
             });
         }
-        onShow() {
+        onLoad() {
             this.refresh(1);
         }
         // onPrefetch () {
