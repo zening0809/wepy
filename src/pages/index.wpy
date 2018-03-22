@@ -9,7 +9,8 @@
                     </view>
                     <text>筛选</text>
                 </view>
-                <view class="logoCardContainer" @tap="navigate('card_page')">
+                <view class="logoCardContainer" @tap="toCardList">
+                    <view class='notice' wx:if="{{noticeStatus}}"></view>
                     <view style="background:#fff;box-shadow: 0 2px 8px rgba(0, 0, 0, .45)">
                         <image src="/asserts/image/home/box.png" />
                     </view>
@@ -50,7 +51,8 @@
             animationData: {},
             curCard: [],
             curIndex: 0,
-            page: 1
+            page: 1,
+            noticeStatus: false
         };
         computed = {};
         methods = {
@@ -59,6 +61,22 @@
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index`
                 });
+            },
+            // 去卡片列表 并且 取消红点
+            toCardList() {
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                let session_key = wx.getStorageSync('session_key');
+                GET(`${localUrl}/user/changeNotice`, {
+                    session_key: session_key
+                }, res => {
+                    if (res.data.status === 1) {
+                        console.log(res, '修改成功');
+                    } else {
+                        console.log(res, '失败');
+                    }
+                    this.$apply();
+                });
+                this.methods.navigate('card_page');
             },
             handleTouchstart(e) {
                 this.mouseData.lastX = e.touches[0].pageX;
@@ -146,6 +164,21 @@
         assignmentAction(item) {
             this.$broadcast('switchCard', item);
         }
+        noticeStatusAction() {
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            let session_key = wx.getStorageSync('session_key');
+            GET(`${localUrl}/user/user`, {
+                session_key: session_key
+            }, res => {
+                if (res.data.status === 1) {
+                    this.noticeStatus = res.data.data.notice;
+                    this.$apply();
+                } else {
+                    console.log(res, '失败');
+                }
+                this.$apply();
+            });
+        }
         refresh(page) {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
@@ -171,6 +204,7 @@
             });
         }
         onShow() {
+            this.noticeStatusAction();
             this.refresh(1);
         }
         // onPrefetch () {
@@ -207,6 +241,15 @@
                 display: flex;
                 flex-direction: column;
                 margin-left: 10rpx;
+                position: relative;
+                .notice {
+                    width: 20rpx;
+                    height: 20rpx;
+                    background: red;
+                    position: absolute;
+                    right: 8px;
+                    top: 5rpx;
+                }
                 view {
                     width: 100rpx;
                     height: 100rpx;
