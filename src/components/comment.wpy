@@ -25,14 +25,26 @@
                 this.content = e.detail.value
             },
             sendComment() {
-                let commentData = {}
+                let content = this.content;
+                console.log('====', this);
+                if (this.content.length <= 0) {
+                    wx.showModal({
+                        title: '提示',
+                        content: '评论内容不能为空，请重新填写后发布！',
+                        showCancel: false
+                    })
+                    return;
+                }
                 let localUrl = this.$parent.$parent.globalData.backgroundCheckUrl
-                var session_key = wx.getStorageSync('session_key');
-               
-                commentData.content = this.content
+                let session_key = wx.getStorageSync('session_key');
+                let commentData = {}
+                commentData.content = content;
                 commentData.card_id = this.cardId
                 let that = this
-                POST(`${localUrl}/comment/saveComment`, {session_key, commentData}, (res) => {
+                POST(`${localUrl}/comment/saveComment`, {
+                    session_key,
+                    commentData
+                }, (res) => {
                     wepy.showModal({
                         title: '存储成功',
                         icon: 'success',
