@@ -2480,9 +2480,9 @@ wepy-compiler-less@^1.3.11:
   dependencies:
     less "^2.7.1"
 
-wepy-compiler-sass@^1.3.8:
-  version "1.3.8"
-  resolved "http://r.cnpmjs.org/wepy-compiler-sass/download/wepy-compiler-sass-1.3.8.tgz#459efc93151eb9370ed2569c2cec215c1d3cd4ff"
+wepy-compiler-sass@^1.3.12:
+  version "1.3.12"
+  resolved "http://registry.npm.taobao.org/wepy-compiler-sass/download/wepy-compiler-sass-1.3.12.tgz#5ee3c38066c86921357226fa4b5b587d3a01595d"
   dependencies:
     node-sass "^4.0.0"
 

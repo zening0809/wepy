@@ -34,8 +34,9 @@
                 feedbackData.user_id = this.userId;
                 let that = this;
                 
-                POST(`${localUrl}/index/wxCheck`, feedbackData, (res) => {
-                    wepy.showModal({
+                POST(`${localUrl}/feedback/add`, feedbackData, (res) => {
+                    if(res.data.status === 1){
+                        wepy.showModal({
                         title: '存储成功',
                         icon: 'success',
                         confirmColor: '#6CACF4',
@@ -44,6 +45,8 @@
                             that.$emit('closePopup')
                         }
                     })
+                    }
+                
                 })
             },
             disabled() {
