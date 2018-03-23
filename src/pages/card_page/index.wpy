@@ -31,7 +31,7 @@
                 </view>
                 <image src="/asserts/image/card/right.png" class="right" />
             </view>
-            <view @tap="navigate('add_card_page')" class="newCard">写卡片</view>
+            <!-- <view @tap="navigate('add_card_page')" class="newCard">写卡片</view> -->
         </view>
         <BtnCom />
     </view>

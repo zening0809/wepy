@@ -8,13 +8,15 @@
                 <view class="number">No.{{group}}</view>
             </view>
         </view>
-        <image class="content" src="{{img_url}}" />
+        <view class="imgContainer" style="background-image: url('{{img_url}}')">
+            <!-- <image class="content" src="{{img_url}}" /> -->
+        </view>
         <view class="productTitle">{{title}}</view>
         <view class="productContent">{{content}}</view>
         <view class="groupDevContainer">
             <view class="cardTag" style="background:{{tagColor}};">{{tagName}}</view>
             <view class="sportCardContainer">
-                <image src="/asserts/image/home/suport_card.png" class="suportCard" />
+                <image src="/asserts/image/home/suport_card.png" class="suportCard" @tap.stop="support" />
                 <text>{{supportNum}}</text>
             </view>
         </view>
@@ -150,9 +152,11 @@
                 }
             }
         }
-        .content {
-            width: 100%;
+        .imgContainer {
+            width: 610rpx;
             height: 340rpx;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
         .productTitle {
             color: #333;

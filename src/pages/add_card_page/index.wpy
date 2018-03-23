@@ -117,7 +117,7 @@
                             console.log(e);
                             wx.showModal({
                                 title: '提示',
-                                content: '上传失败',
+                                content: '新添卡片失败',
                                 showCancel: false
                             })
                         },
