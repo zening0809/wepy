@@ -36,7 +36,7 @@
                 
                 POST(`${localUrl}/index/wxCheck`, feedbackData, (res) => {
                     wepy.showModal({
-                        title: '存储成功',
+                        title: '发送成功',
                         icon: 'success',
                         confirmColor: '#6CACF4',
                         showCancel: false,

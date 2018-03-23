@@ -9,6 +9,12 @@
                     </view>
                     <text>筛选</text>
                 </view>
+                <view class="logoCardContainer" @tap="navigate('add_card_page')">
+                    <view>
+                        <image src="/asserts/image/home/nav.png" />
+                    </view>
+                    <text>写卡片</text>
+                </view>
                 <view class="logoCardContainer" @tap="toCardList">
                     <view class='notice' wx:if="{{noticeStatus}}"></view>
                     <view style="background:#fff;box-shadow: 0 2px 8px rgba(0, 0, 0, .45)">
@@ -32,7 +38,7 @@
     } from "../utils";
     export default class Index extends wepy.page {
         config = {
-            navigationBarTitleText: "首页"
+            navigationBarTitleText: "SDGo社区"
         };
         components = {
             BtnCom,
@@ -205,6 +211,8 @@
         }
         onShow() {
             this.noticeStatusAction();
+        }
+        onLoad() {
             this.refresh(1);
         }
         // onPrefetch () {
@@ -230,7 +238,7 @@
             margin-left: 60rpx;
         }
         .cardContainer {
-            width: 300rpx;
+            width: 400rpx;
             height: 100%;
             display: flex;
             .logoCardContainer {
