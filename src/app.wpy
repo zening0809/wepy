@@ -54,7 +54,7 @@
         };
         globalData = {
             userInfo: null,
-            backgroundCheckUrl: 'http://192.168.1.107:3001'   //'https://sdgo.lzkjchina.com'  //'http://zeningtest.free.ngrok.cc'  //'http://192.168.1.109:3001'     192.168.0.68:3000 https://m.yunhe.mobi
+            backgroundCheckUrl: 'http://192.168.0.100:3001'   //'https://sdgo.lzkjchina.com'  //'http://zeningtest.free.ngrok.cc'  //'http://192.168.1.109:3001'     192.168.0.68:3000 https://m.yunhe.mobi
             
         };
         constructor() {
