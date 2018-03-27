@@ -11,7 +11,7 @@
                 </view>
                 <view class="logoCardContainer" @tap="navigate('add_card_page')">
                     <view>
-                        <image src="/asserts/image/home/plus.pic" />
+                        <image src="/asserts/image/home/plus.png" />
                     </view>
                     <text>写卡片</text>
                 </view>

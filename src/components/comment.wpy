@@ -26,7 +26,6 @@
             },
             sendComment() {
                 let content = this.content;
-                console.log('====', this);
                 if (this.content.length <= 0) {
                     wx.showModal({
                         title: '提示',
