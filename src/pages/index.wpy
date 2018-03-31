@@ -100,7 +100,9 @@
                 if (Math.abs(tx) > Math.abs(ty)) {
                     if (tx < 0) {
                         text = "left";
+                        this.sliderCardAddNum();
                     } else if (tx > 0) {
+                        this.sliderCardAddNum();
                         text = "right";
                     }
                 } else {
@@ -117,6 +119,19 @@
                 this.sliderCard(text);
             }
         };
+        sliderCardAddNum(){
+            let localUrl = this.$parent.globalData.backgroundCheckUrl;
+            let session_key = wx.getStorageSync('session_key');
+            GET(`${localUrl}/user/sliderCard`, {
+                session_key: session_key
+            }, res => {
+                if (res.data.status === 1) {
+                   console.log('success');
+                } else {
+                    console.log('失败');
+                }
+            });
+        }
         sliderCard(direction) {
             switch (direction) {
                 case "right":
