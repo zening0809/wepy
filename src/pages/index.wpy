@@ -119,7 +119,7 @@
                 this.sliderCard(text);
             }
         };
-        sliderCardAddNum(){
+        sliderCardAddNum() {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
             GET(`${localUrl}/user/sliderCard`, {
