@@ -211,13 +211,23 @@
         getData() {
             let session_key = wx.getStorageSync('session_key');
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            GET(`${localUrl}/badge/getDate`, {
+            
+            GET(`${localUrl}/badge/hasGetBdage`, {
                 session_key: session_key
             }, (res) => {
                 if (res.data.status === 1) {
-                    console.log(res.data);
-                    res.data.data.userData.badge.forEach((value) => {
-                        this.get_badgeList.push(this.badgeList[value - 1])
+                    let badgeObj = {};
+                    res.data.data.forEach((item) => {
+                         badgeObj = {
+                            name: item.name,
+                            img: item.icon_url,
+                            des: '徽章描述',
+                            personNum: item.personal,
+                            teamNum: item.team,
+                            date: '2018-03-20',
+                            id: item.id
+                        };
+                        this.get_badgeList.push(badgeObj);
                     })
                     this.$apply();
                 }

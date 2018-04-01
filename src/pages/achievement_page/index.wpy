@@ -1,7 +1,7 @@
 <template>
     <view class="addCardContainer">
         <Badge />
-        <AchieveHead ></AchieveHead>
+        <AchieveHead></AchieveHead>
         <view class="achive-tab">
             <view @tap="navigate('achievement_page')" class="tab active-tab">
                 <span class="span-tab">我的徽章</span>
@@ -280,12 +280,23 @@
                     this.$broadcast('achivement', personalAcivement);
                     this.badgeNum = userData.badge.length;
                     this.avatar_url = userData.avatar_url;
-                    let hasBadageList = userData.badge;
-                    this.badgeList.forEach((item) => {
-                        if (hasBadageList.indexOf(item.id) == -1) {
-                            this.noBadge.push(item);
-                        }
-                    })
+                    let toGetBadge = res.data.data.waitGet;
+                    let badgeList = [];
+                    let badgeObj = {};
+                    toGetBadge.map((item) => {
+                        badgeObj = {
+                            name: item.name,
+                            img: item.icon_url,
+                            des: '徽章描述',
+                            personNum: item.personal,
+                            teamNum: item.team,
+                            date: '2018-03-20',
+                            id: item.id
+                        };
+                        badgeList.push(badgeObj);
+                    });
+                    this.noBadge = badgeList;
+                    console.log(this.noBadge);
                     this.$apply();
                 }
             })
