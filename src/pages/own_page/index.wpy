@@ -9,6 +9,7 @@
             <view @tap="navigate('message_page')" class='messageContainer'>
                 <view>
                     <image src='/asserts/image/own/notify.png' />
+                    <text wx:if="{{message_status}}" class="message_status"></text>
                     <text>消息</text>
                 </view>
                 <image class='rightImg' src='/asserts/image/card/right.png' />
@@ -52,6 +53,7 @@
             nickname: '',
             groupname: '',
             group: 222,
+            message_status: 0
         }
         components = {
             AchieveHead,
@@ -62,6 +64,20 @@
         methods = {
             // 路由跳转
             navigate(pageName) {
+                if (pageName === 'message_page') {
+                    var that = this;
+                    let localUrl = that.$parent.globalData.backgroundCheckUrl;
+                    let session_key = wx.getStorageSync('session_key');
+                    GET(`${localUrl}/message/changeMessageStatus`, {
+                        session_key: session_key
+                    }, (res) => {
+                        if (res.data.status === 1) {
+                            that.message_status = 0;
+                        }else{
+                            console.log(res.errmsg);
+                        }
+                    })
+                }
                 wepy.navigateTo({
                     url: `/pages/${pageName}/index`
                 })
@@ -83,7 +99,7 @@
                 this.feedbackStatus = false
             }
         }
-        onLoad() {
+        onShow() {
             var that = this;
             let localUrl = that.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
@@ -92,10 +108,12 @@
             }, (res) => {
                 if (res.data.status === 1) {
                     let curUser = res.data.data;
+                    console.log(curUser);
                     that.avatar_url = curUser.avatar_url;
                     that.nickname = curUser.nickname;
                     that.group = curUser.group;
                     that.user_id = curUser.id;
+                    that.message_status = curUser.message_status;
                     // this.cardSupportCount = res.data.data.suport,
                     // this.cardCommentCount = res.data.data.comment,
                     that.$apply();
@@ -125,6 +143,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            .message_status {
+                width: 14rpx;
+                height: 14rpx;
+                border-radius: 50%;
+                background: red;
+                position: absolute;
+                left: 48rpx;
+                top: 18rpx;
+            }
             view {
                 height: 100%;
                 display: flex;
