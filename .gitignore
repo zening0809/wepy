@@ -6,4 +6,5 @@
 /static/download
 /nfs
 /dist
+.DS_Store
 .wepycache
