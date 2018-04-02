@@ -1,9 +1,9 @@
 <template>
     <view class="sub-container">
-        <view @tap="commentContainer()" class="comment">
+        <view @tap="sendComment" class="comment">
             <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
         </view>
-        <view @tap="support()" class="suport">
+        <view @tap="support" class="suport">
             <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
         </view>
     </view>
@@ -12,17 +12,45 @@
 <script>
     import wepy from 'wepy'
     import {
+        GET,
         POST
     } from '../utils'
     export default class CommentSupport extends wepy.component {
+        data = {
+            commentSupportPower: 1
+        }
         methods = {
             // 点赞
             support() {
-                this.$invoke('../ProductCard', 'support');
+                this.$invoke('../ProductCard', 'sendSupport');
             },
-            commentContainer() {
-                this.$emit('openPopup');
+            // 评论
+            sendComment() {
+                let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
+                let session_key = wx.getStorageSync('session_key');
+                GET(`${localUrl}/user/user`, {
+                    session_key: session_key
+                }, res => {
+                    if (res.data.status === 1) {
+                        this.commentSupportPower = res.data.data.comment_support_power;
+                        this.$apply();
+                        this.commentContainer();
+                    } else {
+                        console.log(res, '失败');
+                    }
+                });
             }
+        }
+        commentContainer() {
+            if (this.commentSupportPower !== 1) {
+                wx.showModal({
+                    title: '提示',
+                    content: '您没有写点赞权限，请联系管理员设置！',
+                    showCancel: false
+                })
+                return;
+            }
+            this.$emit('openPopup');
         }
     }
 </script>

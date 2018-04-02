@@ -15,7 +15,7 @@
                                 <text class="item-name">{{item.nickname}}</text>
                                 <view class="item-number">No.{{item.group}}</view>
                             </view>
-                            <view @tap="support" class="item-header--right" data-index="{{index}}">
+                            <view @tap="sendSupport" class="item-header--right" data-index="{{index}}">
                                 <image src="/asserts/image/home/suport_card.png" class="item-like" />{{item.support.length}}
                             </view>
                         </view>
@@ -81,7 +81,8 @@
                 }
             ],
             card_id: 0,
-            open_id: ''
+            open_id: '',
+            commentSupportPower: 1
         }
         config = {
             navigationBarTitleText: '团队评论'
@@ -119,21 +120,21 @@
                     }
                 })
             },
-            support(e) {
-                let index = e.currentTarget.dataset.index;
+            // 点赞(注意 this 指向问题，将 support 方法置于外层)
+            sendSupport(e) {
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
                 let session_key = wx.getStorageSync('session_key');
-                let data = {
-                    session_key: session_key,
-                    id: this.data.commentList[index].id
-                }
-                let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/comment/support`, data, (res) => {
-                    // 添加成功
-                    if (res.data.data.status == 1) {
-                        this.getCommentList(this.card_id, session_key);
-                        this.commentSupportAddNum();
+                GET(`${localUrl}/user/user`, {
+                    session_key: session_key
+                }, res => {
+                    if (res.data.status === 1) {
+                        this.commentSupportPower = res.data.data.comment_support_power;
+                        this.$apply();
+                        this.support(e);
+                    } else {
+                        console.log(res, '失败');
                     }
-                })
+                });
             }
         }
         events = {
@@ -207,6 +208,30 @@
         assignmentAction(item) {
             this.$broadcast('switchCard', item);
         }
+        support(e) {
+            if (this.commentSupportPower !== 1) {
+                wx.showModal({
+                    title: '提示',
+                    content: '您没有写点赞权限，请联系管理员设置！',
+                    showCancel: false
+                })
+                return;
+            }
+            let index = e.currentTarget.dataset.index;
+            let session_key = wx.getStorageSync('session_key');
+            let data = {
+                session_key: session_key,
+                id: this.data.commentList[index].id
+            }
+            let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
+            POST(`${localUrl}/comment/support`, data, (res) => {
+                // 添加成功
+                if (res.data.data.status == 1) {
+                    this.getCommentList(this.card_id, session_key);
+                    this.commentSupportAddNum();
+                }
+            })
+        }
         commentSupportAddNum() {
             let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
@@ -214,7 +239,7 @@
                 session_key: session_key
             }, res => {
                 if (res.data.status === 1) {
-                   console.log('success');
+                    console.log('success');
                 } else {
                     console.log('失败');
                 }

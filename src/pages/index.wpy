@@ -9,7 +9,7 @@
                     </view>
                     <text>筛选</text>
                 </view>
-                <view class="logoCardContainer" @tap="navigate('add_card_page')">
+                <view class="logoCardContainer" @tap="sendCard">
                     <view>
                         <image src="/asserts/image/home/plus.png" />
                     </view>
@@ -58,14 +58,41 @@
             curCard: [],
             curIndex: 0,
             page: 1,
+            sendCardPower: 1,
             noticeStatus: false
         };
         computed = {};
         methods = {
             // 路由跳转
-            navigate(pageName) {
-                wepy.navigateTo({
-                    url: `/pages/${pageName}/index`
+            navigate(pageName, power) {
+                console.log('===', this)
+                if (pageName === 'card_page' || power === 1) {
+                    wepy.navigateTo({
+                        url: `/pages/${pageName}/index`
+                    });
+                } else {
+                    wx.showModal({
+                        title: '提示',
+                        content: '您没有写卡片权限，请联系管理员设置！',
+                        showCancel: false
+                    })
+                }
+            },
+            // 写卡片
+            sendCard() {
+                let localUrl = this.$parent.globalData.backgroundCheckUrl;
+                let session_key = wx.getStorageSync('session_key');
+                GET(`${localUrl}/user/user`, {
+                    session_key: session_key
+                }, res => {
+                    if (res.data.status === 1) {
+                        console.log('===', res.data.data, typeof res.data.data.send_card_power)
+                        this.sendCardPower = res.data.data.send_card_power;
+                        this.$apply();
+                        this.methods.navigate('add_card_page', this.sendCardPower);
+                    } else {
+                        console.log(res, '失败');
+                    }
                 });
             },
             // 去卡片列表 并且 取消红点
@@ -126,7 +153,7 @@
                 session_key: session_key
             }, res => {
                 if (res.data.status === 1) {
-                   console.log('success');
+                    console.log('success');
                 } else {
                     console.log('失败');
                 }
@@ -197,7 +224,6 @@
                 } else {
                     console.log(res, '失败');
                 }
-                this.$apply();
             });
         }
         refresh(page) {

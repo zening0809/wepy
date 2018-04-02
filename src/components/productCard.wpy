@@ -16,7 +16,7 @@
         <view class="groupDevContainer">
             <view class="cardTag" style="background:{{tagColor}};">{{tagName}}</view>
             <view class="sportCardContainer">
-                <image src="/asserts/image/home/suport_card.png" class="suportCard" @tap.stop="support" />
+                <image src="/asserts/image/home/suport_card.png" class="suportCard" @tap.stop="sendSupport" />
                 <text>{{supportNum}}</text>
             </view>
         </view>
@@ -24,7 +24,7 @@
             <view class="comment">
                 <image src="/asserts/image/home/commit.png" class="suportCard" /> 评论
             </view>
-            <view class="suport" @tap.stop="support">
+            <view class="suport" @tap.stop="sendSupport">
                 <image src="/asserts/image/home/btn_suport.png" class="suportCard" /> 点赞
             </view>
         </view>
@@ -50,6 +50,7 @@
             tagName: '',
             supportNum: 0,
             card_id: 0,
+            commentSupportPower: 1,
             tagList: [{
                     color: "#256af2",
                     text: "技能交换"
@@ -82,20 +83,20 @@
                 })
             },
             // 点赞
-            support() {
-                let session_key = wx.getStorageSync('session_key');
+            sendSupport(e) {
                 let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
-                POST(`${localUrl}/card/support`, {
-                    id: this.card_id,
-                    session_key
-                }, (res) => {
-                    // 添加成功
-                    if (res.data.status == 1) {
-                        this.supportNum = this.supportNum + 1;
+                let session_key = wx.getStorageSync('session_key');
+                GET(`${localUrl}/user/user`, {
+                    session_key: session_key
+                }, res => {
+                    if (res.data.status === 1) {
+                        this.commentSupportPower = res.data.data.comment_support_power;
                         this.$apply();
-                        this.cardSupportAddNum();
+                        this.support(e);
+                    } else {
+                        console.log(res, '失败');
                     }
-                })
+                });
             }
         }
         events = {
@@ -113,6 +114,29 @@
                 this.isShow = item.isShow;
             }
         }
+        support(e) {
+            if (this.commentSupportPower !== 1) {
+                wx.showModal({
+                    title: '提示',
+                    content: '您没有写点赞权限，请联系管理员设置！',
+                    showCancel: false
+                })
+                return;
+            }
+            let session_key = wx.getStorageSync('session_key');
+            let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
+            POST(`${localUrl}/card/support`, {
+                id: this.card_id,
+                session_key
+            }, (res) => {
+                // 添加成功
+                if (res.data.status == 1) {
+                    this.supportNum = this.supportNum + 1;
+                    this.$apply();
+                    this.cardSupportAddNum();
+                }
+            })
+        }
         cardSupportAddNum() {
             let localUrl = this.$root.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
@@ -120,7 +144,7 @@
                 session_key: session_key
             }, res => {
                 if (res.data.status === 1) {
-                   console.log('success');
+                    console.log('success');
                 } else {
                     console.log('失败');
                 }
