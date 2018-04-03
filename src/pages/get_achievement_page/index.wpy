@@ -217,6 +217,7 @@
             }, (res) => {
                 if (res.data.status === 1) {
                     let badgeObj = {};
+                    this.get_badgeList = [];
                     res.data.data.forEach((item) => {
                          badgeObj = {
                             name: item.name,

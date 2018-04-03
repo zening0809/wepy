@@ -94,6 +94,9 @@
                     personalAcivement.teamNum = res.data.data.teamTotal;
                     this.$broadcast('achivement', personalAcivement);
                     let groupList = Object.values(res.data.data.groupList);
+                    groupList.sort((a, b)=>{
+                        return b.sub - a.sub
+                    })
                     groupList.forEach((item, index) => {
                         item.teamRank = index + 1
                     });

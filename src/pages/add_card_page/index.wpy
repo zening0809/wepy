@@ -131,6 +131,9 @@
                         data: data
                     },
                     success: function(res) {
+                        that.chooseImg = false,
+                        that.chooseImgPath = ''
+                        that.$apply();
                         wepy.showModal({
                             title: '存储成功',
                             confirmColor: '#6CACF4',
