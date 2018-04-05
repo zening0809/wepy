@@ -290,7 +290,7 @@
                             des: '徽章描述',
                             personNum: item.personal,
                             teamNum: item.team,
-                            date: '2018-03-20',
+                            date: item.end_time,
                             id: item.id
                         };
                         badgeList.push(badgeObj);
