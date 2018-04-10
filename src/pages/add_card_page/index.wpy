@@ -85,6 +85,7 @@
             },
             submitForm() {
                 let curData = this.data;
+                let that = this;
                 let title = curData.formObj.title;
                 let content = curData.formObj.content;
                 if (title.length <= 0 || title.length > 20) {
@@ -109,70 +110,93 @@
                 addCard.content = content;
                 addCard.tag = curData.curTag;
                 let localUrl = this.$parent.globalData.backgroundCheckUrl;
-                this.upload(`${localUrl}/card/saveCard`, chooseImgPath, JSON.stringify(addCard));
-            }
-        }
-        upload(url, path, data) {
-            console.log(path);
-            const that = this;
-            wx.showToast({
-                    icon: "loading",
-                    title: "正在上传"
-                }),
-                wx.uploadFile({
-                    url: url,
-                    filePath: path,
-                    name: 'file',
-                    header: {
-                        "Content-Type": "multipart/form-data"
-                    },
-                    formData: {
+                if (!chooseImgPath) {
+                    GET(`${localUrl}/card/saveCard`, {
                         session_key: wx.getStorageSync('session_key'),
-                        data: data
-                    },
-                    success: function(res) {
-                        that.chooseImg = false,
-                        that.chooseImgPath = ''
-                        that.$apply();
-                        wepy.showModal({
-                            title: '存储成功',
-                            confirmColor: '#6CACF4',
-                            showCancel: false,
-                            success: (res) => {
-                                that.sendCardAddNum();
-                                if (res.confirm) {
-                                    wepy.redirectTo({
-                                        url: `/pages/index`
-                                    })
+                        data: addCard
+                    }, (res) => {
+                        if (res.data.status === 1) {
+                            that.chooseImg = false,
+                            that.chooseImgPath = ''
+                            that.$apply();
+                            wepy.showModal({
+                                title: '存储成功',
+                                confirmColor: '#6CACF4',
+                                showCancel: false,
+                                success: (res) => {
+                                    that.methods.sendCardAddNum(that);
+                                    if (res.confirm) {
+                                        wepy.redirectTo({
+                                            url: `/pages/index`
+                                        })
+                                    }
                                 }
-                            }
-                        })
-                    },
-                    fail: function(e) {
-                        console.log(e);
-                        wx.showModal({
-                            title: '提示',
-                            content: '新添卡片失败',
-                            showCancel: false
-                        })
-                    },
-                    complete: function() {
-                        wx.hideToast(); //隐藏Toast
-                    }
-                })
-        }
-        sendCardAddNum() {
-            let localUrl = this.$parent.globalData.backgroundCheckUrl;
-            let session_key = wx.getStorageSync('session_key');
-            GET(`${localUrl}/user/sendCard`, {
-                session_key: session_key
-            }, res => {
-                if (res.data.status === 1) {
-                    console.log('success');
+                            })
+                        }
+                    })
                 } else {
-                    console.log('失败');
+                    this.methods.upload(`${localUrl}/card/saveCard`, chooseImgPath, JSON.stringify(addCard), that);
                 }
-            });
+            },
+            upload(url, path, data, that) {
+                wx.showToast({
+                        icon: "loading",
+                        title: "正在上传"
+                    }),
+                    wx.uploadFile({
+                        url: url,
+                        filePath: path,
+                        name: 'file',
+                        header: {
+                            "Content-Type": "multipart/form-data"
+                        },
+                        formData: {
+                            session_key: wx.getStorageSync('session_key'),
+                            data: data
+                        },
+                        success: function(res) {
+                            that.chooseImg = false,
+                                that.chooseImgPath = '';
+                            that.$apply();
+                            wepy.showModal({
+                                title: '存储成功',
+                                confirmColor: '#6CACF4',
+                                showCancel: false,
+                                success: (res) => {
+                                    that.methods.sendCardAddNum(that);
+                                    if (res.confirm) {
+                                        wepy.redirectTo({
+                                            url: `/pages/index`
+                                        })
+                                    }
+                                }
+                            })
+                        },
+                        fail: function(e) {
+                            wx.showModal({
+                                title: '提示',
+                                content: '新添卡片失败',
+                                showCancel: false
+                            })
+                        },
+                        complete: function() {
+                            wx.hideToast(); //隐藏Toast
+                        }
+                    })
+            },
+            sendCardAddNum(that) {
+                let localUrl = that.$parent.globalData.backgroundCheckUrl;
+                let session_key = wx.getStorageSync('session_key');
+                GET(`${localUrl}/user/sendCard`, {
+                    session_key: session_key
+                }, res => {
+                    if (res.data.status === 1) {
+                        console.log('success');
+                    } else {
+                        console.log('失败');
+                    }
+                });
+            }
         }
     }
 </script>

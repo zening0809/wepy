@@ -8,7 +8,7 @@
                 <view class="number">No.{{group}}</view>
             </view>
         </view>
-        <view class="imgContainer" style="background-image: url('{{img_url}}')">
+        <view class="imgContainer" style="background-image: url('{{img_url}}')" data-image="{{img_url}}" @tap.stop="previewImg">
             <!-- <image class="content" src="{{img_url}}" /> -->
         </view>
         <view class="productTitle">{{title}}</view>
@@ -97,6 +97,21 @@
                         console.log(res, '失败');
                     }
                 });
+            },
+            previewImg(e) {
+                var pages = getCurrentPages() //获取加载的页面
+                var currentPage = pages[pages.length - 1]
+                var url = currentPage.route
+                if (url === 'pages/team_comment_page/index') {
+                    wx.previewImage({
+                        current: e.currentTarget.dataset.image,
+                        urls: [e.currentTarget.dataset.image]
+                    })
+                } else {
+                    wepy.navigateTo({
+                        url: `/pages/team_comment_page/index?id=${this.card_id}`
+                    })
+                }
             }
         }
         events = {
