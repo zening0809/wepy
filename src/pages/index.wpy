@@ -1,9 +1,10 @@
 <template>
     <view class="homeContainer" @touchstart="handleTouchstart" @touchend="handleTouchend">
+        <ChooseCard/>
         <view class="headContainer">
             <image class="logo" src="/asserts/image/home/logo.png" />
             <view class="cardContainer">
-                <view class="logoCardContainer">
+                <view class="logoCardContainer"  @tap="chooseCardAction">
                     <view>
                         <image src="/asserts/image/home/nav.png" />
                     </view>
@@ -27,12 +28,14 @@
         <ProductCard wx:if="{{isShow}}" />
         <BtnCom/>
     </view>
+
 </template>
 
 <script>
     import wepy from "wepy";
     import BtnCom from "../components/btnCom";
     import ProductCard from "../components/productCard";
+    import ChooseCard from "../components/chooseCard";
     import {
         GET
     } from "../utils";
@@ -42,7 +45,8 @@
         };
         components = {
             BtnCom,
-            ProductCard
+            ProductCard,
+            ChooseCard
         };
         data = {
             isShow: false,
@@ -72,7 +76,7 @@
                 } else {
                     wx.showModal({
                         title: '提示',
-                        content: '您没有写卡片权限，请联系管理员设置！',
+                        content: '发卡数量超出限制',
                         showCancel: false
                     })
                 }
@@ -92,6 +96,9 @@
                         console.log(res, '失败');
                     }
                 });
+            },
+            chooseCardAction(){
+                this.$broadcast('chooseCard');
             },
             // 去卡片列表 并且 取消红点
             toCardList() {
@@ -144,6 +151,16 @@
                 this.sliderCard(text);
             }
         };
+        events = {
+            cardSelect : (curCardSelect) => {
+                let page = 1;
+                let curIndex = 0;
+                wx.setStorageSync('page', page);
+                wx.setStorageSync('curIndex', curIndex);
+                this.refresh(page, curIndex, curCardSelect);
+                console.log(curCardSelect);
+            }
+        }
         sliderCardAddNum() {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
@@ -158,6 +175,7 @@
             });
         }
         sliderCard(direction) {
+            let curCardSelect = wx.getStorageSync('cardSelectStatus');
             switch (direction) {
                 case "right":
                     if (this.curIndex <= 0) {
@@ -172,7 +190,7 @@
                             this.page--;
                             wx.setStorageSync('page', this.page);
                             this.$apply();
-                            this.refresh(this.page);
+                            this.refresh(this.page, 0, curCardSelect);
                         }
                     } else {
                         this.curIndex = this.curIndex - 1;
@@ -191,13 +209,13 @@
                             this.page = 1;
                             this.$apply();
                             wx.setStorageSync('page', this.page);
-                            this.refresh(this.page);
+                            this.refresh(this.page, 0, curCardSelect);
                         } else {
                             // 否则读取下一页数据
                             this.page++;
                             this.$apply();
                             wx.setStorageSync('page', this.page);
-                            this.refresh(this.page);
+                            this.refresh(this.page, 0, curCardSelect);
                         }
                     } else {
                         this.curIndex = this.curIndex + 1;
@@ -230,21 +248,28 @@
                 }
             });
         }
-        refresh(page, curIndex) {
+        refresh(page, curIndex, cardStatus) {
             let localUrl = this.$parent.globalData.backgroundCheckUrl;
             let session_key = wx.getStorageSync('session_key');
             GET(`${localUrl}/card/getList`, {
                 page: page,
+                cardStatus: cardStatus,
                 session_key: session_key
             }, res => {
+                console.log(res, 'res')
                 if (res.data.status === 1) {
-                    this.curCard = res.data.data.data;
+                    if(res.data.data.data){
+                        this.curCard = res.data.data.data;
+                    }else{
+                        this.curCard = res.data.data;
+                    }
+                    
                     if (this.curCard.length === 0) {
                         this.isShow = false;
                     } else {
                         this.isShow = true;
                         this.curIndex = curIndex || 0;
-                        let curObj = res.data.data.data[this.curIndex];
+                        let curObj = this.curCard[this.curIndex];
                         curObj.isShow = true;
                         this.assignmentAction(curObj);
                         wx.setStorageSync('curIndex', this.curIndex);
@@ -259,17 +284,18 @@
             this.noticeStatusAction();
         }
         onLoad() {
-            let page = wx.getStorageSync('page');
+            let cardSelectStatus = wx.getStorageSync('cardSelectStatus') || '0-0';
+            if(!cardSelectStatus){
+                wx.setStorageSync('cardSelectStatus', '0-0')
+            }
+            let page = wx.getStorageSync('page') || this.page;
             let curIndex = wx.getStorageSync('curIndex');
             if(page){
-                this.refresh(page, curIndex);
+                this.refresh(page, curIndex, cardSelectStatus);
             }else{
-                this.refresh(1);
+                this.refresh(1, 0, cardSelectStatus);
             }
         }
-        // onPrefetch () {
-        //     console.log(11111);
-        // }
     }
 </script>
 

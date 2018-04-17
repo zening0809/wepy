@@ -1,0 +1,181 @@
+<template>
+    <view class="backLayerContainer" wx:if="{{status}}">
+        <view class='backLayer' @tap="disabled"></view>
+        <view class='comentCotioner'>
+            <view class='chooseContainer'>
+                <view>
+                    <repeat for="{{statusList}}" key="index" item="item" index="index">
+                        <view class='selectBtn' style="background:{{index === curStatus?'#c9defc': ''}};border:{{index === curStatus?'1rpx solid #3c63e4': ''}};color:{{index === curStatus?'#3c63e4': ''}}" data-index="{{index}}" @tap="chooseStatus">{{item.text}}</view>
+                    </repeat>
+                </view>
+                <view>
+                    <repeat for="{{tagList}}" key="index" item="item" index="index">
+                        <view class='selectBtn' style="background:{{index === tagStatus?'#c9defc': ''}};border:{{index === tagStatus?'1rpx solid #3c63e4': ''}};color:{{index === tagStatus?'#3c63e4': ''}}" data-index="{{index}}" @tap="tagStatusChange">{{item.text}}</view>
+                    </repeat>
+                </view>
+            </view>
+            <view @tap="chooseCardPage" class='button'>确 认</view>
+        </view>
+    </view>
+</template>
+
+<script>
+    import wepy from 'wepy'
+    import {
+        POST,
+        GET
+    } from '../utils'
+    export default class Feedback extends wepy.component {
+        data = {
+            content: '',
+            curStatus: 0,
+            tagStatus: 0,
+            status: false,
+            tagList: [
+            {
+                color: '#b4e99f',
+                text: '全部'
+            },{
+                color: '#256af2',
+                text: '技能交换'
+            },
+            {
+                color: '#b4e99f',
+                text: '团队进展'
+            },
+            {
+                color: '#fb91af',
+                text: '求助'
+            },
+            {
+                color: '#f7cd8b',
+                text: '资源分享'
+            }],
+            statusList: [{
+                text: '随机'
+            },
+            {
+                text: '最热'
+            }]
+        }
+        props = {
+            userId: Number
+        }
+        methods = {
+            getContent(e) {
+                this.content = e.detail.value
+            },
+            chooseCardPage() {
+                this.status = false;
+                let curCardSelect = this.curStatus + '-' + this.tagStatus;
+                wx.setStorageSync('cardSelectStatus', curCardSelect);
+                this.$emit('cardSelect' , curCardSelect);
+                this.$apply();
+            },
+            disabled() {
+                this.status = false;
+                this.$apply();
+            },
+            chooseStatus(e){
+                let index = e.currentTarget.dataset.index;
+                this.curStatus = index;
+                this.$apply();
+            },
+            tagStatusChange(e){
+                let index = e.currentTarget.dataset.index;
+                this.tagStatus = index;
+                this.$apply();
+            }
+        }
+        events = {
+            chooseCard: () => {
+                this.status = true;
+                let cardSelectStatus = wx.getStorageSync('cardSelectStatus');
+                if(cardSelectStatus){
+                    this.curStatus: cardSelectStatus.slite('-')[0];
+                    this.tagStatus: cardSelectStatus.slite('-')[1];
+                }
+                this.$apply();
+            }
+        }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .backLayerContainer {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 100000;
+        .backLayer {
+            background: #000;
+            width: 100%;
+            height: 100%;
+            opacity: 0.6;
+        }
+        .comentCotioner {
+            width: 70%;
+            height: 600rpx;
+            background: #fff;
+            margin: 0 auto;
+            position: absolute;
+            top: 20%;
+            left: 15%;
+            .chooseContainer {
+                height: 80%;
+                display: flex;
+                &>view {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                &>view:nth-child(2) {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                .selectBtn {
+                    width: 180rpx;
+                    height: 50rpx;
+                    border: 1rpx solid #cccccc;
+                    margin-top: 30rpx;
+                    text-align: center;
+                    line-height: 50rpx;
+                    font-size: 24rpx;
+                    color: grey;
+                }
+                .selectBtnSelection {
+                    width: 180rpx;
+                    height: 50rpx;
+                    border: 1rpx solid #cccccc;
+                    margin-top: 30rpx;
+                    text-align: center;
+                    line-height: 50rpx;
+                    font-size: 24rpx;
+                    color: grey;
+                }
+            }
+            textarea {
+                width: 70%;
+                height: 300rpx;
+                top: 80rpx;
+                left: 15%;
+                position: absolute;
+            }
+            .button {
+                width: 100%;
+                position: absolute;
+                height: 60rpx;
+                line-height: 60rpx;
+                background: rgb(60, 99, 228);
+                text-align: center;
+                color: #fff;
+                font-size: 32rpx;
+                bottom: 0;
+                z-index: 999999999
+            }
+        }
+    }
+</style>
