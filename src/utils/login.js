@@ -1,11 +1,13 @@
 export function Login(_url, phonenum) {
+    console.log(_url);
     wx.login({
         success: function (result) {
-            //   console.log(result.code);
             if (result.code) {
                 wx.getUserInfo({
                     success: function (res) {
-                        res.userInfo.phonenum = phonenum
+                        console.log(_url + '/public/wxLogin');
+
+                        res.userInfo.phonenum = phonenum;
                         wx.setStorageSync('userInfo', res.userInfo)
                         //发起网络请求
                         wx.request({
@@ -17,6 +19,7 @@ export function Login(_url, phonenum) {
                                 'content-type': 'application/json' // 默认值
                             },
                             success: function (res) {
+                                console.log(res);
                                 if (res.data.status == 1) {
                                     let session_key = res.data.data.session_key;
                                     wx.setStorageSync('session_key', session_key);
@@ -52,7 +55,7 @@ export function Login(_url, phonenum) {
                         })
                     },
                     complete: function (res) {
-                        // console.log('complete',res);
+                        console.log('complete',res);
                     }
 
                 })

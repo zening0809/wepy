@@ -92,8 +92,8 @@
                 this.status = true;
                 let cardSelectStatus = wx.getStorageSync('cardSelectStatus');
                 if(cardSelectStatus){
-                    this.curStatus: cardSelectStatus.slite('-')[0];
-                    this.tagStatus: cardSelectStatus.slite('-')[1];
+                    this.curStatus = cardSelectStatus.slite('-')[0];
+                    this.tagStatus = cardSelectStatus.slite('-')[1];
                 }
                 this.$apply();
             }

@@ -258,6 +258,7 @@
             }, res => {
                 console.log(res, 'res')
                 if (res.data.status === 1) {
+                    let tempObj = Object.assign({}, this.curCard);
                     if(res.data.data.data){
                         this.curCard = res.data.data.data;
                     }else{
@@ -265,8 +266,19 @@
                     }
                     
                     if (this.curCard.length === 0) {
-                        this.isShow = false;
+                        wepy.showModal({
+                            // title: '数据获取失败',
+                            content: '没有更多的卡片了',
+                            // confirmColor: '#6CACF4',
+                            showCancel: false
+                        })
+                        this.curCard = tempObj;
+                        // let curCardSelect = wx.getStorageSync('cardSelectStatus');
+                        // this.refresh(1, 0, curCardSelect);
+                        // this.isShow = true;
+                        
                     } else {
+                       
                         this.isShow = true;
                         this.curIndex = curIndex || 0;
                         let curObj = this.curCard[this.curIndex];
